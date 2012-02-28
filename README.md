@@ -7,15 +7,15 @@ EasyImage is built on top of ImageMagick, so make sure ImageMagick is installed 
 
 On Ubuntu
 
-   $ apt-get install imagemagick
+    $ apt-get install imagemagick
 
 On Mac OS X
 
-   $ brew install imagemagick
+    $ brew install imagemagick
 
 On CentOS
 
-   $ yum install imagemagick
+    $ yum install imagemagick
 
 
 ## Installation
@@ -24,7 +24,7 @@ On CentOS
 
 ## Usage
 
-   var easyim = require('easyimage');
+    var easyim = require('easyimage');
 
 EasyImage offers these methods:
 
@@ -53,14 +53,14 @@ EasyImage offers these methods:
 
 Example 1
 
-   easyim.info('sample-images/kitten.jpg', function(err, stdout, stderr) {
+    easyim.info('sample-images/kitten.jpg', function(err, stdout, stderr) {
       if (err) throw err;
       console.log(stdout);
-   });
+    });
 
 Example 2
 
-   easyim.rescrop(
+    easyim.rescrop(
       {
          src:'sample-images/kitten.jpg', dst:'kitten-thumbnail.jpg',
          width:500, height:500,
@@ -71,7 +71,7 @@ Example 2
          if (err) throw err;
          console.log('Resized and cropped');
       }
-   );
+    );
 
 For more examples check out test.js.
 
@@ -93,6 +93,4 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
