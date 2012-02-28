@@ -8,6 +8,5 @@
 	"repository" : {
 		"type": "git",
 		"url": "https://git@github.com:hacksparrow/node-easyimage.git"
-	},
-	"engines": { "node": "0.6.*" }
+	}
 }

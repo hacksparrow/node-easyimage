@@ -1,4 +1,4 @@
-var easyim = require('./easyimage');
+var easyim = require('easyimage');
 
 easyim.info('sample-images/kitten.jpg', function(err, stdout, stderr) {
 	if (err) throw err;
