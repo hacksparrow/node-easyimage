@@ -1,0 +1,13 @@
+{
+	"name": "easyimage",
+	"version": "0.0.1",
+	"description": "A friendly module for processing images.",
+	"main": "easyimage.js",
+	"author": "Hack Sparrow <captain@hacksparrow.com>",
+	"keywords": ["image", "graphics", "process", "convert", "resize", "crop"],
+	"repository" : {
+		"type": "git",
+		"url": "https://git@github.com:hacksparrow/node-easyimage.git"
+	},
+	"engines": { "node": "0.6.*" }
+}
