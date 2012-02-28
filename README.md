@@ -17,10 +17,9 @@ On CentOS
 
     $ yum install imagemagick
 
-
 ## Installation
 
-   $ npm install easyimage
+    $ npm install easyimage
 
 ## Usage
 
