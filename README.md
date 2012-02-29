@@ -45,8 +45,7 @@ EasyImage offers these methods:
 	cropheight - height of cropped image, if missing, height will be used instead
 	x - x offset for cropping, defaults to 0
 	y - y offset for cropping, defaults to 0
-	gravity - crop position [NorthWest | North | NorthEast | West | Center 
-	| East | SouthWest | South | SouthEast], defaults to Center
+	gravity - crop position [NorthWest | North | NorthEast | West | Center | East | SouthWest | South | SouthEast], defaults to Center
 
 ## Examples
 
