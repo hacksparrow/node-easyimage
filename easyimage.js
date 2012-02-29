@@ -32,8 +32,8 @@ exports.info = function(file, callback) {
 // convert a file type to another
 exports.convert = function(options, callback) {
 	if (options.src === undefined || options.dst === undefined) throw_err('path');
-	options.src = options.src.replace(' ', '\ ');
-	options.dst = options.dst.replace(' ', '\ ');
+	options.src = options.src.replace(' ', '\ ').replace('(', '\(').replace(')', '\)');
+	options.dst = options.dst.replace(' ', '\ ').replace('(', '\(').replace(')', '\)');
 	if (options.quality === undefined) imcmd = 'convert ' + options.src + ' ' + options.dst;
 	else imcmd = 'convert ' + options.src + ' -quality ' + options.quality + ' ' + options.dst;
 	child = exec(imcmd, function(err, stdout, stderr) {
@@ -46,8 +46,8 @@ exports.resize = function(options, callback) {
 	if (options.src === undefined || options.dst === undefined) throw_err('path');
 	if (options.width === undefined) throw_err('dim'); 
 	options.height = options.height || options.width;
-	options.src = options.src.replace(' ', '\ ');
-	options.dst = options.dst.replace(' ', '\ ');
+	options.src = options.src.replace(' ', '\ ').replace('(', '\(').replace(')', '\)');
+	options.dst = options.dst.replace(' ', '\ ').replace('(', '\(').replace(')', '\)');
 	if (options.quality === undefined) imcmd = 'convert ' + options.src + ' -resize '+options.width + 'x' + options.height + ' ' + options.dst;
 	else imcmd = 'convert ' + options.src + ' -resize '+options.width + 'x' + options.height + ' -quality ' + options.quality + ' ' + options.dst;
 	child = exec(imcmd, function(err, stdout, stderr) {
@@ -63,8 +63,8 @@ exports.crop = function(options, callback) {
 	options.gravity = options.gravity || 'Center';
 	options.x = options.x || 0;
 	options.y = options.y || 0;
-	options.src = options.src.replace(' ', '\ ');
-	options.dst = options.dst.replace(' ', '\ ');
+	options.src = options.src.replace(' ', '\ ').replace('(', '\(').replace(')', '\)');
+	options.dst = options.dst.replace(' ', '\ ').replace('(', '\(').replace(')', '\)');
 	if (options.quality === undefined) imcmd = 'convert ' + options.src + ' -gravity ' + options.gravity + ' -crop '+ options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y + ' ' + options.dst;
 	else  imcmd = 'convert ' + options.src + ' -gravity ' + options.gravity + ' -crop '+ options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y + ' -quality ' + options.quality + ' ' + options.dst;
 	child = exec(imcmd, function(err, stdout, stderr) {
@@ -84,8 +84,8 @@ exports.rescrop = function(options, callback) {
 	options.gravity = options.gravity || 'Center';
 	options.x = options.x || 0;
 	options.y = options.y || 0;
-	options.src = options.src.replace(' ', '\ ');
-	options.dst = options.dst.replace(' ', '\ ');
+	options.src = options.src.replace(' ', '\ ').replace('(', '\(').replace(')', '\)');
+	options.dst = options.dst.replace(' ', '\ ').replace('(', '\(').replace(')', '\)');
 	if (options.quality === undefined) imcmd = 'convert ' + options.src + ' -resize ' + options.width + 'x' + options.height + ' -gravity ' + options.gravity + ' -crop '+ options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y + ' ' + options.dst;
 	else imcmd = 'convert ' + options.src + ' -resize ' + options.width + 'x' + options.height + ' -gravity ' + options.gravity + ' -crop '+ options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y + ' -quality ' + options.quality + ' ' + options.dst;
 	child = exec(imcmd, function(err, stdout, stderr) {
