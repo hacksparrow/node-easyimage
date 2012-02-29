@@ -32,7 +32,7 @@ EasyImage offers these methods:
 	easyimg.resize(<options>, <callback_function>) - to resize an image
 	easyimg.crop(<options>, <callback_function>) - to crop an image
 	easyimg.rescrop(<options>, <callback_function>) - to resize and crop and image in one go, useful for creating thumbnails
-	easyimg.exec(<command>, <callback_function>) - when you want to call a custom command to ImageMagick
+	easyimg.exec(<command>, <callback_function>) - when you want to call a custom command to ImageMagick, you will need to take care of escaping special characters etc
 
  The EasyImage options object can have these properties depending on 
  the method. Unrelated options are ignored.

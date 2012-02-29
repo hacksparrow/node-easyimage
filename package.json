@@ -1,6 +1,6 @@
 {
 	"name": "easyimage",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"description": "A user-friendly module for processing images in Node.js.",
 	"main": "easyimage.js",
 	"author": "Hack Sparrow <captain@hacksparrow.com>",

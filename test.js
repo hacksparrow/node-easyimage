@@ -1,25 +1,25 @@
-var easyim = require('easyimage');
+var easyimg = require('easyimage');
 
-easyim.info('sample-images/kitten.jpg', function(err, stdout, stderr) {
+easyimg.info('sample-images/cute kitten.jpg', function(err, stdout, stderr) {
 	if (err) throw err;
 	console.log(stdout);
 });
 
 
-easyim.convert({src:'sample-images/kitten.jpg', dst:'kitten.png', quality:10}, function(err, stdout, stderr) {
+easyimg.convert({src:'sample-images/cute kitten.jpg', dst:'cute kitten.png', quality:10}, function(err, stdout, stderr) {
 	if (err) throw err;
 	console.log('Converted');
 });
 
 
-easyim.resize({src:'sample-images/kitten.jpg', dst:'kitten-small.jpg', width:640, height:480}, function(err, stdout, stderr) {
+easyimg.resize({src:'sample-images/cute kitten.jpg', dst:'kitten-small.jpg', width:640, height:480}, function(err, stdout, stderr) {
 	if (err) throw err;
 	console.log('Resized');
 });
 
-easyim.crop(
+easyimg.crop(
 	{
-		src:'sample-images/kitten.jpg', dst:'kitten.jpg',
+		src:'sample-images/cute kitten.jpg', dst:'cute kitten.jpg',
 		cropwidth:128, cropheight:128,
 		gravity:'North',
 		x:0, y:0
@@ -30,9 +30,9 @@ easyim.crop(
 	}
 );
 
-easyim.rescrop(
+easyimg.rescrop(
 	{
-		src:'sample-images/kitten.jpg', dst:'kitten-thumbnail.jpg',
+		src:'sample-images/cute kitten.jpg', dst:'kitten-thumbnail.jpg',
 		width:500, height:500,
 		cropwidth:128, cropheight:128,
 		x:0, y:0
@@ -43,7 +43,7 @@ easyim.rescrop(
 	}
 );
 
-easyim.exec('convert sample-images/kitten.jpg kitten.gif', function(err, stdout, stderr) {
+easyimg.exec('convert sample-images/cute\\ kitten.jpg cute\\ kitten.gif', function(err, stdout, stderr) {
 	if (err) throw err;
 	console.log('Command executed');
 });
