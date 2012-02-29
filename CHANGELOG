@@ -1,0 +1,11 @@
+0.0.1
+-----
+
+Initial release
+
+0.0.2
+-----
+
+1. Fixed space character in file name bug
+2. crop() will assume width and height as cropwidth and cropheight if they are not specified
+
