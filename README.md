@@ -23,16 +23,16 @@ On CentOS
 
 ## Usage
 
-    var easyim = require('easyimage');
+    var easyimg = require('easyimage');
 
 EasyImage offers these methods:
 
-	easyim.info(<image_path>, <callback_function>) - to retrieve information about an image
-	easyim.convert(<options>, <callback_function>) - to convert an image from one format to another
-	easyim.resize(<options>, <callback_function>) - to resize an image
-	easyim.crop(<options>, <callback_function>) - to crop an image
-	easyim.rescrop(<options>, <callback_function>) - to resize and crop and image in one go, useful for creating thumbnails
-	easyim.exec(<command>, <callback_function>) - when you want to call a custom command to ImageMagick
+	easyimg.info(<image_path>, <callback_function>) - to retrieve information about an image
+	easyimg.convert(<options>, <callback_function>) - to convert an image from one format to another
+	easyimg.resize(<options>, <callback_function>) - to resize an image
+	easyimg.crop(<options>, <callback_function>) - to crop an image
+	easyimg.rescrop(<options>, <callback_function>) - to resize and crop and image in one go, useful for creating thumbnails
+	easyimg.exec(<command>, <callback_function>) - when you want to call a custom command to ImageMagick
 
  The EasyImage options object can have these properties depending on 
  the method. Unrelated options are ignored.
@@ -41,24 +41,27 @@ EasyImage offers these methods:
 	dst - path to destination image
 	width - width of resized image
 	height - height of resized image
-	cropwidth - width of cropped image
-	cropheight - height of cropped image
-	x - x offset for cropping
-	y - y offset for cropping
-	gravity - crop position [NorthWest | North | NorthEast | West | Center | East | SouthWest | South | SouthEast]
+	cropwidth - width of cropped image, if missing, width will be used 
+	instead
+	cropheight - height of cropped image, if missing, height will be used 
+	instead
+	x - x offset for cropping, defaults to 0
+	y - y offset for cropping, defaults to 0
+	gravity - crop position [NorthWest | North | NorthEast | West | Center 
+	| East | SouthWest | South | SouthEast], defaults to Center
 
 ## Examples
 
 Example 1
 
-    easyim.info('sample-images/kitten.jpg', function(err, stdout, stderr) {
+    easyimg.info('sample-images/kitten.jpg', function(err, stdout, stderr) {
       if (err) throw err;
       console.log(stdout);
     });
 
 Example 2
 
-    easyim.rescrop(
+    easyimg.rescrop(
       {
          src:'sample-images/kitten.jpg', dst:'kitten-thumbnail.jpg',
          width:500, height:500,
