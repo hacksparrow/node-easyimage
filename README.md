@@ -41,10 +41,8 @@ EasyImage offers these methods:
 	dst - path to destination image
 	width - width of resized image
 	height - height of resized image
-	cropwidth - width of cropped image, if missing, width will be used 
-	instead
-	cropheight - height of cropped image, if missing, height will be used 
-	instead
+	cropwidth - width of cropped image, if missing, width will be used instead
+	cropheight - height of cropped image, if missing, height will be used instead
 	x - x offset for cropping, defaults to 0
 	y - y offset for cropping, defaults to 0
 	gravity - crop position [NorthWest | North | NorthEast | West | Center 
