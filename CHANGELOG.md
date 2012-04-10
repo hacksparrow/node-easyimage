@@ -19,3 +19,7 @@ Initial release
 
 1. Fixed file name special character bug. More complicated than assumed!
 
+0.0.5 - 09-04-2012
+------------------
+
+1. File names can have more than once space
