@@ -14,17 +14,24 @@ var throw_err = function(type) { throw(error_messages[type]); };
 
 // get basic information about an image file
 exports.info = function(file, callback) {
-	imcmd = 'identify ' + file.replace(/ /g, '\\ ').replace('(', '\\(').replace(')', '\\)');
+	imcmd = 'identify "' + file + '"';
 	child = exec(imcmd, function(err, stdout, stderr) {
 		var info = {};
 		var temp = stdout.split(' ');
-		info.name = temp[0];
-		info.type = temp[1];
-		var dim = temp[2].split('x');
+		temp.reverse();
+		info.type = temp.splice(7, 1).toString();
+		var dim = temp.splice(6, 1).toString();
+		dim = dim.split('x');
 		info.width = dim[0];
 		info.height = dim[1];
-		info.depth = temp[4];
-		info.size = temp[6];
+		info.depth = temp.splice(4, 1).toString();
+		info.size = temp.splice(2, 1).toString();
+		temp.shift();
+		temp.shift();
+		temp.shift();
+		temp.shift();
+		temp.reverse();
+		info.name = temp.join(' ');
 		callback(err, info, stderr);
 	});
 };
@@ -32,8 +39,8 @@ exports.info = function(file, callback) {
 // convert a file type to another
 exports.convert = function(options, callback) {
 	if (options.src === undefined || options.dst === undefined) throw_err('path');
-	options.src = options.src.replace(/ /g, '\\ ').replace('(', '\\(').replace(')', '\\)');
-	options.dst = options.dst.replace(/ /g, '\\ ').replace('(', '\\(').replace(')', '\\)');
+	options.src = '"' + options.src + '"';
+	options.dst = '"' + options.dst + '"';
 	if (options.quality === undefined) imcmd = 'convert ' + options.src + ' ' + options.dst;
 	else imcmd = 'convert ' + options.src + ' -quality ' + options.quality + ' ' + options.dst;
 	child = exec(imcmd, function(err, stdout, stderr) {
@@ -46,8 +53,8 @@ exports.resize = function(options, callback) {
 	if (options.src === undefined || options.dst === undefined) throw_err('path');
 	if (options.width === undefined) throw_err('dim'); 
 	options.height = options.height || options.width;
-	options.src = options.src.replace(/ /g, '\\ ').replace('(', '\\(').replace(')', '\\)');
-	options.dst = options.dst.replace(/ /g, '\\ ').replace('(', '\\(').replace(')', '\\)');
+	options.src = '"' + options.src + '"';
+	options.dst = '"' + options.dst + '"';
 	if (options.quality === undefined) imcmd = 'convert ' + options.src + ' -resize '+options.width + 'x' + options.height + ' ' + options.dst;
 	else imcmd = 'convert ' + options.src + ' -resize '+options.width + 'x' + options.height + ' -quality ' + options.quality + ' ' + options.dst;
 	child = exec(imcmd, function(err, stdout, stderr) {
@@ -63,8 +70,8 @@ exports.crop = function(options, callback) {
 	options.gravity = options.gravity || 'Center';
 	options.x = options.x || 0;
 	options.y = options.y || 0;
-	options.src = options.src.replace(/ /g, '\\ ').replace('(', '\\(').replace(')', '\\)');
-	options.dst = options.dst.replace(/ /g, '\\ ').replace('(', '\\(').replace(')', '\\)');
+	options.src = '"' + options.src + '"';
+	options.dst = '"' + options.dst + '"';
 	if (options.quality === undefined) imcmd = 'convert ' + options.src + ' -gravity ' + options.gravity + ' -crop '+ options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y + ' ' + options.dst;
 	else  imcmd = 'convert ' + options.src + ' -gravity ' + options.gravity + ' -crop '+ options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y + ' -quality ' + options.quality + ' ' + options.dst;
 	child = exec(imcmd, function(err, stdout, stderr) {
@@ -84,8 +91,8 @@ exports.rescrop = function(options, callback) {
 	options.gravity = options.gravity || 'Center';
 	options.x = options.x || 0;
 	options.y = options.y || 0;
-	options.src = options.src.replace(/ /g, '\\ ').replace('(', '\\(').replace(')', '\\)');
-	options.dst = options.dst.replace(/ /g, '\\ ').replace('(', '\\(').replace(')', '\\)');
+	options.src = '"' + options.src + '"';
+	options.dst = '"' + options.dst + '"';
 	if (options.quality === undefined) imcmd = 'convert ' + options.src + ' -resize ' + options.width + 'x' + options.height + ' -gravity ' + options.gravity + ' -crop '+ options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y + ' ' + options.dst;
 	else imcmd = 'convert ' + options.src + ' -resize ' + options.width + 'x' + options.height + ' -gravity ' + options.gravity + ' -crop '+ options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y + ' -quality ' + options.quality + ' ' + options.dst;
 	child = exec(imcmd, function(err, stdout, stderr) {
