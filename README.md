@@ -31,7 +31,8 @@ EasyImage offers these methods:
 	easyimg.convert(<options>, <callback_function>) - to convert an image from one format to another
 	easyimg.resize(<options>, <callback_function>) - to resize an image
 	easyimg.crop(<options>, <callback_function>) - to crop an image
-	easyimg.rescrop(<options>, <callback_function>) - to resize and crop and image in one go, useful for creating thumbnails
+	easyimg.thumbnail(<options>, <callback_function>) - to create square thumbnails
+	easyimg.rescrop(<options>, <callback_function>) - to resize and crop and image in one go, useful for creating customzied thumbnails
 	easyimg.exec(<command>, <callback_function>) - when you want to call a custom command to ImageMagick, you will need to take care of escaping special characters etc
 
  The EasyImage options object can have these properties depending on 
@@ -45,6 +46,7 @@ EasyImage offers these methods:
 	cropheight - height of cropped image, if missing, height will be used instead
 	x - x offset for cropping, defaults to 0
 	y - y offset for cropping, defaults to 0
+	quality - quality of processed image, 1 to 100
 	gravity - crop position [NorthWest | North | NorthEast | West | Center | East | SouthWest | South | SouthEast], defaults to Center
 
 ## Examples
@@ -71,11 +73,11 @@ Example 2
       }
     );
 
-For more examples check out test.js.
+For more examples check out [test.js](https://github.com/hacksparrow/node-easyimage/blob/master/test.js).
 
 ## License (MIT)
 
-Copyright (c) 2012 Hack Sparrow
+Copyright (c) 2012 Hack Sparrow <[http://www.hacksparrow.com](http://www.hacksparrow.com)>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
