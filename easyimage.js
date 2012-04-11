@@ -15,24 +15,20 @@ var throw_err = function(type) { throw(error_messages[type]); };
 // general info function
 function info(file, callback) {
 	file = quoted_name(file);
-	imcmd = 'identify ' + file;
+	// %z = depth, %m = type, %w = width, %h = height, %b = filesize in byte, %f = filename
+	imcmd = 'identify -format "%m %z %w %h %b %f" ' + file;
+	
 	child = exec(imcmd, function(err, stdout, stderr) {
 		var info = {};
 		var temp = stdout.split(' ');
-		temp.reverse();
-		info.type = temp.splice(7, 1).toString();
-		var dim = temp.splice(6, 1).toString();
-		dim = dim.split('x');
-		info.width = dim[0];
-		info.height = dim[1];
-		info.depth = temp.splice(4, 1).toString();
-		info.size = temp.splice(2, 1).toString();
-		temp.shift();
-		temp.shift();
-		temp.shift();
-		temp.shift();
-		temp.reverse();
-		info.name = temp.join(' ');
+		
+		info.type   = temp[0].toString();
+		info.depth  = temp[1].toString();
+		info.width  = temp[2].toString();
+		info.height = temp[3].toString();
+		info.size   = temp[4].toString();
+		info.name   = temp.slice(5).join(' ').replace(/(\r\n|\n|\r)/gm,'');
+		
 		callback(err, info, stderr);
 	});
 }
