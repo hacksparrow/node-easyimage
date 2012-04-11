@@ -6,7 +6,8 @@ var imcmd; // short for ImageMagick Command, how ingenious (y)
 var error_messages = {
 	'path': 'Missing image paths.\nMake sure both source and destination files are specified.',	
 	'dim': 'Missing dimensions.\nSpecify the width atleast.',
-	'restricted': 'The command you are trying to execute is prohibited.'
+	'restricted': 'The command you are trying to execute is prohibited.',
+	'unsupported': 'It seems like this file is not supported.',
 };
 
 // function to throw errors at unsuspecting and potentially innocent developers
@@ -17,10 +18,16 @@ function info(file, callback) {
 	file = quoted_name(file);
 	// %z = depth, %m = type, %w = width, %h = height, %b = filesize in byte, %f = filename
 	imcmd = 'identify -format "%m %z %w %h %b %f" ' + file;
-	
+	console.log(imcmd);
 	child = exec(imcmd, function(err, stdout, stderr) {
 		var info = {};
+		//Basic error handling:
+		if (stderr.match(/^identify:/)) throw_err('unsupported');
 		var temp = stdout.split(' ');
+
+		//Basic error handling:
+		if (temp.length < 6) throw_err('unsupported'); 
+		 
 		
 		info.type   = temp[0].toString();
 		info.depth  = temp[1].toString();
