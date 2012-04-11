@@ -18,7 +18,7 @@ function info(file, callback) {
 	file = quoted_name(file);
 	// %z = depth, %m = type, %w = width, %h = height, %b = filesize in byte, %f = filename
 	imcmd = 'identify -format "%m %z %w %h %b %f" ' + file;
-	console.log(imcmd);
+	
 	child = exec(imcmd, function(err, stdout, stderr) {
 		var info = {};
 		//Basic error handling:
