@@ -23,3 +23,14 @@ Initial release
 ------------------
 
 1. File names can have more than once space
+
+0.0.6 - 09-04-2012
+------------------
+
+1. Better fix for file name issues.
+2. info() bug fixed
+
+0.0.7 - 10-04-2012
+------------------
+
+1. New method - thumbnail()
