@@ -1,10 +1,10 @@
 {
 	"name": "easyimage",
-	"version": "0.0.7",
+	"version": "0.0.8",
 	"description": "A user-friendly module for processing images in Node.js.",
 	"main": "easyimage.js",
 	"author": "Hack Sparrow <captain@hacksparrow.com>",
-	"keywords": ["imagemagick", "image", "graphics", "process", "convert", "resize", "crop"],
+	"keywords": ["imagemagick", "image", "graphics", "process", "convert", "resize", "crop", "thumbnail"],
 	"repository" : {
 		"type": "git",
 		"url": "https://git@github.com:hacksparrow/node-easyimage.git"
