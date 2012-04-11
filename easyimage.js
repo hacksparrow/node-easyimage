@@ -131,6 +131,10 @@ exports.thumbnail = function(options, callback) {
 	info(options.src, function(err, original, stderr) {
 		if (err) throw err;
 		
+		// dimensions come as strings, convert them to number
+		original.width = +original.width;
+		original.height = +original.height;
+		
 		var resizewidth = options.width;
 		var resizeheight = options.height;
 		
