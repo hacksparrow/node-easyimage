@@ -35,8 +35,13 @@ Initial release
 
 1. New method - thumbnail()
 
-
 0.0.8 - 11-04-2012
 ------------------
 
 1. Bug in thumbnail() fixed
+
+0.0.9 - 15-04-2012
+------------------
+
+1. Optimized info()
+
