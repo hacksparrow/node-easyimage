@@ -7,7 +7,7 @@ var error_messages = {
 	'path': 'Missing image paths.\nMake sure both source and destination files are specified.',	
 	'dim': 'Missing dimensions.\nSpecify the width atleast.',
 	'restricted': 'The command you are trying to execute is prohibited.',
-	'unsupported': 'It seems like this file is not supported.',
+	'unsupported': 'File not supported.',
 };
 
 // function to throw errors at unsuspecting and potentially innocent developers
