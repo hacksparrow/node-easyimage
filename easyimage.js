@@ -27,13 +27,12 @@ function info(file, callback) {
 
 		//Basic error handling:
 		if (temp.length < 6) throw_err('unsupported'); 
-		 
 		
-		info.type   = temp[0].toString();
-		info.depth  = temp[1].toString();
-		info.width  = temp[2].toString();
-		info.height = temp[3].toString();
-		info.size   = temp[4].toString();
+		info.type   = temp[0];
+		info.depth  = temp[1];
+		info.width  = temp[2];
+		info.height = temp[3];
+		info.size   = temp[4];
 		info.name   = temp.slice(5).join(' ').replace(/(\r\n|\n|\r)/gm,'');
 		
 		callback(err, info, stderr);
