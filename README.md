@@ -27,7 +27,7 @@ On CentOS
 
 EasyImage offers these methods:
 
-	easyimg.info(<image_path>, <callback_function>) - to retrieve information about an image
+	easyimg.info(<image_path>, <callback_function>) - to retrieve information about an image (name, type, width, height, size, depth)
 	easyimg.convert(<options>, <callback_function>) - to convert an image from one format to another
 	easyimg.resize(<options>, <callback_function>) - to resize an image
 	easyimg.crop(<options>, <callback_function>) - to crop an image
@@ -53,7 +53,7 @@ EasyImage offers these methods:
 
 Example 1
 
-    easyimg.info('sample-images/kitten.jpg', function(err, stdout, stderr) {
+    easyimg.info('kitten.jpg', function(err, stdout, stderr) {
       if (err) throw err;
       console.log(stdout);
     });
@@ -62,14 +62,14 @@ Example 2
 
     easyimg.rescrop(
       {
-         src:'sample-images/kitten.jpg', dst:'kitten-thumbnail.jpg',
+         src:'kitten.jpg', dst:'kitten-thumbnail.jpg',
          width:500, height:500,
          cropwidth:128, cropheight:128,
          x:0, y:0
          },
-      function(err, stdout, stderr) {
+      function(err, image) {
          if (err) throw err;
-         console.log('Resized and cropped');
+         console.log('Resized and cropped: ' + image.width + ' x ' + image.height);
       }
     );
 

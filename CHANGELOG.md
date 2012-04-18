@@ -45,3 +45,8 @@ Initial release
 
 1. Optimized info()
 
+0.1.0 - 18-04-2012
+------------------
+
+1. Operations return an image object
+

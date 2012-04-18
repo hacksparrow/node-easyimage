@@ -60,7 +60,8 @@ exports.convert = function(options, callback) {
 	if (options.quality === undefined) imcmd = 'convert ' + options.src + ' ' + options.dst;
 	else imcmd = 'convert ' + options.src + ' -quality ' + options.quality + ' ' + options.dst;
 	child = exec(imcmd, function(err, stdout, stderr) {
-		callback(err, stdout, stderr);
+		if (err) throw err;
+		info(options.dst, callback);
 	});
 };
 
@@ -74,7 +75,8 @@ exports.resize = function(options, callback) {
 	if (options.quality === undefined) imcmd = 'convert ' + options.src + ' -resize '+options.width + 'x' + options.height + ' ' + options.dst;
 	else imcmd = 'convert ' + options.src + ' -resize '+options.width + 'x' + options.height + ' -quality ' + options.quality + ' ' + options.dst;
 	child = exec(imcmd, function(err, stdout, stderr) {
-		callback(err, stdout, stderr);
+		if (err) throw err;
+		info(options.dst, callback);
 	});
 };
 
@@ -92,7 +94,8 @@ exports.crop = function(options, callback) {
 	if (options.quality === undefined) imcmd = 'convert ' + options.src + ' -gravity ' + options.gravity + ' -crop '+ options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y + ' ' + options.dst;
 	else  imcmd = 'convert ' + options.src + ' -gravity ' + options.gravity + ' -crop '+ options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y + ' -quality ' + options.quality + ' ' + options.dst;
 	child = exec(imcmd, function(err, stdout, stderr) {
-		callback(err, stdout, stderr);
+		if (err) throw err;
+		info(options.dst, callback);
 	});
 
 };
@@ -114,7 +117,8 @@ exports.rescrop = function(options, callback) {
 	if (options.quality === undefined) imcmd = 'convert ' + options.src + ' -resize ' + options.width + 'x' + options.height + ' -gravity ' + options.gravity + ' -crop '+ options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y + ' ' + options.dst;
 	else imcmd = 'convert ' + options.src + ' -resize ' + options.width + 'x' + options.height + ' -gravity ' + options.gravity + ' -crop '+ options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y + ' -quality ' + options.quality + ' ' + options.dst;
 	child = exec(imcmd, function(err, stdout, stderr) {
-		callback(err, stdout, stderr);
+		if (err) throw err;
+		info(options.dst, callback);
 	});
 };
 
@@ -149,7 +153,7 @@ exports.thumbnail = function(options, callback) {
 		
 		child = exec(imcmd, function(err, stdout, stderr) {
 			if (err) throw err;
-				callback(err, stdout, stderr);
+			info(options.dst, callback);
 		});
 
 	});

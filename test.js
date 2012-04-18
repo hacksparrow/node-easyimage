@@ -1,6 +1,6 @@
-var easyimg = require('easyimage');
+var easyimg = require('./easyimage.js');
 
-var srcimg = 'sample-images/thed.jpg';
+var srcimg = 'kitteh.jpg';
 
 easyimg.info(srcimg, function(err, stdout, stderr) {
 	if (err) throw err;
@@ -8,15 +8,17 @@ easyimg.info(srcimg, function(err, stdout, stderr) {
 });
 
 
-easyimg.convert({src:srcimg, dst:'convert.png', quality:10}, function(err, stdout, stderr) {
+easyimg.convert({src:srcimg, dst:'convert.png', quality:10}, function(err, image) {
 	if (err) throw err;
 	console.log('Converted');
+	console.log(image);
 });
 
 
-easyimg.resize({src:srcimg, dst:'resize.jpg', width:640, height:480}, function(err, stdout, stderr) {
+easyimg.resize({src:srcimg, dst:'resize.jpg', width:640, height:480}, function(err, image) {
 	if (err) throw err;
 	console.log('Resized');
+	console.log(image);
 });
 
 
@@ -27,9 +29,10 @@ easyimg.crop(
 		gravity:'North',
 		x:0, y:0
 	},
-	function(err, stdout, stderr) {
+	function(err, image) {
 		if (err) throw err;
 		console.log('Cropped');
+		console.log(image);
 	}
 );
 
@@ -39,9 +42,10 @@ easyimg.thumbnail(
 		width:128, height:128,
 		x:0, y:0
 	},
-	function(err, stdout, stderr) {
+	function(err, image) {
 		if (err) throw err;
 		console.log('Thumbnail created');
+		console.log(image);
 	}
 );
 
@@ -52,9 +56,10 @@ easyimg.rescrop(
 		cropwidth:128, cropheight:128,
 		x:0, y:0
 	},
-	function(err, stdout, stderr) {
+	function(err, image) {
 		if (err) throw err;
 		console.log('Resized and cropped');
+		console.log(image);
 	}
 );
 
