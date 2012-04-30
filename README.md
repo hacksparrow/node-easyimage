@@ -48,6 +48,9 @@ EasyImage offers these methods:
 	y - y offset for cropping, defaults to 0
 	quality - quality of processed image, 1 to 100
 	gravity - crop position [NorthWest | North | NorthEast | West | Center | East | SouthWest | South | SouthEast], defaults to Center
+	colorspace - resize with colorspace correction [e.g. RGB]
+	density - set density for the resized image [e.g. 72x72 to have a 72dpi output image]
+	strip - strip any profiles or comments from the resized image
 
 ## Examples
 
