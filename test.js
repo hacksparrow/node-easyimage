@@ -48,6 +48,18 @@ easyimg.resize({src:srcimg,
 		   console.log(image);
 	       });
 
+easyimg.resize_if_bigger({src:srcimg, dst:'resize_if_bigger.jpg', width:640, height:480}, function(err, image) {
+	if (err) throw err;
+	console.log('Resized');
+	console.log(image);
+});
+
+easyimg.resize_if_bigger({src:srcimg, dst:'resize_copied.jpg', width:5000, height:5000}, function(err, image) {
+	if (err) throw err;
+	console.log('Copied');
+	console.log(image);
+});
+
 easyimg.crop(
 	{
 		src:srcimg, dst:'crop.jpg',

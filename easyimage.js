@@ -66,7 +66,7 @@ exports.convert = function(options, callback) {
 };
 
 // resize an image
-exports.resize = function(options, callback) {
+var resize = function(options, callback) {
 	if (options.src === undefined || options.dst === undefined) throw_err('path');
 	if (options.width === undefined && options.height === undefined) throw_err('dim'); 
 	options.height = options.height || "";
@@ -93,6 +93,32 @@ exports.resize = function(options, callback) {
 		if (err) throw err;
 		info(options.dst, callback);
 	});
+};
+
+exports.resize = function(options, callback) {
+    resize(options, callback);
+};
+
+// resize an image if src is bigger than dst otherwise copy it
+exports.resize_if_bigger = function(options, callback) {
+    if (options.src === undefined || options.dst === undefined) throw_err('path');
+    if (options.width === undefined && options.height === undefined) throw_err('dim'); 
+    options.height = options.height || "";
+    options.width = options.width || "";
+    options.src = quoted_name(options.src);
+    options.dst = quoted_name(options.dst);
+    var resize_cb = function(err, info, stderr) {
+	if (err) throw err;
+	if ((options.width && info.width < options.width) ||
+	    (options.height && info.height < options.height)) {
+	    // src is smaller than dst => copy it
+            var cmd = 'cp '+options.src+' '+options.dst;
+	    child = exec(cmd, callback);
+	} else {
+	    resize(options, callback);
+	}
+    };
+    info(options.src, resize_cb);
 };
 
 // crop an image

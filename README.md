@@ -30,6 +30,7 @@ EasyImage offers these methods:
 	easyimg.info(<image_path>, <callback_function>) - to retrieve information about an image (name, type, width, height, size, depth)
 	easyimg.convert(<options>, <callback_function>) - to convert an image from one format to another
 	easyimg.resize(<options>, <callback_function>) - to resize an image
+	easyimg.resize_if_bigger(<options>, <callback_function>) - to resize an image only if bigger than destination. If smaller simply copy it.
 	easyimg.crop(<options>, <callback_function>) - to crop an image
 	easyimg.thumbnail(<options>, <callback_function>) - to create square thumbnails
 	easyimg.rescrop(<options>, <callback_function>) - to resize and crop and image in one go, useful for creating customzied thumbnails
