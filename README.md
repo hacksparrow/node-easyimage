@@ -35,9 +35,9 @@ EasyImage offers these methods:
 	easyimg.rescrop(<options>, <callback_function>) - to resize and crop and image in one go, useful for creating customzied thumbnails
 	easyimg.exec(<command>, <callback_function>) - when you want to call a custom command to ImageMagick, you will need to take care of escaping special characters etc
 
- The EasyImage options object can have these properties depending on 
+ The EasyImage options object can have these properties depending on
  the method. Unrelated options are ignored.
- 
+
 	src - path to source image
 	dst - path to destination image
 	width - width of resized image
@@ -48,6 +48,7 @@ EasyImage offers these methods:
 	y - y offset for cropping, defaults to 0
 	quality - quality of processed image, 1 to 100
 	gravity - crop position [NorthWest | North | NorthEast | West | Center | East | SouthWest | South | SouthEast], defaults to Center
+	fill - fill area flag, image is resized to completely fill the target crop dimensions, defaults to false
 
 ## Examples
 
