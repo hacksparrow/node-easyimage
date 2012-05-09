@@ -50,3 +50,8 @@ Initial release
 
 1. Operations return an image object
 
+0.1.1 - 09-05-2012
+------------------
+
+1. crop bug fixed
+2. fill option
