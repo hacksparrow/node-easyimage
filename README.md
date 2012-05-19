@@ -3,8 +3,6 @@ EasyImage
 
 EasyImage is built on top of ImageMagick, so make sure ImageMagick is installed on your system.
 
-**Note**: the current version does not work under Windows.
-
 On Ubuntu
 
     $ apt-get install imagemagick
