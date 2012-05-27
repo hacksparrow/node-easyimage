@@ -9,8 +9,8 @@ easyimg.info(srcimg, function(err, stdout, stderr) {
 
 // test for info on a non image
 easyimg.info('./test.js', function(err,stdout,stderr) {
-  console.log('Next line should be unsupported error');
-  console.log(err);
+	  console.log('Next line should be unsupported error');
+	  console.log(err);
 });
 
 
