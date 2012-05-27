@@ -53,5 +53,10 @@ Initial release
 0.1.1 - 09-05-2012
 ------------------
 
-1. crop bug fixed
-2. fill option
+1. Crop bug fixed
+2. Fill option
+
+0.1.2 - 27-05-2012
+------------------
+
+1. Unsupported files should not crash
