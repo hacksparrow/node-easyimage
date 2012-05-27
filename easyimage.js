@@ -18,24 +18,28 @@ function info(file, callback) {
 	file = quoted_name(file);
 	// %z = depth, %m = type, %w = width, %h = height, %b = filesize in byte, %f = filename
 	imcmd = 'identify -format "%m %z %w %h %b %f" ' + file;
-
+	
 	child = exec(imcmd, function(err, stdout, stderr) {
 		var info = {};
-		//Basic error handling:
-		if (stderr.match(/^identify:/)) throw_err('unsupported');
-		var temp = stdout.split(' ');
-
-		//Basic error handling:
-		if (temp.length < 6) throw_err('unsupported');
-
-		info.type   = temp[0];
-		info.depth  = temp[1];
-		info.width  = temp[2];
-		info.height = temp[3];
-		info.size   = temp[4];
-		info.name   = temp.slice(5).join(' ').replace(/(\r\n|\n|\r)/gm,'');
-
-		callback(err, info, stderr);
+		//Basic error handling
+		if (stderr.match(/^identify:/)) {
+      callback(error_messages['unsupported'], stdout, stderr); 
+    } else {
+      var temp = stdout.split(' ');
+      //Basic error handling:
+      if (temp.length < 6) {
+        callback(error_messages['unsupported'], stdout, stderr);
+      } else {
+        info.type   = temp[0];
+        info.depth  = temp[1];
+        info.width  = temp[2];
+        info.height = temp[3];
+        info.size   = temp[4];
+        info.name   = temp.slice(5).join(' ').replace(/(\r\n|\n|\r)/gm,'');
+        
+        callback(err, info, stderr);
+      }
+    }
 	});
 }
 

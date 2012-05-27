@@ -7,6 +7,12 @@ easyimg.info(srcimg, function(err, stdout, stderr) {
 	console.log(stdout);
 });
 
+// test for info on a non image
+easyimg.info('./test.js', function(err,stdout,stderr) {
+  console.log('Next line should be unsupported error');
+  console.log(err);
+});
+
 
 easyimg.convert({src:srcimg, dst:'convert.png', quality:10}, function(err, image) {
 	if (err) throw err;
