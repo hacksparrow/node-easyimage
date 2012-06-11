@@ -60,3 +60,8 @@ Initial release
 ------------------
 
 1. Unsupported files should not crash
+
+0.1.2 - 27-05-2012
+------------------
+
+1. refactored to pass all errors to callback instead of throwing since nodejs does not pass thrown exceptions up the call stack as expected
