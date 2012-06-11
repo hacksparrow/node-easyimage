@@ -65,3 +65,8 @@ Initial release
 ------------------
 
 1. refactored to pass all errors to callback instead of throwing since nodejs does not pass thrown exceptions up the call stack as expected
+
+0.1.3 - 11-06-2012
+------------------
+
+1. Refactored to return an error object instead of crashing the app, in case of errors
