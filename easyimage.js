@@ -62,7 +62,7 @@ exports.convert = function(options, callback) {
 	if (options.quality === undefined) imcmd = 'convert ' + options.src + ' ' + options.dst;
 	else imcmd = 'convert ' + options.src + ' -quality ' + options.quality + ' ' + options.dst;
 	child = exec(imcmd, function(err, stdout, stderr) {
-		if (err)return callback(err);
+		if (err) return callback(err);
 		info(options.dst, callback);
 	});
 };
@@ -77,7 +77,7 @@ exports.resize = function(options, callback) {
 	if (options.quality === undefined) imcmd = 'convert ' + options.src + ' -resize '+options.width + 'x' + options.height + ' ' + options.dst;
 	else imcmd = 'convert ' + options.src + ' -resize '+options.width + 'x' + options.height + ' -quality ' + options.quality + ' ' + options.dst;
 	child = exec(imcmd, function(err, stdout, stderr) {
-		if (err)return callback(err);
+		if (err) return callback(err);
 		info(options.dst, callback);
 	});
 };
@@ -96,7 +96,7 @@ exports.crop = function(options, callback) {
 	if (options.quality === undefined) imcmd = 'convert ' + options.src + ' -gravity ' + options.gravity + ' -crop '+ options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y + ' ' + options.dst;
 	else  imcmd = 'convert ' + options.src + ' -gravity ' + options.gravity + ' -crop '+ options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y + ' -quality ' + options.quality + ' ' + options.dst;
 	child = exec(imcmd, function(err, stdout, stderr) {
-		if (err)return callback(err);
+		if (err) return callback(err);
 		info(options.dst, callback);
 	});
 
@@ -120,7 +120,7 @@ exports.rescrop = function(options, callback) {
 	if (options.quality === undefined) imcmd = 'convert ' + options.src + ' -resize ' + options.width + 'x' + options.height + options.fill + ' -gravity ' + options.gravity + ' -crop '+ options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y + ' ' + options.dst;
 	else imcmd = 'convert ' + options.src + ' -resize ' + options.width + 'x' + options.height + options.fill + ' -gravity ' + options.gravity + ' -crop '+ options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y + ' -quality ' + options.quality + ' ' + options.dst;
 	child = exec(imcmd, function(err, stdout, stderr) {
-		if (err)return callback(err);
+		if (err) return callback(err);
 		info(options.dst, callback);
 	});
 };
@@ -138,7 +138,7 @@ exports.thumbnail = function(options, callback) {
 	options.dst = quoted_name(options.dst);
 
 	info(options.src, function(err, original, stderr) {
-		if (err)return callback(err);
+		if (err) return callback(err);
 
 		// dimensions come as strings, convert them to number
 		original.width = +original.width;
@@ -155,7 +155,7 @@ exports.thumbnail = function(options, callback) {
 		else imcmd = 'convert ' + options.src + ' -resize '+ resizewidth + 'x' + resizeheight + ' -quality ' + options.quality + ' -gravity ' + options.gravity + ' -crop '+ options.width + 'x'+ options.height + '+' + options.x + '+' + options.y + ' -quality ' + options.quality + ' ' + options.dst;
 
 		child = exec(imcmd, function(err, stdout, stderr) {
-			if (err)return callback(err);
+			if (err) return callback(err);
 			info(options.dst, callback);
 		});
 
