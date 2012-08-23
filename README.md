@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/hacksparrow/node-easyimage.png)](http://travis-ci.org/hacksparrow/node-easyimage)
 EasyImage
 =========
 
