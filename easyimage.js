@@ -40,7 +40,6 @@ function info(file, callback) {
 				info.name   = temp.slice(5).join(' ').replace(/(\r\n|\n|\r)/gm,'');
 				
 				callback(err, info, stderr);
-				process.exit();
 				return;
 			}
 		}
