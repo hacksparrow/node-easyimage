@@ -21,12 +21,16 @@ function info(file, callback) {
 		var info = {};
 		//Basic error handling
 		if (stderr.match(/^identify:/)) {
-			return callback(error_messages['unsupported'], stdout, stderr); 
+			callback(error_messages['unsupported'], stdout, stderr); 
+			process.exit();
+			return;
 		} else {
 			var temp = stdout.split(' ');
 			//Basic error handling:
 			if (temp.length < 6) {
-				return callback(error_messages['unsupported'], stdout, stderr);
+ 				callback(error_messages['unsupported'], stdout, stderr);
+				process.exit();
+				return;
 			} else {
 				info.type   = temp[0];
 				info.depth  = temp[1];
@@ -35,7 +39,8 @@ function info(file, callback) {
 				info.size   = temp[4];
 				info.name   = temp.slice(5).join(' ').replace(/(\r\n|\n|\r)/gm,'');
 				
-				return callback(err, info, stderr);
+				callback(err, info, stderr);
+				return;
 			}
 		}
 	});
@@ -62,7 +67,11 @@ exports.convert = function(options, callback) {
 	if (options.quality === undefined) imcmd = 'convert ' + options.src + ' ' + options.dst;
 	else imcmd = 'convert ' + options.src + ' -quality ' + options.quality + ' ' + options.dst;
 	child = exec(imcmd, function(err, stdout, stderr) {
-		if (err) return callback(err);
+		if (err) {
+			callback(err);
+			process.exit();
+			return;
+		}
 		info(options.dst, callback);
 	});
 };
@@ -77,7 +86,11 @@ exports.resize = function(options, callback) {
 	if (options.quality === undefined) imcmd = 'convert ' + options.src + ' -resize '+options.width + 'x' + options.height + ' ' + options.dst;
 	else imcmd = 'convert ' + options.src + ' -resize '+options.width + 'x' + options.height + ' -quality ' + options.quality + ' ' + options.dst;
 	child = exec(imcmd, function(err, stdout, stderr) {
-		if (err) return callback(err);
+		if (err) {
+			callback(err);
+			process.exit();
+			return;
+		}
 		info(options.dst, callback);
 	});
 };
@@ -96,7 +109,11 @@ exports.crop = function(options, callback) {
 	if (options.quality === undefined) imcmd = 'convert ' + options.src + ' -gravity ' + options.gravity + ' -crop '+ options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y + ' ' + options.dst;
 	else  imcmd = 'convert ' + options.src + ' -gravity ' + options.gravity + ' -crop '+ options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y + ' -quality ' + options.quality + ' ' + options.dst;
 	child = exec(imcmd, function(err, stdout, stderr) {
-		if (err) return callback(err);
+		if (err) {
+			callback(err);
+			process.exit();
+			return;
+		}
 		info(options.dst, callback);
 	});
 
@@ -120,7 +137,11 @@ exports.rescrop = function(options, callback) {
 	if (options.quality === undefined) imcmd = 'convert ' + options.src + ' -resize ' + options.width + 'x' + options.height + options.fill + ' -gravity ' + options.gravity + ' -crop '+ options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y + ' ' + options.dst;
 	else imcmd = 'convert ' + options.src + ' -resize ' + options.width + 'x' + options.height + options.fill + ' -gravity ' + options.gravity + ' -crop '+ options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y + ' -quality ' + options.quality + ' ' + options.dst;
 	child = exec(imcmd, function(err, stdout, stderr) {
-		if (err) return callback(err);
+		if (err) {
+			callback(err);
+			process.exit();
+			return;
+		}
 		info(options.dst, callback);
 	});
 };
@@ -155,7 +176,11 @@ exports.thumbnail = function(options, callback) {
 		else imcmd = 'convert ' + options.src + ' -resize '+ resizewidth + 'x' + resizeheight + ' -quality ' + options.quality + ' -gravity ' + options.gravity + ' -crop '+ options.width + 'x'+ options.height + '+' + options.x + '+' + options.y + ' -quality ' + options.quality + ' ' + options.dst;
 
 		child = exec(imcmd, function(err, stdout, stderr) {
-			if (err) return callback(err);
+			if (err) {
+				callback(err);
+				process.exit();
+				return;
+			}
 			info(options.dst, callback);
 		});
 
@@ -168,6 +193,12 @@ exports.exec = function(command, callback) {
 	// as a security measure, we will allow only 'convert' commands
 	if (_command != 'convert')return callback(error_messages['restricted']);
 
-	child = exec(command, function(err, stdout, stderr) { callback(err, stdout, stderr); });
+	child = exec(command, function(err, stdout, stderr) { 
+		if (err) {
+			callback(err, stdout, stderr); 
+			process.exit();
+			return;
+		}
+	});	
 };
 
