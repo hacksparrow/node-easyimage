@@ -14,7 +14,7 @@ var error_messages = {
 function info(file, callback) {
 	if (callback === undefined)return;
 	file = quoted_name(file);
-	// %z = depth, %m = type, %w = width, %h = height, %b = filesize in byte, %f = filename
+	// %z = depth, %m = type, %w = width, %h = height, %b = filesize in byte, %f = filename, %x = density
 	imcmd = 'identify -format "%m %z %w %h %b %x %f" ' + file;
 
 	child = exec(imcmd, function(err, stdout, stderr) {
