@@ -15,26 +15,27 @@ function info(file, callback) {
 	if (callback === undefined)return;
 	file = quoted_name(file);
 	// %z = depth, %m = type, %w = width, %h = height, %b = filesize in byte, %f = filename
-	imcmd = 'identify -format "%m %z %w %h %b %f" ' + file;
-	
+	imcmd = 'identify -format "%m %z %w %h %b %x %f" ' + file;
+
 	child = exec(imcmd, function(err, stdout, stderr) {
 		var info = {};
 		//Basic error handling
 		if (stderr.match(/^identify:/)) {
-			return callback(error_messages['unsupported'], stdout, stderr); 
+			return callback(error_messages['unsupported'], stdout, stderr);
 		} else {
 			var temp = stdout.split(' ');
 			//Basic error handling:
-			if (temp.length < 6) {
+			if (temp.length < 7) {
 				return callback(error_messages['unsupported'], stdout, stderr);
 			} else {
-				info.type   = temp[0];
-				info.depth  = temp[1];
-				info.width  = temp[2];
-				info.height = temp[3];
-				info.size   = temp[4];
-				info.name   = temp.slice(5).join(' ').replace(/(\r\n|\n|\r)/gm,'');
-				
+				info.type    = temp[0];
+				info.depth   = temp[1];
+				info.width   = temp[2];
+				info.height  = temp[3];
+				info.size    = temp[4];
+				info.density = temp[5];
+				info.name    = temp.slice(6).join(' ').replace(/(\r\n|\n|\r)/gm,'');
+
 				return callback(err, info, stderr);
 			}
 		}
