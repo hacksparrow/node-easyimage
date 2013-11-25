@@ -74,9 +74,13 @@ Example 2
 
 For more examples check out [test.js](https://github.com/hacksparrow/node-easyimage/blob/master/test.js).
 
+If you have cloned this repository, run to the following command to execute the tests.
+
+    $ node test.js
+
 ## License (MIT)
 
-Copyright (c) 2012 Hack Sparrow <[http://www.hacksparrow.com](http://www.hacksparrow.com)>
+Copyright (c) 2012 Hage Yaapa <[http://www.hacksparrow.com](http://www.hacksparrow.com)>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

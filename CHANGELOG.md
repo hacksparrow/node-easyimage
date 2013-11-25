@@ -65,3 +65,9 @@ Initial release
 ------------------
 
 1. Refactored to return an error object instead of crashing the app, in case of errors
+
+0.1.4 - 25-11-2013
+------------------
+
+1. Add density info (Kevin Smith ksmth@github)
+2. Made testing easier with a sample image and output directory

@@ -1,6 +1,6 @@
 var easyimg = require('./easyimage.js');
 
-var srcimg = 'kitteh.jpg';
+var srcimg = 'kitten.jpg';
 
 easyimg.info(srcimg, function(err, stdout, stderr) {
 	if (err) throw err;
@@ -14,14 +14,14 @@ easyimg.info('./test.js', function(err,stdout,stderr) {
 });
 
 
-easyimg.convert({src:srcimg, dst:'convert.png', quality:10}, function(err, image) {
+easyimg.convert({src:srcimg, dst:'./output/convert.png', quality:10}, function(err, image) {
 	if (err) throw err;
 	console.log('Converted');
 	console.log(image);
 });
 
 
-easyimg.resize({src:srcimg, dst:'resize.jpg', width:640, height:480}, function(err, image) {
+easyimg.resize({src:srcimg, dst:'./output/resize.jpg', width:640, height:480}, function(err, image) {
 	if (err) throw err;
 	console.log('Resized');
 	console.log(image);
@@ -30,7 +30,7 @@ easyimg.resize({src:srcimg, dst:'resize.jpg', width:640, height:480}, function(e
 
 easyimg.crop(
 	{
-		src:srcimg, dst:'crop.jpg',
+		src:srcimg, dst:'./output/crop.jpg',
 		cropwidth:128, cropheight:128,
 		gravity:'North',
 		x:0, y:0
@@ -44,7 +44,7 @@ easyimg.crop(
 
 easyimg.thumbnail(
 	{
-		src:srcimg, dst:'thumbnail.jpg',
+		src:srcimg, dst:'./output/thumbnail.jpg',
 		width:128, height:128,
 		x:0, y:0
 	},
@@ -57,9 +57,9 @@ easyimg.thumbnail(
 
 easyimg.rescrop(
 	{
-		src:srcimg, dst:'rescrop.jpg',
-		width:500, height:500,
-		cropwidth:128, cropheight:128,
+		src:srcimg, dst:'./output/rescrop.jpg',
+		width:400, height:5400,
+		cropwidth:100, cropheight:100,
 		x:0, y:0
 	},
 	function(err, image) {
@@ -69,7 +69,7 @@ easyimg.rescrop(
 	}
 );
 
-easyimg.exec('convert '+ srcimg +' command.gif', function(err, stdout, stderr) {
+easyimg.exec('convert '+ srcimg +' ./output/command.gif', function(err, stdout, stderr) {
 	if (err) throw err;
 	console.log('Command executed');
 });

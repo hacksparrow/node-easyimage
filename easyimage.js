@@ -34,7 +34,7 @@ function info(file, callback) {
 				info.height  = parseInt(temp[3]);
 				info.size    = parseInt(temp[4]);
 				info.density = parseFloat(temp[5]);
-				info.name    = temp.slice(6).join(' ').replace(/(\r\n|\n|\r)/gm,'');
+				info.name    = temp.slice(7).join(' ').replace(/(\r\n|\n|\r)/gm,'');
 
 				return callback(err, info, stderr);
 			}
