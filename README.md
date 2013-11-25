@@ -74,7 +74,7 @@ Example 2
 
 For more examples check out [test.js](https://github.com/hacksparrow/node-easyimage/blob/master/test.js).
 
-If you have cloned this repository, run to the following command to execute the tests.
+If you have cloned this repository, run the following command to execute the tests.
 
     $ node test.js
 
