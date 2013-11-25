@@ -29,11 +29,11 @@ function info(file, callback) {
 				return callback(error_messages['unsupported'], stdout, stderr);
 			} else {
 				info.type    = temp[0];
-				info.depth   = temp[1];
-				info.width   = temp[2];
-				info.height  = temp[3];
-				info.size    = temp[4];
-				info.density = temp[5];
+				info.depth   = parseInt(temp[1]);
+				info.width   = parseInt(temp[2]);
+				info.height  = parseInt(temp[3]);
+				info.size    = parseInt(temp[4]);
+				info.density = parseFloat(temp[5]);
 				info.name    = temp.slice(6).join(' ').replace(/(\r\n|\n|\r)/gm,'');
 
 				return callback(err, info, stderr);
