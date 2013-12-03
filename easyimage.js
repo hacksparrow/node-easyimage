@@ -23,7 +23,7 @@ function info(file, callback) {
 		if (stderr.match(/^identify:/)) {
 			return callback(error_messages['unsupported'], stdout, stderr);
 		} else {
-			var temp = stdout.split(' ');
+			var temp = stdout.replace('PixelsPerInch', '').split(' ');
 			//Basic error handling:
 			if (temp.length < 7) {
 				return callback(error_messages['unsupported'], stdout, stderr);
