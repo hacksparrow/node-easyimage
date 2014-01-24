@@ -80,7 +80,7 @@ If you have cloned this repository, run the following command to execute the tes
 
 ## License (MIT)
 
-Copyright (c) 2012 Hage Yaapa <[http://www.hacksparrow.com](http://www.hacksparrow.com)>
+Copyright (c) 2014 Hage Yaapa <[http://www.hacksparrow.com](http://www.hacksparrow.com)>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
