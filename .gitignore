@@ -3,6 +3,4 @@
 *.DS_Store
 *.swp
 *.out
-
-sample-images/
-NOTES
+output/
