@@ -71,3 +71,14 @@ Initial release
 
 1. Add density info (Kevin Smith ksmth@github)
 2. Made testing easier with a sample image and output directory
+
+0.1.7 - 11-07-2014
+------------------
+
+1. Thumbnail generation optimized
+
+1.0.0 - 14-07-2014
+------------------
+
+1. Changed to promise-based interface
+2. Mocha tests
