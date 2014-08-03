@@ -62,19 +62,24 @@ exports.info = function(file) {
 };
 
 // convert a file type to another
-exports.convert = function(options, callback) {
+exports.convert = function(options) {
 
 	var deferred = Q.defer();
 
-	if (options.src === undefined || options.dst === undefined)return callback(error_messages['path']);
-	options.src = quoted_name(options.src);
-	options.dst = quoted_name(options.dst);
-	if (options.quality === undefined) imcmd = 'convert ' + options.src + ' ' + options.dst;
-	else imcmd = 'convert ' + options.src + ' -quality ' + options.quality + ' ' + options.dst;
-	child = exec(imcmd, function(err, stdout, stderr) {
-		if (err) deferred.reject(err);
-		else deferred.resolve(info(options.dst));
-	});
+	process.nextTick(function () {
+
+		if (options.src === undefined || options.dst === undefined) return deferred.reject(error_messages['path']);
+
+		options.src = quoted_name(options.src);
+		options.dst = quoted_name(options.dst);
+		if (options.quality === undefined) imcmd = 'convert ' + options.src + ' ' + options.dst;
+		else imcmd = 'convert ' + options.src + ' -quality ' + options.quality + ' ' + options.dst;
+		child = exec(imcmd, function(err, stdout, stderr) {
+			if (err) deferred.reject(err);
+			else deferred.resolve(info(options.dst));
+		});
+
+	})
 
 	return deferred.promise;
 };
@@ -84,28 +89,34 @@ exports.resize = function(options) {
 
 	var deferred = Q.defer();
 
-	if (options.src === undefined || options.dst === undefined)return callback(error_messages['path']);
-	if (options.width === undefined)return callback(error_messages['dim']);
-	options.height = options.height || options.width;
-	options.src = quoted_name(options.src);
-	options.dst = quoted_name(options.dst);
-	if (options.quality === undefined) imcmd = 'convert ' + options.src + ' -resize '+options.width + 'x' + options.height + ' ' + options.dst;
-	else imcmd = 'convert ' + options.src + ' -resize '+options.width + 'x' + options.height + ' -quality ' + options.quality + ' ' + options.dst;
-	child = exec(imcmd, function(err, stdout, stderr) {
-		if (err) deferred.reject(err);
-		deferred.resolve(info(options.dst));
-	});
+	process.nextTick(function () {
+
+		if (options.src === undefined || options.dst === undefined) return deferred.reject(error_messages['path']);
+		if (options.width === undefined) return deferred.reject(error_messages['dim']);
+
+		options.height = options.height || options.width;
+		options.src = quoted_name(options.src);
+		options.dst = quoted_name(options.dst);
+		if (options.quality === undefined) imcmd = 'convert ' + options.src + ' -resize '+options.width + 'x' + options.height + ' ' + options.dst;
+		else imcmd = 'convert ' + options.src + ' -resize '+options.width + 'x' + options.height + ' -quality ' + options.quality + ' ' + options.dst;
+		child = exec(imcmd, function(err, stdout, stderr) {
+			if (err) deferred.reject(err);
+			deferred.resolve(info(options.dst));
+		});		
+
+	})
 
 	return deferred.promise;
 };
 
 // crop an image
-exports.crop = function(options, callback) {
+exports.crop = function(options) {
 
 	var deferred = Q.defer();
 
-	if (options.src === undefined || options.dst === undefined)return callback(error_messages['path']);
-	if (options.cropwidth === undefined)return callback(error_messages['dim']);
+	if (options.src === undefined || options.dst === undefined) return deferred.reject(error_messages['path']);
+	if (options.cropwidth === undefined) return deferred.reject(error_messages['dim']);
+
 	options.cropheight = options.cropheight || options.cropwidth;
 	options.gravity = options.gravity || 'Center';
 	options.x = options.x || 0;
@@ -124,86 +135,100 @@ exports.crop = function(options, callback) {
 };
 
 // resize and crop in one shot!
-exports.rescrop = function(options, callback) {
+exports.rescrop = function(options) {
 
 	var deferred = Q.defer();
 
-	if (options.src === undefined || options.dst === undefined)return callback(error_messages['path']);
-	if (options.width === undefined)return callback(error_messages['dim']);
-	options.height = options.height || options.width;
+	process.nextTick(function () {
 
-	options.cropwidth = options.cropwidth || options.width;
-	options.cropheight = options.cropheight || options.height;
+		if (options.src === undefined || options.dst === undefined) return deferred.reject(error_messages['path']);
+		if (options.width === undefined) return deferred.reject(error_messages['dim']);
 
-	options.gravity = options.gravity || 'Center';
-	options.x = options.x || 0;
-	options.y = options.y || 0;
-	options.src = quoted_name(options.src);
-	options.dst = quoted_name(options.dst);
-	options.fill = options.fill ? '^' : '';
-	if (options.quality === undefined) imcmd = 'convert ' + options.src + ' -resize ' + options.width + 'x' + options.height + options.fill + ' -gravity ' + options.gravity + ' -crop '+ options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y + ' ' + options.dst;
-	else imcmd = 'convert ' + options.src + ' -resize ' + options.width + 'x' + options.height + options.fill + ' -gravity ' + options.gravity + ' -crop '+ options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y + ' -quality ' + options.quality + ' ' + options.dst;
-	child = exec(imcmd, function(err, stdout, stderr) {
-		if (err) deferred.reject(err);
-		deferred.resolve(info(options.dst));
-	});
+		options.height = options.height || options.width;
+
+		options.cropwidth = options.cropwidth || options.width;
+		options.cropheight = options.cropheight || options.height;
+
+		options.gravity = options.gravity || 'Center';
+		options.x = options.x || 0;
+		options.y = options.y || 0;
+		options.src = quoted_name(options.src);
+		options.dst = quoted_name(options.dst);
+		options.fill = options.fill ? '^' : '';
+		if (options.quality === undefined) imcmd = 'convert ' + options.src + ' -resize ' + options.width + 'x' + options.height + options.fill + ' -gravity ' + options.gravity + ' -crop '+ options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y + ' ' + options.dst;
+		else imcmd = 'convert ' + options.src + ' -resize ' + options.width + 'x' + options.height + options.fill + ' -gravity ' + options.gravity + ' -crop '+ options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y + ' -quality ' + options.quality + ' ' + options.dst;
+		child = exec(imcmd, function(err, stdout, stderr) {
+			if (err) deferred.reject(err);
+			deferred.resolve(info(options.dst));
+		});		
+
+	})
 
 	return deferred.promise;
 };
 
 // create thumbnails
-exports.thumbnail = function(options, callback) {
+exports.thumbnail = function(options) {
 
 	var deferred = Q.defer();
 
-	if (options.src === undefined || options.dst === undefined) deferred.reject(error_messages['path']);
-	if (options.width === undefined) deferred.reject(error_messages['dim']);
-	options.height = options.height || options.width;
-	options.gravity = options.gravity || 'Center';
-	options.x = options.x || 0;
-	options.y = options.y || 0;
-	options.src = quoted_name(options.src);
-	options.dst = quoted_name(options.dst);
+	process.nextTick(function () {
 
-	info(options.src).then(function(original) {
+		if (options.src === undefined || options.dst === undefined) return deferred.reject(error_messages['path']);
+		if (options.width === undefined) return deferred.reject(error_messages['dim']);
+		
+		options.height = options.height || options.width;
+		options.gravity = options.gravity || 'Center';
+		options.x = options.x || 0;
+		options.y = options.y || 0;
+		options.src = quoted_name(options.src);
+		options.dst = quoted_name(options.dst);
 
-		// dimensions come as strings, convert them to number
-		original.width = +original.width;
-		original.height = +original.height;
+		info(options.src).then(function(original) {
 
-		var resizewidth = options.width;
-		var resizeheight = options.height;
+			// dimensions come as strings, convert them to number
+			original.width = +original.width;
+			original.height = +original.height;
 
-		if (original.width > original.height) { resizewidth = ''; }
-		else if (original.height > original.width) { resizeheight = ''; }
+			var resizewidth = options.width;
+			var resizeheight = options.height;
 
-		// resize and crop
-		if (options.quality === undefined) imcmd = 'convert ' + options.src + ' -interpolate bicubic -strip -thumbnail ' + resizewidth + 'x' + resizeheight + ' -gravity ' + options.gravity + ' -crop '+ options.width + 'x'+ options.height + '+' + options.x + '+' + options.y + ' ' + options.dst;
-		else imcmd = 'convert ' + options.src + ' -interpolate bicubic -strip -thumbnail '+ resizewidth + 'x' + resizeheight + ' -quality ' + options.quality + ' -gravity ' + options.gravity + ' -crop '+ options.width + 'x'+ options.height + '+' + options.x + '+' + options.y + ' ' + options.dst;
+			if (original.width > original.height) { resizewidth = ''; }
+			else if (original.height > original.width) { resizeheight = ''; }
 
-		child = exec(imcmd, function(err, stdout, stderr) {
-			if (err) deferred.reject(err);
-			deferred.resolve(info(options.dst));
-		});
+			// resize and crop
+			if (options.quality === undefined) imcmd = 'convert ' + options.src + ' -interpolate bicubic -strip -thumbnail ' + resizewidth + 'x' + resizeheight + ' -gravity ' + options.gravity + ' -crop '+ options.width + 'x'+ options.height + '+' + options.x + '+' + options.y + ' ' + options.dst;
+			else imcmd = 'convert ' + options.src + ' -interpolate bicubic -strip -thumbnail '+ resizewidth + 'x' + resizeheight + ' -quality ' + options.quality + ' -gravity ' + options.gravity + ' -crop '+ options.width + 'x'+ options.height + '+' + options.x + '+' + options.y + ' ' + options.dst;
 
-	}, function (err) { deferred.reject(err); });
+			child = exec(imcmd, function(err, stdout, stderr) {
+				if (err) return deferred.reject(err);
+				deferred.resolve(info(options.dst));
+			});
+
+		}, function (err) { deferred.reject(err); });		
+
+	})
 
 	return deferred.promise;
 };
 
 // for the hardcore types - issue your own ImageMagick command
-exports.exec = function(command, callback) {
+exports.exec = function(command) {
 
 	var deferred = Q.defer();
 
-	var _command = command.split(' ')[0];
-	// as a security measure, we will allow only 'convert' commands
-	if (_command != 'convert') return callback(error_messages['restricted']);
+	process.nextTick(function () {
 
-	child = exec(command, function(err, stdout, stderr) {
-		if (err) deferred.reject(err);
-		deferred.resolve(stdout);
-	});
+		var _command = command.split(' ')[0];
+		// as a security measure, we will allow only 'convert' commands
+		if (_command != 'convert') return callback(error_messages['restricted']);
+
+		child = exec(command, function(err, stdout, stderr) {
+			if (err) return deferred.reject(err);
+			deferred.resolve(stdout);
+		});		
+
+	})
 
 	return deferred.promise;
 };

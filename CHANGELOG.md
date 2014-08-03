@@ -82,3 +82,8 @@ Initial release
 
 1. Changed to promise-based interface
 2. Mocha tests
+
+1.0.1 - 03-08-2014
+------------------
+
+1. Fixed potential hidden bugs - thanks to @jheusala
