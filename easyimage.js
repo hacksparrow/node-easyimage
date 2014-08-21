@@ -26,7 +26,7 @@ function info(file) {
 			deferred.reject(new Error(error_messages['unsupported']));
 		} else {
 
-			var temp = stdout.replace('PixelsPerInch', '').split(' ');
+			var temp = stdout.replace('PixelsPerInch', '').replace('PixelsPerCentimeter', '').split(' ');
 			//Basic error handling:
 			if (temp.length < 7) {
 				deferred.reject(new Error(error_messages['unsupported']));
@@ -38,7 +38,7 @@ function info(file) {
 				info.height  = parseInt(temp[3]);
 				info.size    = parseInt(temp[4]);
 				info.density = parseFloat(temp[5]);
-				info.name    = temp.slice(6).join(' ').replace(/(\r\n|\n|\r)/gm,'');
+				info.name    = temp.slice(6).join(' ').replace(/(\r\n|\n|\r)/gm, '').trim();
 
 				deferred.resolve(info);
 			}
