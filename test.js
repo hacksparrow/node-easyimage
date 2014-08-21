@@ -3,6 +3,10 @@ var chaiAsPromised = require("chai-as-promised");
     chai.use(chaiAsPromised);
     chai.should();
 var expect = chai.expect;
+var fs = require('fs');
+
+var outputDir = './output';
+if (!fs.existsSync()) fs.mkdirSync(outputDir);
 
 var easyimg = require('./easyimage.js');
 var srcimg = 'kitten.jpg';

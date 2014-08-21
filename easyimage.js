@@ -221,7 +221,7 @@ exports.exec = function(command) {
 
 		var _command = command.split(' ')[0];
 		// as a security measure, we will allow only 'convert' commands
-		if (_command != 'convert') return callback(error_messages['restricted']);
+		if (_command != 'convert') return deferred.reject(error_messages['restricted']);
 
 		child = exec(command, function(err, stdout, stderr) {
 			if (err) return deferred.reject(err);
