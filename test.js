@@ -6,7 +6,7 @@ var expect = chai.expect;
 var fs = require('fs');
 
 var outputDir = './output';
-if (!fs.existsSync()) fs.mkdirSync(outputDir);
+if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir);
 
 var easyimg = require('./easyimage.js');
 var srcimg = 'kitten.jpg';
