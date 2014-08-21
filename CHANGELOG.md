@@ -87,3 +87,9 @@ Initial release
 ------------------
 
 1. Fixed potential hidden bugs - thanks to @jheusala
+
+1.0.2 - 21-08-2014
+------------------
+
+1. Remove PixelsPerCentimeter
+2. Test output dir
