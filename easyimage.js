@@ -21,15 +21,14 @@ function info(file) {
 
 	child = exec(imcmd, function(err, stdout, stderr) {
 		var info = {};
-		//Basic error handling
-		if (stderr.match(/^identify:/)) {
-			deferred.reject(new Error(error_messages['unsupported']));
-		} else {
 
+		//Basic error handling
+		if (stdout) {
 			var temp = stdout.replace('PixelsPerInch', '').replace('PixelsPerCentimeter', '').split(' ');
+			
 			//Basic error handling:
 			if (temp.length < 7) {
-				deferred.reject(new Error(error_messages['unsupported']));
+				deferred.reject(new Error(stderr || error_messages['unsupported']));
 			} else {
 
 				info.type    = temp[0];
@@ -40,8 +39,14 @@ function info(file) {
 				info.density = parseFloat(temp[5]);
 				info.name    = temp.slice(6).join(' ').replace(/(\r\n|\n|\r)/gm, '').trim();
 
+				if (stderr) {
+					info.warnings = stderr.split('\n');
+				}
+
 				deferred.resolve(info);
 			}
+		} else {
+			deferred.reject(new Error(stderr || error_messages['unsupported']));
 		}
 	});
 

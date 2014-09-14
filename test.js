@@ -2,6 +2,7 @@ var chai = require("chai");
 var chaiAsPromised = require("chai-as-promised");
     chai.use(chaiAsPromised);
     chai.should();
+var assert = chai.assert;
 var expect = chai.expect;
 var fs = require('fs');
 
@@ -10,6 +11,7 @@ if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir);
 
 var easyimg = require('./easyimage.js');
 var srcimg = 'kitten.jpg';
+var warningimg = 'letter.png';
 
 describe('.info - ', function () {
 
@@ -19,9 +21,15 @@ describe('.info - ', function () {
         });
     });
 
+    describe('valid file type with warning', function () {
+		it('should show file info', function () {
+			return expect(easyimg.info(warningimg)).to.eventually.have.property('warnings');
+		});
+	});
+
     describe('invalid file type', function () {
         it('should not be supported', function () {
-            return easyimg.info('./test.js').should.be.rejected;
+            return assert.isRejected(easyimg.info('./test.js'), /^identify/);
         });
     });
 
