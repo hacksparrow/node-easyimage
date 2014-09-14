@@ -10,6 +10,7 @@ if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir);
 
 var easyimg = require('./easyimage.js');
 var srcimg = 'kitten.jpg';
+var warningimg = 'letter.png';
 
 describe('.info - ', function () {
 
@@ -18,6 +19,12 @@ describe('.info - ', function () {
             return easyimg.info(srcimg);
         });
     });
+
+    describe('valid file type with warning', function () {
+		it('should show file info', function () {
+			return expect(easyimg.info(warningimg)).to.eventually.have.property('warnings');
+		});
+	});
 
     describe('invalid file type', function () {
         it('should not be supported', function () {
