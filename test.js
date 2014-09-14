@@ -2,6 +2,7 @@ var chai = require("chai");
 var chaiAsPromised = require("chai-as-promised");
     chai.use(chaiAsPromised);
     chai.should();
+var assert = chai.assert;
 var expect = chai.expect;
 var fs = require('fs');
 
@@ -28,7 +29,7 @@ describe('.info - ', function () {
 
     describe('invalid file type', function () {
         it('should not be supported', function () {
-            return easyimg.info('./test.js').should.be.rejected;
+            return assert.isRejected(easyimg.info('./test.js'), /^identify/);
         });
     });
 

@@ -28,7 +28,7 @@ function info(file) {
 			
 			//Basic error handling:
 			if (temp.length < 7) {
-				deferred.reject(new Error(error_messages['unsupported']));
+				deferred.reject(new Error(stderr || error_messages['unsupported']));
 			} else {
 
 				info.type    = temp[0];
@@ -46,7 +46,7 @@ function info(file) {
 				deferred.resolve(info);
 			}
 		} else {
-			deferred.reject(new Error(error_messages['unsupported']));
+			deferred.reject(new Error(stderr || error_messages['unsupported']));
 		}
 	});
 
