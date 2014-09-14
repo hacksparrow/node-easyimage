@@ -3,6 +3,9 @@
   "version": "1.0.2",
   "description": "A promise-based, user-friendly module for processing images in Node.js",
   "main": "easyimage.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha test.js"
+  },
   "author": "Hage Yaapa <captain@hacksparrow.com>",
   "keywords": [
     "imagemagick",
@@ -24,6 +27,7 @@
   },
   "devDependencies": {
     "chai": "^1.9.1",
-    "chai-as-promised": "^4.1.1"
+    "chai-as-promised": "^4.1.1",
+    "mocha": "^1.21.4"
   }
 }
