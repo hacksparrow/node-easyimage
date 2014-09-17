@@ -29,18 +29,21 @@ describe('.info - ', function () {
 
 describe('.convert -', function () {
 
-    it('should convert an image format to another', function (done) {
+    afterEach(function(done) {
+        fs.unlink('./output/convert.png', function() {
+            /* ignore any error unlinking */
+            done();
+        });
+    });
 
-        easyimg.convert({src:srcimg, dst:'./output/convert.png', quality:10}).then(function (file) {
-            try {
-                file.should.be.a('object');
-                file.should.have.property('type');
-                file.type.should.be.equal('PNG');
-                file.name.should.be.equal('convert.png');
-                done();
-            }
-            catch(e) { done(e); }
-        }, function (err) { done(err); });
+    it('should convert an image format to another', function () {
+
+        return easyimg.convert({src:srcimg, dst:'./output/convert.png', quality:10}).then(function (file) {
+            file.should.be.a('object');
+            file.should.have.property('type');
+            file.type.should.be.equal('PNG');
+            file.name.should.be.equal('convert.png');
+        });
 
     });
 
@@ -48,18 +51,20 @@ describe('.convert -', function () {
 
 describe('.resize -', function () {
 
-    it('should resize an image', function (done) {
+    afterEach(function(done) {
+        fs.unlink('./output/resize.jpg', function() {
+            /* ignore any error unlinking */
+            done();
+        });
+    });
+    it('should resize an image', function () {
 
-        easyimg.resize({src:srcimg, dst:'./output/resize.jpg', width:640, height:480}).then(function (file) {
-            try {
-                file.should.be.a('object');
-                file.should.have.property('width');
-                file.width.should.be.equal(640);
-                file.name.should.be.equal('resize.jpg');
-                done();
-            }
-            catch(e) { done(e); }
-        }, function (err) { done(err); });
+        return easyimg.resize({src:srcimg, dst:'./output/resize.jpg', width:640, height:480}).then(function (file) {
+            file.should.be.a('object');
+            file.should.have.property('width');
+            file.width.should.be.equal(640);
+            file.name.should.be.equal('resize.jpg');
+        });
 
     });
 
@@ -67,23 +72,26 @@ describe('.resize -', function () {
 
 describe('.crop -', function () {
 
-    it('should crop an image', function (done) {
+    afterEach(function(done) {
+        fs.unlink('./output/crop.jpg', function() {
+            /* ignore any error unlinking */
+            done();
+        });
+    });
 
-        easyimg.crop({
+    it('should crop an image', function () {
+
+        return easyimg.crop({
             src:srcimg, dst:'./output/crop.jpg',
             cropwidth:128, cropheight:128,
             gravity:'North',
             x:0, y:0
         }).then(function (file) {
-            try {
-                file.should.be.a('object');
-                file.should.have.property('width');
-                file.width.should.be.equal(128);
-                file.name.should.be.equal('crop.jpg');
-                done();
-            }
-            catch(e) { done(e); }
-        }, function (err) { done(err); });
+            file.should.be.a('object');
+            file.should.have.property('width');
+            file.width.should.be.equal(128);
+            file.name.should.be.equal('crop.jpg');
+        });
 
     });
 
@@ -91,23 +99,26 @@ describe('.crop -', function () {
 
 describe('.rescrop -', function () {
 
-    it('should resize and crop', function (done) {
+    afterEach(function(done) {
+        fs.unlink('./output/rescrop.jpg', function() {
+            /* ignore any error unlinking */
+            done();
+        });
+    });
 
-        easyimg.rescrop({
+    it('should resize and crop', function () {
+
+        return easyimg.rescrop({
             src:srcimg, dst:'./output/rescrop.jpg',
             width:400, height:5400,
             cropwidth:100, cropheight:100,
             x:0, y:0
         }).then(function (file) {
-            try {
-                file.should.be.a('object');
-                file.should.have.property('width');
-                file.width.should.be.equal(100);
-                file.name.should.be.equal('rescrop.jpg');
-                done();
-            }
-            catch(e) { done(e); }
-        }, function (err) { done(err); });
+            file.should.be.a('object');
+            file.should.have.property('width');
+            file.width.should.be.equal(100);
+            file.name.should.be.equal('rescrop.jpg');
+        });
 
     });
 
@@ -115,23 +126,25 @@ describe('.rescrop -', function () {
 
 describe('.thumbnail -', function () {
 
+    afterEach(function(done) {
+        fs.unlink('./output/thumbnail.jpg', function() {
+            /* ignore any error unlinking */
+            done();
+        });
+    });
 	//this.timeout(5000);
-    it('should generate a thumbnail', function (done) {
+    it('should generate a thumbnail', function () {
 
-        easyimg.thumbnail({
+        return easyimg.thumbnail({
             src:srcimg, dst:'./output/thumbnail.jpg',
             width:128, height:128,
             x:0, y:0
         }).then(function (file) {
-            try {
-                file.should.be.a('object');
-                file.should.have.property('width');
-                file.width.should.be.equal(128);
-                file.name.should.be.equal('thumbnail.jpg');
-                done();
-            }
-            catch(e) { done(e); }
-        }, function (err) { done(err); });
+            file.should.be.a('object');
+            file.should.have.property('width');
+            file.width.should.be.equal(128);
+            file.name.should.be.equal('thumbnail.jpg');
+        });
 
     });
 
@@ -139,10 +152,16 @@ describe('.thumbnail -', function () {
 
 describe('.exec -', function () {
 
-    it('should invoke `convert` command', function (done) {
-        easyimg.exec('convert '+ srcimg +' ./output/command.gif').then(function (file) {
-        	done();
-        }, function (err) { done(err); });
+    afterEach(function(done) {
+        fs.unlink('./output/command.gif', function() {
+            /* ignore any error unlinking */
+            done();
+        });
+    });
+
+    it('should invoke `convert` command', function () {
+        return easyimg.exec('convert '+ srcimg +' ./output/command.gif').then(function (file) {
+        });
 
     });
 
