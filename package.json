@@ -25,9 +25,11 @@
   "devDependencies": {
     "chai": "^1.9.1",
     "chai-as-promised": "^4.1.1",
+    "mocha": "^1.21.4",
     "eslint": "^0.8.1"
   },
   "scripts": {
+    "test": "mocha",
     "lint": "eslint ./easyimage.js"
   }
 }
