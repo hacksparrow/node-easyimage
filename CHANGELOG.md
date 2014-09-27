@@ -93,3 +93,9 @@ Initial release
 
 1. Remove PixelsPerCentimeter
 2. Test output dir
+
+1.0.3 - 27-09-2014
+------------------
+
+1. Use child_process.execFile instead of child_process.exec to prevent potential shellshock exploit
+

@@ -1,6 +1,6 @@
 {
   "name": "easyimage",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A promise-based, user-friendly module for processing images in Node.js",
   "main": "easyimage.js",
   "scripts": {
@@ -29,5 +29,8 @@
     "chai": "^1.9.1",
     "chai-as-promised": "^4.1.1",
     "mocha": "^1.21.4"
+  },
+  "scripts": {
+      "test": "mocha"
   }
 }
