@@ -105,7 +105,7 @@ exports.resize = function(options) {
 		// options.src = quoted_name(options.src);
 		// options.dst = quoted_name(options.dst);
 
-		if (options.largeronly) options.largeronly = '\\>';
+		if (options.largeronly) options.largeronly = '>';
 
 		if (options.quality === undefined) args = [options.src, '-resize', options.width + 'x' + options.height + options.largeronly, options.dst];
 		else args = [options.src, '-resize', options.width + 'x' + options.height + options.largeronly, '-quality', options.quality, options.dst];
@@ -198,7 +198,7 @@ exports.thumbnail = function(options) {
 		// options.src = quoted_name(options.src);
 		// options.dst = quoted_name(options.dst);
 
-		if (options.largeronly) options.largeronly = '\\>';
+		if (options.largeronly) options.largeronly = '>';
 
 		info(options.src).then(function(original) {
 
