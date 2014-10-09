@@ -46,7 +46,7 @@ EasyImage offers these promise methods:
 	quality - quality of processed image, 1 to 100
 	gravity - crop position [NorthWest | North | NorthEast | West | Center | East | SouthWest | South | SouthEast], defaults to Center
 	fill - fill area flag, image is resized to completely fill the target crop dimensions, defaults to false
-  largeronly - shrink an image only if its dimension(s) are larger than the corresponding width and/or height arguments
+	largeronly - shrink an image only if its dimension(s) are larger than the corresponding width and/or height arguments
 
 ## Examples
 
