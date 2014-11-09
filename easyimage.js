@@ -24,7 +24,7 @@ function info(file) {
 		//Basic error handling
 		if (stdout) {
 			var temp = stdout.replace('PixelsPerInch', '').replace('PixelsPerCentimeter', '').split(' ');
-			
+
 			//Basic error handling:
 			if (temp.length < 7) {
 				deferred.reject(new Error(stderr || error_messages['unsupported']));
@@ -90,6 +90,27 @@ exports.convert = function(options) {
 	return deferred.promise;
 };
 
+
+// rotate a file
+exports.rotate = function(options) {
+	var deferred = Q.defer();
+
+	process.nextTick(function () {
+
+		if (options.src === undefined || options.dst === undefined || options.degrees === undefined) return deferred.reject(error_messages['path']);
+
+		args = [options.src, '-rotate', options.degrees, options.dst];
+
+		child = exec('convert', args, function(err, stdout, stderr) {
+			if (err) deferred.reject(err);
+			else deferred.resolve(info(options.dst));
+		});
+
+	})
+
+	return deferred.promise;
+};
+
 // resize an image
 exports.resize = function(options) {
 
@@ -109,7 +130,7 @@ exports.resize = function(options) {
 		child = exec('convert', args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
 			deferred.resolve(info(options.dst));
-		});		
+		});
 
 	})
 
@@ -169,7 +190,7 @@ exports.rescrop = function(options) {
 		child = exec('convert', args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
 			deferred.resolve(info(options.dst));
-		});		
+		});
 
 	})
 
@@ -185,7 +206,7 @@ exports.thumbnail = function(options) {
 
 		if (options.src === undefined || options.dst === undefined) return deferred.reject(error_messages['path']);
 		if (options.width === undefined) return deferred.reject(error_messages['dim']);
-		
+
 		options.height = options.height || options.width;
 		options.gravity = options.gravity || 'Center';
 		options.x = options.x || 0;
@@ -214,7 +235,7 @@ exports.thumbnail = function(options) {
 				deferred.resolve(info(options.dst));
 			});
 
-		}, function (err) { deferred.reject(err); });		
+		}, function (err) { deferred.reject(err); });
 
 	})
 
@@ -233,7 +254,7 @@ exports.exec = function(command) {
 		child = exec('convert', args, function(err, stdout, stderr) {
 			if (err) return deferred.reject(err);
 			deferred.resolve(stdout);
-		});		
+		});
 
 	})
 

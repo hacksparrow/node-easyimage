@@ -27,6 +27,7 @@ EasyImage offers these promise methods:
 
 	easyimg.info(<image_path>) - to retrieve information about an image (name, type, width, height, size, depth)
 	easyimg.convert(<options>) - to convert an image from one format to another
+	easyimg.rotate(<options>) - to rotate an image
 	easyimg.resize(<options>) - to resize an image
 	easyimg.crop(<options>) - to crop an image
 	easyimg.thumbnail(<options>) - to create square thumbnails
@@ -39,6 +40,7 @@ EasyImage offers these promise methods:
 	dst - path to destination image
 	width - width of resized image
 	height - height of resized image
+	degrees - rotation degrees
 	cropwidth - width of cropped image, if missing, width will be used instead
 	cropheight - height of cropped image, if missing, height will be used instead
 	x - x offset for cropping, defaults to 0
