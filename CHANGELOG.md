@@ -99,3 +99,7 @@ Initial release
 
 1. Use child_process.execFile instead of child_process.exec to prevent potential shellshock exploit
 
+1.0.4 - 24-12-2014
+------------------
+
+1. Filenames with spaces supported in `.exec()`

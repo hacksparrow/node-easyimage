@@ -136,7 +136,7 @@ describe('.rescrop -', function () {
 describe('.thumbnail -', function () {
 
     afterEach(function(done) {
-        fs.unlink('./output/thumbnail.jpg', function() {
+        fs.unlink('./output/thumb nail.jpg', function() {
             /* ignore any error unlinking */
             done();
         });
@@ -146,14 +146,14 @@ describe('.thumbnail -', function () {
     it('should generate a thumbnail', function () {
 
         return easyimg.thumbnail({
-            src:srcimg, dst:'./output/thumbnail.jpg',
+            src:srcimg, dst:'./output/thumb nail.jpg',
             width:128, height:128,
             x:0, y:0
         }).then(function (file) {
             file.should.be.a('object');
             file.should.have.property('width');
             file.width.should.be.equal(128);
-            file.name.should.be.equal('thumbnail.jpg');
+            file.name.should.be.equal('thumb nail.jpg');
         });
 
     });
@@ -163,14 +163,14 @@ describe('.thumbnail -', function () {
 describe('.exec -', function () {
 
     afterEach(function(done) {
-        fs.unlink('./output/command.gif', function() {
+        fs.unlink('./output/hello kitty.gif', function() {
             /* ignore any error unlinking */
             done();
         });
     });
 
     it('should invoke `convert` command', function () {
-        return easyimg.exec('convert '+ srcimg +' ./output/command.gif').then(function (file) {
+        return easyimg.exec('convert '+ srcimg +' ./output/hello\\ kitty.gif').then(function (file) {
         });
 
     });

@@ -1,5 +1,6 @@
 var Q = require('q');
 var exec = require('child_process').execFile;
+var command = require('child_process').exec;
 var child, args;
 
 var error_messages = {
@@ -222,18 +223,16 @@ exports.thumbnail = function(options) {
 };
 
 // issue your own ImageMagick command
-exports.exec = function(command) {
+exports.exec = function(cmd) {
 
 	var deferred = Q.defer();
 
 	process.nextTick(function () {
 
-		args = command.split(' ').slice(1);
-
-		child = exec('convert', args, function(err, stdout, stderr) {
+		child = command(cmd, function(err, stdout, stderr) {
 			if (err) return deferred.reject(err);
 			deferred.resolve(stdout);
-		});		
+		});
 
 	})
 

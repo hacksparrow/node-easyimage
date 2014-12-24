@@ -25,13 +25,13 @@ On CentOS
 
 EasyImage offers these promise methods:
 
-	easyimg.info(<image_path>) - to retrieve information about an image (name, type, width, height, size, depth)
-	easyimg.convert(<options>) - to convert an image from one format to another
-	easyimg.resize(<options>) - to resize an image
-	easyimg.crop(<options>) - to crop an image
-	easyimg.thumbnail(<options>) - to create square thumbnails
-	easyimg.rescrop(<options>) - to resize and crop and image in one go, useful for creating customzied thumbnails
-	easyimg.exec(<command>) - when you want to call a custom command to ImageMagick, you will need to take care of escaping special characters etc
+	easyimg.info(<image_path>) - to retrieve information about an image (name, type, width, height, size, depth).
+	easyimg.convert(<options>) - to convert an image from one format to another.
+	easyimg.resize(<options>) - to resize an image.
+	easyimg.crop(<options>) - to crop an image.
+	easyimg.thumbnail(<options>) - to create square thumbnails.
+	easyimg.rescrop(<options>) - to resize and crop and image in one go, useful for creating customzied thumbnails.
+	easyimg.exec(<command>) - when you want to call a custom command to ImageMagick, you will need to take care of escaping special characters etc. *NOTE: this spawns a subshell*.
 
  The EasyImage options object can have these properties depending on the method. Unrelated options are ignored.
 
