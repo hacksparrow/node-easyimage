@@ -6,3 +6,4 @@
 output/
 try.js
 node_modules/
+*.log
