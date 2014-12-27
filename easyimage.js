@@ -111,9 +111,9 @@ exports.rotate = function(options) {
 
 	process.nextTick(function () {
 
-		if (options.src === undefined || options.dst === undefined || options.degrees === undefined) return deferred.reject(error_messages['path']);
+		if (options.src === undefined || options.dst === undefined || options.degree === undefined) return deferred.reject(error_messages['path']);
 
-		args = [options.src, '-rotate', options.degrees, options.dst];
+		args = [options.src, '-rotate', options.degree, options.dst];
 
 		child = exec('convert', args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);

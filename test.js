@@ -60,22 +60,22 @@ describe('.convert -', function () {
 describe('.rotate -', function () {
 
     afterEach(function(done) {
-        fs.unlink('./output/convert.png', function() {
+        fs.unlink('./output/rotated.jpg', function() {
             /* ignore any error unlinking */
             done();
         });
     });
 
-    it('should rotate the image by 90 degrees', function () {
+    it('should rotate the image by 90 degree', function () {
 
         return easyimg.info(srcimg).then(function(info){
             info.should.have.property('width')
             info.should.have.property('height')
 
             // Mainly check only if width and height are swaped
-            return easyimg.rotate({src:srcimg, dst:'./output/convert.jpg', degrees: 90}).then(function (file) {
+            return easyimg.rotate({src:srcimg, dst:'./output/rotated.jpg', degree: 90}).then(function (file) {
                 file.should.be.a('object');
-                file.name.should.be.equal('convert.jpg');
+                file.name.should.be.equal('rotated.jpg');
                 file.should.have.property('width');
                 file.width.should.be.equal(info.height);
                 file.height.should.be.equal(info.width);
