@@ -104,6 +104,27 @@ exports.convert = function(options) {
 	return deferred.promise;
 };
 
+
+// rotate a file
+exports.rotate = function(options) {
+	var deferred = Q.defer();
+
+	process.nextTick(function () {
+
+		if (options.src === undefined || options.dst === undefined || options.degrees === undefined) return deferred.reject(error_messages['path']);
+
+		args = [options.src, '-rotate', options.degrees, options.dst];
+
+		child = exec('convert', args, function(err, stdout, stderr) {
+			if (err) deferred.reject(err);
+			else deferred.resolve(info(options.dst));
+		});
+
+	})
+
+	return deferred.promise;
+};
+
 // resize an image
 exports.resize = function(options) {
 

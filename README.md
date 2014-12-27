@@ -31,7 +31,8 @@ EasyImage offers these promise methods:
 	easyimg.crop(<options>) - to crop an image.
 	easyimg.thumbnail(<options>) - to create square thumbnails.
 	easyimg.rescrop(<options>) - to resize and crop and image in one go, useful for creating customzied thumbnails.
-	easyimg.exec(<command>) - when you want to call a custom command to ImageMagick, you will need to take care of escaping special characters etc.
+  easyimg.rotate(<options>) - to rotate an image.
+  easyimg.exec(<command>) - when you want to call a custom command to ImageMagick, you will need to take care of escaping special characters etc.
 
   **NOTE**: `easyimg.exec()` spawns a subshell.
 
@@ -41,6 +42,7 @@ EasyImage offers these promise methods:
 	dst - path to destination image
 	width - width of resized image
 	height - height of resized image
+	degree - degree of rotation
 	cropwidth - width of cropped image, if missing, width will be used instead
 	cropheight - height of cropped image, if missing, height will be used instead
 	x - x offset for cropping, defaults to 0
