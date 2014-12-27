@@ -1,7 +1,20 @@
 var Q = require('q');
 var exec = require('child_process').execFile;
 var command = require('child_process').exec;
+var colors = require('colors');
 var child, args;
+
+// check if ImageMagick is available on the system
+command('convert -version', function(err, stdout, stderr) {
+
+	// ImageMagick is NOT available on the system, exit with download info
+	if (err) {
+		console.log(' ImageMagick Not Found'.red)
+		console.log(' EasyImage requires ImageMagick to work. Install it from http://www.imagemagick.org/script/binary-releases.php.\n')
+	}
+
+})
+
 
 var error_messages = {
 	'path': 'Missing image paths.\nMake sure both source and destination files are specified.',
@@ -25,7 +38,7 @@ function info(file) {
 		//Basic error handling
 		if (stdout) {
 			var temp = stdout.replace('PixelsPerInch', '').replace('PixelsPerCentimeter', '').split(' ');
-			
+
 			//Basic error handling:
 			if (temp.length < 7) {
 				deferred.reject(new Error(stderr || error_messages['unsupported']));
@@ -110,7 +123,7 @@ exports.resize = function(options) {
 		child = exec('convert', args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
 			deferred.resolve(info(options.dst));
-		});		
+		});
 
 	})
 
@@ -170,7 +183,7 @@ exports.rescrop = function(options) {
 		child = exec('convert', args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
 			deferred.resolve(info(options.dst));
-		});		
+		});
 
 	})
 
@@ -186,7 +199,7 @@ exports.thumbnail = function(options) {
 
 		if (options.src === undefined || options.dst === undefined) return deferred.reject(error_messages['path']);
 		if (options.width === undefined) return deferred.reject(error_messages['dim']);
-		
+
 		options.height = options.height || options.width;
 		options.gravity = options.gravity || 'Center';
 		options.x = options.x || 0;
@@ -215,7 +228,7 @@ exports.thumbnail = function(options) {
 				deferred.resolve(info(options.dst));
 			});
 
-		}, function (err) { deferred.reject(err); });		
+		}, function (err) { deferred.reject(err); });
 
 	})
 
@@ -238,4 +251,3 @@ exports.exec = function(cmd) {
 
 	return deferred.promise;
 };
-

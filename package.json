@@ -1,10 +1,10 @@
 {
   "name": "easyimage",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "A promise-based, user-friendly module for processing images in Node.js",
   "main": "easyimage.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha test.js"
+    "test": "mocha"
   },
   "author": "Hage Yaapa <captain@hacksparrow.com>",
   "keywords": [
@@ -23,14 +23,12 @@
     "url": "https://git@github.com:hacksparrow/node-easyimage.git"
   },
   "dependencies": {
+    "colors": "^1.0.3",
     "q": "^1.0.1"
   },
   "devDependencies": {
     "chai": "^1.9.1",
     "chai-as-promised": "^4.1.1",
     "mocha": "^1.21.4"
-  },
-  "scripts": {
-      "test": "mocha"
   }
 }
