@@ -199,7 +199,7 @@ exports.rescrop = function(options) {
 		// options.dst = quoted_name(options.dst);
 		options.fill = options.fill ? '^' : '';
 		if (options.quality === undefined) args = [options.src, '-resize', options.width + 'x' + options.height + options.fill, '-gravity', options.gravity, '-crop', options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y, options.dst];
-		else args = [options.src, '-resize', options.width + 'x' + options.height, options.fill, '-gravity' + options.gravity, '-crop', options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y, '-quality', options.quality, options.dst];
+		else args = [options.src, '-resize', options.width + 'x' + options.height + options.fill, '-gravity', options.gravity, '-crop', options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y, '-quality', options.quality, options.dst];
 
 		child = exec('convert', args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);

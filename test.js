@@ -159,6 +159,23 @@ describe('.rescrop -', function () {
 
     });
 
+    it('should resize and crop with fill and quality specified', function () {
+
+        return easyimg.rescrop({
+            src:srcimg, dst:'./output/rescrop.jpg',
+            width:200, height:205,
+            fill: true,
+            quality: 75
+        }).then(function (file) {
+            file.should.be.a('object');
+            file.should.have.property('width');
+            file.width.should.be.equal(200)
+            file.height.should.be.equal(205);
+            file.name.should.be.equal('rescrop.jpg');
+        });
+
+    });
+
 });
 
 describe('.thumbnail -', function () {
