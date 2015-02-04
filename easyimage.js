@@ -51,6 +51,7 @@ function info(file) {
 				info.size    = parseInt(temp[4]);
 				info.density = parseFloat(temp[5]);
 				info.name    = temp.slice(6).join(' ').replace(/(\r\n|\n|\r)/gm, '').trim();
+				info.path = file;
 
 				if (stderr) {
 					info.warnings = stderr.split('\n');

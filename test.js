@@ -38,7 +38,7 @@ describe('.info - ', function () {
 describe('.convert -', function () {
 
     afterEach(function(done) {
-        fs.unlink('./output/convert.png', function() {
+        fs.unlink(__dirname + '/output/convert.png', function() {
             /* ignore any error unlinking */
             done();
         });
@@ -46,7 +46,7 @@ describe('.convert -', function () {
 
     it('should convert an image format to another', function () {
 
-        return easyimg.convert({src:srcimg, dst:'./output/convert.png', quality:10}).then(function (file) {
+        return easyimg.convert({src:srcimg, dst: __dirname + '/output/convert.png', quality:10}).then(function (file) {
             file.should.be.a('object');
             file.should.have.property('type');
             file.type.should.be.equal('PNG');
@@ -60,7 +60,7 @@ describe('.convert -', function () {
 describe('.rotate -', function () {
 
     afterEach(function(done) {
-        fs.unlink('./output/rotated.jpg', function() {
+        fs.unlink(__dirname + '/output/rotated.jpg', function() {
             /* ignore any error unlinking */
             done();
         });
@@ -73,7 +73,7 @@ describe('.rotate -', function () {
             info.should.have.property('height')
 
             // Mainly check only if width and height are swaped
-            return easyimg.rotate({src:srcimg, dst:'./output/rotated.jpg', degree: 90}).then(function (file) {
+            return easyimg.rotate({src:srcimg, dst: __dirname + '/output/rotated.jpg', degree: 90}).then(function (file) {
                 file.should.be.a('object');
                 file.name.should.be.equal('rotated.jpg');
                 file.should.have.property('width');
@@ -88,7 +88,7 @@ describe('.rotate -', function () {
 describe('.resize -', function () {
 
     afterEach(function(done) {
-        fs.unlink('./output/resize.jpg', function() {
+        fs.unlink(__dirname + '/output/resize.jpg', function() {
             /* ignore any error unlinking */
             done();
         });
@@ -96,7 +96,7 @@ describe('.resize -', function () {
 
     it('should resize an image', function () {
 
-        return easyimg.resize({src:srcimg, dst:'./output/resize.jpg', width:640, height:480}).then(function (file) {
+        return easyimg.resize({src:srcimg, dst: __dirname + '/output/resize.jpg', width:640, height:480}).then(function (file) {
             file.should.be.a('object');
             file.should.have.property('width');
             file.width.should.be.equal(640);
@@ -110,7 +110,7 @@ describe('.resize -', function () {
 describe('.crop -', function () {
 
     afterEach(function(done) {
-        fs.unlink('./output/crop.jpg', function() {
+        fs.unlink(__dirname + '/output/crop.jpg', function() {
             /* ignore any error unlinking */
             done();
         });
@@ -119,7 +119,7 @@ describe('.crop -', function () {
     it('should crop an image', function () {
 
         return easyimg.crop({
-            src:srcimg, dst:'./output/crop.jpg',
+            src:srcimg, dst: __dirname + '/output/crop.jpg',
             cropwidth:128, cropheight:128,
             gravity:'North',
             x:0, y:0
@@ -137,7 +137,7 @@ describe('.crop -', function () {
 describe('.rescrop -', function () {
 
     afterEach(function(done) {
-        fs.unlink('./output/rescrop.jpg', function() {
+        fs.unlink(__dirname + '/output/rescrop.jpg', function() {
             /* ignore any error unlinking */
             done();
         });
@@ -146,7 +146,7 @@ describe('.rescrop -', function () {
     it('should resize and crop', function () {
 
         return easyimg.rescrop({
-            src:srcimg, dst:'./output/rescrop.jpg',
+            src:srcimg, dst: __dirname + '/output/rescrop.jpg',
             width:400, height:5400,
             cropwidth:100, cropheight:100,
             x:0, y:0
@@ -164,7 +164,7 @@ describe('.rescrop -', function () {
 describe('.thumbnail -', function () {
 
     afterEach(function(done) {
-        fs.unlink('./output/thumb nail.jpg', function() {
+        fs.unlink(__dirname + '/output/thumb nail.jpg', function() {
             /* ignore any error unlinking */
             done();
         });
@@ -174,7 +174,7 @@ describe('.thumbnail -', function () {
     it('should generate a thumbnail', function () {
 
         return easyimg.thumbnail({
-            src:srcimg, dst:'./output/thumb nail.jpg',
+            src:srcimg, dst: __dirname + '/output/thumb nail.jpg',
             width:128, height:128,
             x:0, y:0
         }).then(function (file) {
@@ -191,7 +191,7 @@ describe('.thumbnail -', function () {
 describe('.exec -', function () {
 
     afterEach(function(done) {
-        fs.unlink('./output/hello kitty.gif', function() {
+        fs.unlink(__dirname + '/output/hello kitty.gif', function() {
             /* ignore any error unlinking */
             done();
         });
