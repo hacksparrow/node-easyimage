@@ -5,6 +5,7 @@ var chaiAsPromised = require("chai-as-promised");
 var assert = chai.assert;
 var expect = chai.expect;
 var fs = require('fs');
+var rimraf = require('rimraf');
 
 var outputDir = './output';
 if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir);
@@ -188,6 +189,7 @@ describe('.thumbnail -', function () {
 
 });
 
+
 describe('.exec -', function () {
 
     afterEach(function(done) {
@@ -205,3 +207,27 @@ describe('.exec -', function () {
 
 });
 
+
+describe('additionals', function () {
+
+    afterEach(function(done) {
+        rimraf(__dirname + '/output/foo/', function() {
+            done();
+        });
+    });
+
+    //this.timeout(5000);
+    it('should create directories if they do not exist', function () {
+
+        return easyimg.thumbnail({
+            src:srcimg, dst: __dirname + '/output/foo/bar/hey.jpg',
+            width:128, height:128,
+            x:0, y:0
+        }).then(function (file) {
+            file.should.be.a('object');
+            file.name.should.be.equal('hey.jpg');
+        });
+
+    });
+
+});

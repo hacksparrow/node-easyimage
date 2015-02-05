@@ -3,6 +3,9 @@ var exec = require('child_process').execFile;
 var command = require('child_process').exec;
 var colors = require('colors');
 var child, args;
+var path = require('path');
+var fs = require('fs');
+var mkdirp = require('mkdirp');
 
 // check if ImageMagick is available on the system
 command('convert -version', function(err, stdout, stderr) {
@@ -80,12 +83,35 @@ exports.info = function(file) {
 	return info(file);
 };
 
+
+
+function directoryCheck(options, command) {
+
+	var targetDir = path.dirname(options.dst)
+	fs.exists(targetDir, function (exists) {
+		if (exists) {
+			command()
+		}
+		else {
+			mkdirp(targetDir, function (error) {
+				if (error) {
+					throw new Error(error)
+				}
+				else {
+					command()
+				}
+			})
+		}
+	})
+}
+
+
 // convert a file type to another
 exports.convert = function(options) {
 
 	var deferred = Q.defer();
 
-	process.nextTick(function () {
+	function imgConvert() {
 
 		if (options.src === undefined || options.dst === undefined) return deferred.reject(error_messages['path']);
 
@@ -100,17 +126,22 @@ exports.convert = function(options) {
 			else deferred.resolve(info(options.dst));
 		});
 
-	})
+	}
+
+	directoryCheck(options, imgConvert)
 
 	return deferred.promise;
 };
 
 
+
+
 // rotate a file
 exports.rotate = function(options) {
+
 	var deferred = Q.defer();
 
-	process.nextTick(function () {
+	function imgRotate() {
 
 		if (options.src === undefined || options.dst === undefined || options.degree === undefined) return deferred.reject(error_messages['path']);
 
@@ -121,7 +152,9 @@ exports.rotate = function(options) {
 			else deferred.resolve(info(options.dst));
 		});
 
-	})
+	}
+
+	directoryCheck(options, imgRotate)
 
 	return deferred.promise;
 };
@@ -131,7 +164,7 @@ exports.resize = function(options) {
 
 	var deferred = Q.defer();
 
-	process.nextTick(function () {
+	function imgResize() {
 
 		if (options.src === undefined || options.dst === undefined) return deferred.reject(error_messages['path']);
 		if (options.width === undefined) return deferred.reject(error_messages['dim']);
@@ -147,8 +180,9 @@ exports.resize = function(options) {
 			deferred.resolve(info(options.dst));
 		});
 
-	})
+	}
 
+	directoryCheck(options, imgResize)
 	return deferred.promise;
 };
 
@@ -157,24 +191,27 @@ exports.crop = function(options) {
 
 	var deferred = Q.defer();
 
-	if (options.src === undefined || options.dst === undefined) return deferred.reject(error_messages['path']);
-	if (options.cropwidth === undefined) return deferred.reject(error_messages['dim']);
+	function imgCrop() {
+		if (options.src === undefined || options.dst === undefined) return deferred.reject(error_messages['path']);
+		if (options.cropwidth === undefined) return deferred.reject(error_messages['dim']);
 
-	options.cropheight = options.cropheight || options.cropwidth;
-	options.gravity = options.gravity || 'Center';
-	options.x = options.x || 0;
-	options.y = options.y || 0;
-	// options.src = quoted_name(options.src);
-	// options.dst = quoted_name(options.dst);
+		options.cropheight = options.cropheight || options.cropwidth;
+		options.gravity = options.gravity || 'Center';
+		options.x = options.x || 0;
+		options.y = options.y || 0;
+		// options.src = quoted_name(options.src);
+		// options.dst = quoted_name(options.dst);
 
-	if (options.quality === undefined) args = [options.src, '-gravity', options.gravity, '-crop', options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y, options.dst];
-	else args = [options.src, '-gravity', options.gravity, '-crop', options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y, '-quality', options.quality, options.dst];
+		if (options.quality === undefined) args = [options.src, '-gravity', options.gravity, '-crop', options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y, options.dst];
+		else args = [options.src, '-gravity', options.gravity, '-crop', options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y, '-quality', options.quality, options.dst];
 
-	child = exec('convert', args, function(err, stdout, stderr) {
-		if (err) deferred.reject(err);
-		deferred.resolve(info(options.dst));
-	});
+		child = exec('convert', args, function(err, stdout, stderr) {
+			if (err) deferred.reject(err);
+			deferred.resolve(info(options.dst));
+		});
+	}
 
+	directoryCheck(options, imgCrop)
 	return deferred.promise;
 };
 
@@ -183,7 +220,7 @@ exports.rescrop = function(options) {
 
 	var deferred = Q.defer();
 
-	process.nextTick(function () {
+	function imgResCrop() {
 
 		if (options.src === undefined || options.dst === undefined) return deferred.reject(error_messages['path']);
 		if (options.width === undefined) return deferred.reject(error_messages['dim']);
@@ -207,8 +244,9 @@ exports.rescrop = function(options) {
 			deferred.resolve(info(options.dst));
 		});
 
-	})
+	}
 
+	directoryCheck(options, imgResCrop)
 	return deferred.promise;
 };
 
@@ -217,7 +255,7 @@ exports.thumbnail = function(options) {
 
 	var deferred = Q.defer();
 
-	process.nextTick(function () {
+	function imgThumbnail() {
 
 		if (options.src === undefined || options.dst === undefined) return deferred.reject(error_messages['path']);
 		if (options.width === undefined) return deferred.reject(error_messages['dim']);
@@ -252,8 +290,9 @@ exports.thumbnail = function(options) {
 
 		}, function (err) { deferred.reject(err); });
 
-	})
+	}
 
+	directoryCheck(options, imgThumbnail)
 	return deferred.promise;
 };
 
