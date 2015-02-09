@@ -12,6 +12,7 @@ if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir);
 
 var easyimg = require('./easyimage.js');
 var srcimg = 'kitten.jpg';
+var srcimgwidth = 800;
 var warningimg = 'letter.png';
 
 describe('.info - ', function () {
@@ -106,6 +107,17 @@ describe('.resize -', function () {
 
     });
 
+    it('should only resize larger images when "largeronly" option is set', function () {
+
+        return easyimg.resize({src:srcimg, dst:'./output/resize.jpg', width:1000, height:1000, largeronly: true}).then(function (file) {
+            file.should.be.a('object');
+            file.should.have.property('width');
+            file.width.should.be.equal(srcimgwidth);
+            file.name.should.be.equal('resize.jpg');
+        });
+
+    });
+
 });
 
 describe('.crop -', function () {
@@ -183,6 +195,22 @@ describe('.thumbnail -', function () {
             file.should.have.property('width');
             file.width.should.be.equal(128);
             file.name.should.be.equal('thumb nail.jpg');
+        });
+
+    });
+
+    it('should only generate a thumbnail for larger images when "largeronly" option is set', function () {
+
+        return easyimg.thumbnail({
+            src:srcimg, dst:'./output/thumbnail.jpg',
+            width:1000, height:1000,
+            x:0, y:0,
+            largeronly: true
+        }).then(function (file) {
+            file.should.be.a('object');
+            file.should.have.property('width');
+            file.width.should.be.equal(srcimgwidth);
+            file.name.should.be.equal('thumbnail.jpg');
         });
 
     });
