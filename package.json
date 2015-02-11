@@ -1,6 +1,6 @@
 {
   "name": "easyimage",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "A promise-based, user-friendly module for processing images in Node.js",
   "main": "easyimage.js",
   "scripts": {

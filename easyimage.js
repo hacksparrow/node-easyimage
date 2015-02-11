@@ -172,8 +172,8 @@ exports.resize = function(options) {
 		options.height = options.height || options.width;
 		// options.src = quoted_name(options.src);
 		// options.dst = quoted_name(options.dst);
-		if (options.quality === undefined) args = [options.src, '-resize', options.width + 'x' + options.height, options.dst];
-		else args = [options.src, '-resize', options.width + 'x' + options.height, '-quality', options.quality, options.dst];
+		if (options.quality === undefined) args = [options.src, '-auto-orient', '-resize', options.width + 'x' + options.height, options.dst];
+		else args = [options.src, '-auto-orient', '-resize', options.width + 'x' + options.height, '-quality', options.quality, options.dst];
 
 		child = exec('convert', args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
@@ -202,8 +202,8 @@ exports.crop = function(options) {
 		// options.src = quoted_name(options.src);
 		// options.dst = quoted_name(options.dst);
 
-		if (options.quality === undefined) args = [options.src, '-gravity', options.gravity, '-crop', options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y, options.dst];
-		else args = [options.src, '-gravity', options.gravity, '-crop', options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y, '-quality', options.quality, options.dst];
+		if (options.quality === undefined) args = [options.src, '-auto-orient', '-gravity', options.gravity, '-crop', options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y, options.dst];
+		else args = [options.src, '-auto-orient', '-gravity', options.gravity, '-crop', options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y, '-quality', options.quality, options.dst];
 
 		child = exec('convert', args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
@@ -236,8 +236,8 @@ exports.rescrop = function(options) {
 		// options.src = quoted_name(options.src);
 		// options.dst = quoted_name(options.dst);
 		options.fill = options.fill ? '^' : '';
-		if (options.quality === undefined) args = [options.src, '-resize', options.width + 'x' + options.height + options.fill, '-gravity', options.gravity, '-crop', options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y, options.dst];
-		else args = [options.src, '-resize', options.width + 'x' + options.height, options.fill, '-gravity' + options.gravity, '-crop', options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y, '-quality', options.quality, options.dst];
+		if (options.quality === undefined) args = [options.src, '-resize', options.width + 'x' + options.height + options.fill, '-auto-orient', '-gravity', options.gravity, '-crop', options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y, options.dst];
+		else args = [options.src, '-resize', options.width + 'x' + options.height, options.fill, '-auto-orient', '-gravity' + options.gravity, '-crop', options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y, '-quality', options.quality, options.dst];
 
 		child = exec('convert', args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
@@ -280,8 +280,8 @@ exports.thumbnail = function(options) {
 			else if (original.height > original.width) { resizeheight = ''; }
 
 			// resize and crop
-			if (options.quality === undefined) args = [options.src, '-interpolate', 'bicubic', '-strip', '-thumbnail',  resizewidth + 'x' + resizeheight, '-gravity', options.gravity, '-crop', options.width + 'x'+ options.height + '+' + options.x + '+' + options.y, options.dst];
-			else args = [options.src, '-interpolate', 'bicubic', '-strip', '-thumbnail', resizewidth + 'x' + resizeheight, '-quality', options.quality, '-gravity', options.gravity, '-crop', options.width + 'x'+ options.height + '+' + options.x + '+' + options.y, options.dst];
+			if (options.quality === undefined) args = [options.src, '-interpolate', 'bicubic', '-strip', '-thumbnail',  resizewidth + 'x' + resizeheight, '-gravity', options.gravity, '-auto-orient', '-crop', options.width + 'x'+ options.height + '+' + options.x + '+' + options.y, options.dst];
+			else args = [options.src, '-interpolate', 'bicubic', '-strip', '-thumbnail', resizewidth + 'x' + resizeheight, '-quality', options.quality, '-gravity', options.gravity, '-auto-orient', '-crop', options.width + 'x'+ options.height + '+' + options.x + '+' + options.y, options.dst];
 
 			child = exec('convert', args, function(err, stdout, stderr) {
 				if (err) return deferred.reject(err);
