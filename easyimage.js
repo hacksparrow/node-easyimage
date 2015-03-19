@@ -2,7 +2,7 @@ var Q = require('q');
 var exec = require('child_process').execFile;
 var command = require('child_process').exec;
 var colors = require('colors');
-var child, args;
+var child;
 var path = require('path');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
@@ -18,7 +18,6 @@ command('convert -version', function(err, stdout, stderr) {
 
 })
 
-
 var error_messages = {
 	'path': 'Missing image paths.\nMake sure both source and destination files are specified.',
 	'dim': 'Missing dimensions.\nSpecify the width atleast.',
@@ -33,7 +32,9 @@ function info(file) {
 
 	//file = quoted_name(file);
 	// %z = depth, %m = type, %w = width, %h = height, %b = filesize in byte, %f = filename, %x = density
-	args = ['-format', '%m %z %w %h %b %x %f', file];
+	var args = ['-format']
+	args.push('%m %z %w %h %b %x %f')
+	args.push(file)
 
 	child = exec('identify', args, function(err, stdout, stderr) {
 		var info = {};
@@ -115,10 +116,17 @@ exports.convert = function(options) {
 
 		if (options.src === undefined || options.dst === undefined) return deferred.reject(error_messages['path']);
 
-		// options.src = quoted_name(options.src);
-		// options.dst = quoted_name(options.dst);
-		if (options.quality === undefined) args = [options.src, options.dst];
-		else args = [options.src, '-quality', options.quality, options.dst];
+		var args = [options.src]
+		if (options.quality) {
+			args.push('-quality')
+			args.push(options.quality)
+		}
+		if (options.background) {
+			args.push('-background')
+			args.push(options.background)
+		}
+		args.push('-flatten')
+		args.push(options.dst)
 
 		child = exec('convert', args, function(err, stdout, stderr) {
 
@@ -134,8 +142,6 @@ exports.convert = function(options) {
 };
 
 
-
-
 // rotate a file
 exports.rotate = function(options) {
 
@@ -145,7 +151,15 @@ exports.rotate = function(options) {
 
 		if (options.src === undefined || options.dst === undefined || options.degree === undefined) return deferred.reject(error_messages['path']);
 
-		args = [options.src, '-rotate', options.degree, options.dst];
+		var args = [options.src]
+		args.push('-flatten')
+		args.push('-rotate')
+		args.push(options.degree)
+ 		if (options.background) {
+			args.push('-background')
+			args.push(options.background)
+		}
+		args.push(options.dst)
 
 		child = exec('convert', args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
@@ -170,10 +184,21 @@ exports.resize = function(options) {
 		if (options.width === undefined) return deferred.reject(error_messages['dim']);
 
 		options.height = options.height || options.width;
-		// options.src = quoted_name(options.src);
-		// options.dst = quoted_name(options.dst);
-		if (options.quality === undefined) args = [options.src, '-auto-orient', '-resize', options.width + 'x' + options.height, options.dst];
-		else args = [options.src, '-auto-orient', '-resize', options.width + 'x' + options.height, '-quality', options.quality, options.dst];
+
+    var args = [options.src]
+    args.push('-flatten')
+    args.push('-auto-orient')
+    args.push('-resize')
+    args.push(options.width + 'x' + options.height)
+    if (options.quality) {
+    	args.push('-quality')
+    	args.push(options.quality)
+    }
+ 		if (options.background) {
+			args.push('-background')
+			args.push(options.background)
+		}
+    args.push(options.dst)
 
 		child = exec('convert', args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
@@ -199,11 +224,23 @@ exports.crop = function(options) {
 		options.gravity = options.gravity || 'Center';
 		options.x = options.x || 0;
 		options.y = options.y || 0;
-		// options.src = quoted_name(options.src);
-		// options.dst = quoted_name(options.dst);
 
-		if (options.quality === undefined) args = [options.src, '-auto-orient', '-gravity', options.gravity, '-crop', options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y, options.dst];
-		else args = [options.src, '-auto-orient', '-gravity', options.gravity, '-crop', options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y, '-quality', options.quality, options.dst];
+    var args = [options.src]
+    args.push('-flatten')
+    args.push('-auto-orient')
+    args.push('-gravity')
+    args.push(options.gravity)
+    args.push('-crop')
+    args.push(options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y)
+    if (options.quality) {
+    	args.push('-quality')
+    	args.push(options.quality)
+    }
+ 		if (options.background) {
+			args.push('-background')
+			args.push(options.background)
+		}
+    args.push(options.dst)
 
 		child = exec('convert', args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
@@ -233,11 +270,26 @@ exports.rescrop = function(options) {
 		options.gravity = options.gravity || 'Center';
 		options.x = options.x || 0;
 		options.y = options.y || 0;
-		// options.src = quoted_name(options.src);
-		// options.dst = quoted_name(options.dst);
 		options.fill = options.fill ? '^' : '';
-		if (options.quality === undefined) args = [options.src, '-resize', options.width + 'x' + options.height + options.fill, '-auto-orient', '-gravity', options.gravity, '-crop', options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y, options.dst];
-		else args = [options.src, '-resize', options.width + 'x' + options.height, options.fill, '-auto-orient', '-gravity' + options.gravity, '-crop', options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y, '-quality', options.quality, options.dst];
+
+    var args = [options.src]
+    args.push('-flatten')
+    args.push('-auto-orient')
+    args.push('-gravity')
+    args.push(options.gravity)
+    args.push('-resize')
+    args.push(options.width + 'x' + options.height + options.fill)
+    args.push('-crop')
+    args.push(options.cropwidth + 'x'+ options.cropheight + '+' + options.x + '+' + options.y)
+    if (options.quality) {
+    	args.push('-quality')
+    	args.push(options.quality)
+    }
+ 		if (options.background) {
+			args.push('-background')
+			args.push(options.background)
+		}
+    args.push(options.dst)
 
 		child = exec('convert', args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
@@ -264,8 +316,6 @@ exports.thumbnail = function(options) {
 		options.gravity = options.gravity || 'Center';
 		options.x = options.x || 0;
 		options.y = options.y || 0;
-		// options.src = quoted_name(options.src);
-		// options.dst = quoted_name(options.dst);
 
 		info(options.src).then(function(original) {
 
@@ -279,9 +329,27 @@ exports.thumbnail = function(options) {
 			if (original.width > original.height) { resizewidth = ''; }
 			else if (original.height > original.width) { resizeheight = ''; }
 
-			// resize and crop
-			if (options.quality === undefined) args = [options.src, '-interpolate', 'bicubic', '-strip', '-thumbnail',  resizewidth + 'x' + resizeheight, '-gravity', options.gravity, '-auto-orient', '-crop', options.width + 'x'+ options.height + '+' + options.x + '+' + options.y, options.dst];
-			else args = [options.src, '-interpolate', 'bicubic', '-strip', '-thumbnail', resizewidth + 'x' + resizeheight, '-quality', options.quality, '-gravity', options.gravity, '-auto-orient', '-crop', options.width + 'x'+ options.height + '+' + options.x + '+' + options.y, options.dst];
+	    var args = [options.src]
+	    args.push('-flatten')
+	    args.push('-auto-orient')
+	    args.push('-gravity')
+	    args.push(options.gravity)
+	    args.push('-interpolate')
+	    args.push('bicubic')
+	    args.push('-strip')
+	    args.push('-thumbnail')
+	    args.push(resizewidth + 'x' + resizeheight)
+	    args.push('-crop')
+	    args.push(options.width + 'x'+ options.height + '+' + options.x + '+' + options.y)
+	    if (options.quality) {
+	    	args.push('-quality')
+	    	args.push(options.quality)
+	    }
+			if (options.background) {
+				args.push('-background')
+				args.push(options.background)
+			}
+	    args.push(options.dst)
 
 			child = exec('convert', args, function(err, stdout, stderr) {
 				if (err) return deferred.reject(err);
