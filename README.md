@@ -50,11 +50,11 @@ EasyImage offers these promise methods:
 	quality - quality of processed image, 1 to 100
 	gravity - crop position [NorthWest | North | NorthEast | West | Center | East | SouthWest | South | SouthEast], defaults to Center
 	fill - fill area flag, image is resized to completely fill the target crop dimensions, defaults to false
-  background - background color; defaults to "white"
+	background - background color; defaults to "white"
 
 ## Examples
 
-Example 1
+### Example 1: File info
 
     easyimg.info('kitten.jpg').then(
       function(file) {
@@ -66,7 +66,7 @@ Example 1
 
 The first function of the `then` method is the success handler, the second function is the error handler.
 
-Example 2
+### Example 2: Resize and Crop
 
     easyimg.rescrop({
          src:'kitten.jpg', dst:'./output/kitten-thumbnail.jpg',
