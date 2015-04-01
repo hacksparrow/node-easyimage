@@ -31,10 +31,10 @@ EasyImage offers these promise methods:
 	easyimg.crop(<options>) - to crop an image.
 	easyimg.thumbnail(<options>) - to create square thumbnails.
 	easyimg.rescrop(<options>) - to resize and crop and image in one go, useful for creating customzied thumbnails.
-  easyimg.rotate(<options>) - to rotate an image.
-  easyimg.exec(<command>) - when you want to call a custom command to ImageMagick, you will need to take care of escaping special characters etc.
+	easyimg.rotate(<options>) - to rotate an image.
+	easyimg.exec(<command>) - when you want to call a custom command to ImageMagick, you will need to take care of escaping special characters etc.
 
-  **NOTE**: `easyimg.exec()` spawns a subshell.
+	**NOTE**: `easyimg.exec()` spawns a subshell.
 
  The EasyImage options object can have these properties depending on the method. Unrelated options are ignored.
 
@@ -50,7 +50,7 @@ EasyImage offers these promise methods:
 	quality - quality of processed image, 1 to 100
 	gravity - crop position [NorthWest | North | NorthEast | West | Center | East | SouthWest | South | SouthEast], defaults to Center
 	fill - fill area flag, image is resized to completely fill the target crop dimensions, defaults to false
-  background - background color; defaults to "white"
+	background - background color; defaults to "white"
 
 ## Examples
 
