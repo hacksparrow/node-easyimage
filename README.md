@@ -51,6 +51,7 @@ EasyImage offers these promise methods:
 	gravity - crop position [NorthWest | North | NorthEast | West | Center | East | SouthWest | South | SouthEast], defaults to Center
 	fill - fill area flag, image is resized to completely fill the target crop dimensions, defaults to false
   background - background color; defaults to "white"
+  flatten - if present, the image will be flattened (flattening removes alpha channel)
 
 ## Examples
 
