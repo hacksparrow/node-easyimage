@@ -125,7 +125,9 @@ exports.convert = function(options) {
 			args.push('-background')
 			args.push(options.background)
 		}
-		args.push('-flatten')
+		if (options.flatten) {
+			args.push('-flatten');
+		}
 		args.push(options.dst)
 
 		child = exec('convert', args, function(err, stdout, stderr) {
@@ -152,7 +154,9 @@ exports.rotate = function(options) {
 		if (options.src === undefined || options.dst === undefined || options.degree === undefined) return deferred.reject(error_messages['path']);
 
 		var args = [options.src]
-		args.push('-flatten')
+		if (options.flatten) {
+			args.push('-flatten');
+		}
 		args.push('-rotate')
 		args.push(options.degree)
  		if (options.background) {
@@ -186,7 +190,9 @@ exports.resize = function(options) {
 		options.height = options.height || options.width;
 
     var args = [options.src]
-    args.push('-flatten')
+    if (options.flatten) {
+		args.push('-flatten');
+	}
     args.push('-auto-orient')
     args.push('-resize')
     args.push(options.width + 'x' + options.height)
@@ -226,7 +232,9 @@ exports.crop = function(options) {
 		options.y = options.y || 0;
 
     var args = [options.src]
-    args.push('-flatten')
+    if (options.flatten) {
+		args.push('-flatten');
+	}
     args.push('-auto-orient')
     args.push('-gravity')
     args.push(options.gravity)
@@ -273,7 +281,9 @@ exports.rescrop = function(options) {
 		options.fill = options.fill ? '^' : '';
 
     var args = [options.src]
-    args.push('-flatten')
+    if (options.flatten) {
+		args.push('-flatten');
+	}
     args.push('-auto-orient')
     args.push('-gravity')
     args.push(options.gravity)
@@ -330,7 +340,9 @@ exports.thumbnail = function(options) {
 			else if (original.height > original.width) { resizeheight = ''; }
 
 	    var args = [options.src]
-	    args.push('-flatten')
+	    if (options.flatten) {
+			args.push('-flatten');
+		}
 	    args.push('-auto-orient')
 	    args.push('-gravity')
 	    args.push(options.gravity)
