@@ -55,7 +55,7 @@ EasyImage offers these promise methods:
 
 ## Examples
 
-Example 1
+### Example 1: File info
 
     easyimg.info('kitten.jpg').then(
       function(file) {
@@ -67,7 +67,7 @@ Example 1
 
 The first function of the `then` method is the success handler, the second function is the error handler.
 
-Example 2
+### Example 2: Resize and Crop
 
     easyimg.rescrop({
          src:'kitten.jpg', dst:'./output/kitten-thumbnail.jpg',
