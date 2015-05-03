@@ -41,7 +41,7 @@ function info(file) {
 
 		//Basic error handling
 		if (stdout) {
-			var temp = stdout.replace('PixelsPerInch', '').replace('PixelsPerCentimeter', '').split(' ');
+            var temp = stdout.replace(/PixelsPerInch/g, '').replace(/PixelsPerCentimeter/g, '').replace(/Undefined/g, '').split(/\s+/g);
 
 			//Basic error handling:
 			if (temp.length < 7) {
