@@ -29,7 +29,7 @@ var easyimg = require('easyimage');
 EasyImage offers these promise methods:
 
 ```
-easyimg.info(<image_path>) - to retrieve information about an image. Will return an object with the following properties - `type`, `depth`, `width`, `height`, `size`, `density`, `name`, and `path`.
+easyimg.info(<image_path>) - to retrieve information about an image. Will return an object with the following properties - type, depth, width, height, size, density, name, and path.
 easyimg.convert(<options>) - to convert an image from one format to another.
 easyimg.resize(<options>) - to resize an image.
 easyimg.crop(<options>) - to crop an image.
@@ -54,9 +54,9 @@ x - x offset for cropping, defaults to 0.
 y - y offset for cropping, defaults to 0.
 quality - quality of processed image, 1 to 100.
 gravity - crop position [NorthWest | North | NorthEast | West | Center | East | SouthWest | South | SouthEast], defaults to Center.
-fill - fill area flag, image is resized to completely fill the target crop dimensions, defaults to `false`.
+fill - fill area flag, image is resized to completely fill the target crop dimensions, defaults to false.
 background - background color, defaults to "white". If specified, automatically flattens the image.
-flatten - if present, the image will be flattened (flattening removes alpha channel).
+flatten - if present, the image will be flattened (flattening removes alpha channel). Defaults to false.
 ```
 
 ## Examples
@@ -90,7 +90,7 @@ easyimg.rescrop({
   }
 );
 ```
-For more examples check out [test.js](https://github.com/hacksparrow/node-easyimage/blob/master/test.js).
+For more examples check out [test/test.js](https://github.com/hacksparrow/node-easyimage/blob/master/test.js).
 
 ## License (MIT)
 
