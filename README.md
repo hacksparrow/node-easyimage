@@ -43,20 +43,20 @@ easyimg.exec(<command>) - when you want to call a custom command to ImageMagick,
 The EasyImage options object can have these properties depending on the method. Unrelated options are ignored.
 
 ```
-src - path to source image
-dst - path to destination image
-width - width of resized image
-height - height of resized image
-degree - degree of rotation
-cropwidth - width of cropped image, if missing, width will be used instead
-cropheight - height of cropped image, if missing, height will be used instead
-x - x offset for cropping, defaults to 0
-y - y offset for cropping, defaults to 0
-quality - quality of processed image, 1 to 100
-gravity - crop position [NorthWest | North | NorthEast | West | Center | East | SouthWest | South | SouthEast], defaults to Center
-fill - fill area flag, image is resized to completely fill the target crop dimensions, defaults to false
-background - background color; defaults to "white"
-flatten - if present, the image will be flattened (flattening removes alpha channel)
+src - path to source image.
+dst - path to destination image.
+width - width of resized image.
+height - height of resized image.
+degree - degree of rotation.
+cropwidth - width of cropped image, if missing, width will be used instead.
+cropheight - height of cropped image, if missing, height will be used instead.
+x - x offset for cropping, defaults to 0.
+y - y offset for cropping, defaults to 0.
+quality - quality of processed image, 1 to 100.
+gravity - crop position [NorthWest | North | NorthEast | West | Center | East | SouthWest | South | SouthEast], defaults to Center.
+fill - fill area flag, image is resized to completely fill the target crop dimensions, defaults to `false`.
+background - background color, defaults to "white". If specified, automatically flattens the image.
+flatten - if present, the image will be flattened (flattening removes alpha channel).
 ```
 
 ## Examples
