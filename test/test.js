@@ -18,6 +18,7 @@ describe('.info - ', function () {
     describe('valid file type', function () {
         it('should show file info', function () {
             return easyimg.info(srcimg).then(function (file) {
+                //console.log(file);
                 file.should.be.an('object');
                 file.should.have.property('name');
                 file.name.should.be.a('string');

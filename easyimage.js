@@ -38,10 +38,10 @@ function info(file) {
 
 	child = exec('identify', args, function(err, stdout, stderr) {
 		var info = {};
-
+		//console.log(stdout)
 		//Basic error handling
 		if (stdout) {
-            var temp = stdout.replace(/PixelsPerInch/g, '').replace(/PixelsPerCentimeter/g, '').replace(/Undefined/g, '').split(/\s+/g);
+      var temp = stdout.replace(/PixelsPerInch/g, '').replace(/PixelsPerCentimeter/g, '').replace(/Undefined/g, '').split(/\s+/g);
 
 			//Basic error handling:
 			if (temp.length < 7) {
