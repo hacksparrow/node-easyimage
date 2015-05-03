@@ -1,5 +1,5 @@
-var chai = require("chai");
-var chaiAsPromised = require("chai-as-promised");
+var chai = require('chai');
+var chaiAsPromised = require('chai-as-promised');
     chai.use(chaiAsPromised);
     chai.should();
 var assert = chai.assert;
@@ -10,23 +10,38 @@ var rimraf = require('rimraf');
 var outputDir = './output';
 if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir);
 
-var easyimg = require('./easyimage.js');
+var easyimg = require('../easyimage.js');
 var srcimg = 'kitten.jpg';
-var warningimg = 'letter.png';
 
 describe('.info - ', function () {
 
     describe('valid file type', function () {
         it('should show file info', function () {
-            return easyimg.info(srcimg);
+            return easyimg.info(srcimg).then(function (file) {
+                file.should.be.an('object');
+                file.should.have.property('name');
+                file.name.should.be.a('string');
+                file.should.have.property('path');
+                file.path.should.be.a('string');
+                file.should.have.property('type');
+                file.type.should.be.a('string');
+                file.should.have.property('width');
+                file.width.should.be.a('number');
+                file.should.have.property('height');
+                file.height.should.be.a('number');
+                file.should.have.property('depth');
+                file.depth.should.be.a('number');
+                file.should.have.property('size');
+                file.size.should.be.a('number');
+                file.should.have.property('density');
+                file.density.should.be.an('object');
+                file.density.should.have.property('x');
+                file.density.x.should.be.a('number');
+                file.density.should.have.property('y');
+                file.density.y.should.be.a('number');
+            })
         });
     });
-
-    describe('valid file type with warning', function () {
-		it('should show file info', function () {
-			return expect(easyimg.info(warningimg)).to.eventually.have.property('warnings');
-		});
-	});
 
     describe('invalid file type', function () {
         it('should not be supported', function () {
@@ -50,7 +65,7 @@ describe('.convert -', function () {
         return easyimg.convert({src:srcimg, dst: __dirname + '/output/convert.png', quality:10}).then(function (file) {
             file.should.be.a('object');
             file.should.have.property('type');
-            file.type.should.be.equal('PNG');
+            file.type.should.be.equal('png');
             file.name.should.be.equal('convert.png');
         });
 

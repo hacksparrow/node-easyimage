@@ -4,5 +4,5 @@
 *.swp
 *.out
 output/
-try.js
 node_modules/
+temp/

@@ -29,7 +29,7 @@ var easyimg = require('easyimage');
 EasyImage offers these promise methods:
 
 ```
-easyimg.info(<image_path>) - to retrieve information about an image (name, type, width, height, size, depth).
+easyimg.info(<image_path>) - to retrieve information about an image. Will return an object with the following properties - `type`, `depth`, `width`, `height`, `size`, `density`, `name`, and `path`.
 easyimg.convert(<options>) - to convert an image from one format to another.
 easyimg.resize(<options>) - to resize an image.
 easyimg.crop(<options>) - to crop an image.

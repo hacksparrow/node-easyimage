@@ -33,7 +33,7 @@ function info(file) {
 	//file = quoted_name(file);
 	// %z = depth, %m = type, %w = width, %h = height, %b = filesize in byte, %f = filename, %x = density
 	var args = ['-format']
-	args.push('%m %z %w %h %b %x %f')
+	args.push('%m %z %w %h %b %x %y %f')
 	args.push(file)
 
 	child = exec('identify', args, function(err, stdout, stderr) {
@@ -48,13 +48,16 @@ function info(file) {
 				deferred.reject(new Error(stderr || error_messages['unsupported']));
 			} else {
 
-				info.type    = temp[0];
+				info.type    = temp[0].toLowerCase();
 				info.depth   = parseInt(temp[1]);
 				info.width   = parseInt(temp[2]);
 				info.height  = parseInt(temp[3]);
 				info.size    = parseInt(temp[4]);
-				info.density = parseFloat(temp[5]);
-				info.name    = temp.slice(6).join(' ').replace(/(\r\n|\n|\r)/gm, '').trim();
+				info.density = {
+					x: parseFloat(temp[5]),
+					y: parseFloat(temp[6]),
+				};
+				info.name    = temp.slice(7).join(' ').replace(/(\r\n|\n|\r)/gm, '').trim();
 				info.path = file;
 
 				if (stderr) {
@@ -121,13 +124,22 @@ exports.convert = function(options) {
 			args.push('-quality')
 			args.push(options.quality)
 		}
-		if (options.background) {
-			args.push('-background')
-			args.push(options.background)
-		}
+
 		if (options.flatten) {
-			args.push('-flatten');
+			args.push('-flatten')
+			if (options.background) {
+				args.push('-background')
+				args.push(options.background)
+			}	
 		}
+		else {
+			if (options.background) {
+				args.push('-background')
+				args.push(options.background)
+				args.push('-flatten')
+			}	
+		}
+
 		args.push(options.dst)
 
 		child = exec('convert', args, function(err, stdout, stderr) {
@@ -154,9 +166,22 @@ exports.rotate = function(options) {
 		if (options.src === undefined || options.dst === undefined || options.degree === undefined) return deferred.reject(error_messages['path']);
 
 		var args = [options.src]
+
 		if (options.flatten) {
-			args.push('-flatten');
+			args.push('-flatten')
+			if (options.background) {
+				args.push('-background')
+				args.push(options.background)
+			}	
 		}
+		else {
+			if (options.background) {
+				args.push('-background')
+				args.push(options.background)
+				args.push('-flatten')
+			}	
+		}
+
 		args.push('-rotate')
 		args.push(options.degree)
  		if (options.background) {
@@ -190,9 +215,22 @@ exports.resize = function(options) {
 		options.height = options.height || options.width;
 
     var args = [options.src]
-    if (options.flatten) {
-		args.push('-flatten');
-	}
+
+		if (options.flatten) {
+			args.push('-flatten')
+			if (options.background) {
+				args.push('-background')
+				args.push(options.background)
+			}	
+		}
+		else {
+			if (options.background) {
+				args.push('-background')
+				args.push(options.background)
+				args.push('-flatten')
+			}	
+		}
+
     args.push('-auto-orient')
     args.push('-resize')
     args.push(options.width + 'x' + options.height)
@@ -232,9 +270,22 @@ exports.crop = function(options) {
 		options.y = options.y || 0;
 
     var args = [options.src]
-    if (options.flatten) {
-		args.push('-flatten');
-	}
+
+		if (options.flatten) {
+			args.push('-flatten')
+			if (options.background) {
+				args.push('-background')
+				args.push(options.background)
+			}	
+		}
+		else {
+			if (options.background) {
+				args.push('-background')
+				args.push(options.background)
+				args.push('-flatten')
+			}	
+		}
+
     args.push('-auto-orient')
     args.push('-gravity')
     args.push(options.gravity)
@@ -281,9 +332,22 @@ exports.rescrop = function(options) {
 		options.fill = options.fill ? '^' : '';
 
     var args = [options.src]
-    if (options.flatten) {
-		args.push('-flatten');
-	}
+
+		if (options.flatten) {
+			args.push('-flatten')
+			if (options.background) {
+				args.push('-background')
+				args.push(options.background)
+			}	
+		}
+		else {
+			if (options.background) {
+				args.push('-background')
+				args.push(options.background)
+				args.push('-flatten')
+			}	
+		}
+
     args.push('-auto-orient')
     args.push('-gravity')
     args.push(options.gravity)
@@ -340,9 +404,22 @@ exports.thumbnail = function(options) {
 			else if (original.height > original.width) { resizeheight = ''; }
 
 	    var args = [options.src]
-	    if (options.flatten) {
-			args.push('-flatten');
-		}
+
+			if (options.flatten) {
+				args.push('-flatten')
+				if (options.background) {
+					args.push('-background')
+					args.push(options.background)
+				}	
+			}
+			else {
+				if (options.background) {
+					args.push('-background')
+					args.push(options.background)
+					args.push('-flatten')
+				}	
+			}
+
 	    args.push('-auto-orient')
 	    args.push('-gravity')
 	    args.push(options.gravity)
