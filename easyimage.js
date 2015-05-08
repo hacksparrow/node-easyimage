@@ -42,6 +42,9 @@ function info(file) {
 
 		// find rounding max. absolute error, may not be useful
 		// var maxAbsError = unit[sizeArray[2]] / 2;
+		// if (sizeArray[1].indexOf('.') !== -1) {
+		// 	maxAbsError /= 10;
+		// }
 		// console.log(maxAbsError);
 
 		return parseFloat(sizeArray[1]) * unit[sizeArray[2]];
