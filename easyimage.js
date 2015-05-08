@@ -29,9 +29,26 @@ var error_messages = {
 function info(file) {
 
 	var deferred = Q.defer();
+	var parseSize = function(sizeString) {
+		var unit = {
+			KB: 1000,
+			MB: 1000000,            // =1000^2
+			GB: 1000000000,         // =1000^3
+			TB: 1000000000000       // =1000^4
+		};
+
+		var rx = /^(\d\.?\d*)([KMGT]B)$/;  // regex for extract the float value and its unit
+		var sizeArray = rx.exec(sizeString);
+
+		// find rounding max. absolute error, may not be useful
+		// var maxAbsError = unit[sizeArray[2]] / 2;
+		// console.log(maxAbsError);
+
+		return parseFloat(sizeArray[1]) * unit[sizeArray[2]];
+	};
 
 	//file = quoted_name(file);
-	// %z = depth, %m = type, %w = width, %h = height, %b = filesize in byte, %f = filename, %x = density
+	// %z = depth, %m = type, %w = width, %h = height, %b = rounded filesize in byte, %f = filename, %x = density
 	var args = ['-format']
 	args.push('%m %z %w %h %b %x %y %f')
 	args.push(file)
@@ -52,7 +69,7 @@ function info(file) {
 				info.depth   = parseInt(temp[1]);
 				info.width   = parseInt(temp[2]);
 				info.height  = parseInt(temp[3]);
-				info.size    = parseInt(temp[4]);
+				info.size    = parseSize(temp[4]);
 				info.density = {
 					x: parseFloat(temp[5]),
 					y: parseFloat(temp[6]),
