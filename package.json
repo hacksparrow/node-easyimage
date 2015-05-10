@@ -1,10 +1,10 @@
 {
   "name": "easyimage",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A promise-based, user-friendly module for processing images in Node.js",
   "main": "easyimage.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha test/"
   },
   "author": "Hage Yaapa <captain@hacksparrow.com>",
   "keywords": [

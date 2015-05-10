@@ -30,22 +30,17 @@ function info(file) {
 
 	var deferred = Q.defer();
 	var parseSize = function(sizeString) {
+
 		var unit = {
+			B: 1,
 			KB: 1000,
 			MB: 1000000,            // =1000^2
 			GB: 1000000000,         // =1000^3
 			TB: 1000000000000       // =1000^4
 		};
 
-		var rx = /^(\d\.?\d*)([KMGT]B)$/;  // regex for extract the float value and its unit
+		var rx = /^(\d\.?\d*)([KMGT]?B)$/;  // regex for extract the float value and its unit
 		var sizeArray = rx.exec(sizeString);
-
-		// find rounding max. absolute error, may not be useful
-		// var maxAbsError = unit[sizeArray[2]] / 2;
-		// if (sizeArray[1].indexOf('.') !== -1) {
-		// 	maxAbsError /= 10;
-		// }
-		// console.log(maxAbsError);
 
 		return parseFloat(sizeArray[1]) * unit[sizeArray[2]];
 	};
