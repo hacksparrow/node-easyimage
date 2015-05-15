@@ -39,7 +39,7 @@ function info(file) {
 			TB: 1000000000000       // =1000^4
 		};
 
-		var rx = /^(\d\.?\d*)([KMGT]?B)$/;  // regex for extract the float value and its unit
+		var rx = /^(\d*\.?\d*)([KMGT]?B)$/;  // regex for extract the float value and its unit
 		var sizeArray = rx.exec(sizeString);
 
 		return parseFloat(sizeArray[1]) * unit[sizeArray[2]];
