@@ -2,6 +2,7 @@
   "name": "easyimage",
   "version": "2.0.3",
   "description": "A promise-based, user-friendly module for processing images in Node.js",
+  "license": "MIT",
   "main": "easyimage.js",
   "scripts": {
     "test": "cd test && mocha"
