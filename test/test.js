@@ -111,12 +111,32 @@ describe('.resize -', function () {
         });
     });
 
-    it('should resize an image', function () {
+    it('should resize an image with preserved aspect ratio', function () {
 
-        return easyimg.resize({src:srcimg, dst: __dirname + '/output/resize.jpg', width:640, height:480}).then(function (file) {
+        return easyimg.resize({src:srcimg, dst: __dirname + '/output/resize.jpg', width:640, height:400}).then(function (file) {
+            file.should.be.a('object');
+            file.should.have.property('width');
+            /*
+             * The original aspect ratio is equal ~1.333.
+             * Imagemagick calculates it with the lowest common
+             * denominator in our case the height, thats why it is
+             * preserved and width will be adjusted as follow
+             * 400 * 1.33 = ~533
+             */
+            file.width.should.be.equal(533);
+            file.height.should.be.equal(400);
+            file.name.should.be.equal('resize.jpg');
+        });
+
+    });
+
+    it('should resize an image with ignored aspect ratio', function () {
+
+        return easyimg.resize({src:srcimg, dst: __dirname + '/output/resize.jpg', width:640, height:400, ignoreAspectRatio: true}).then(function (file) {
             file.should.be.a('object');
             file.should.have.property('width');
             file.width.should.be.equal(640);
+            file.height.should.be.equal(400);
             file.name.should.be.equal('resize.jpg');
         });
 
