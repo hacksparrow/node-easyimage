@@ -57,6 +57,7 @@ gravity - crop position [NorthWest | North | NorthEast | West | Center | East | 
 fill - fill area flag, image is resized to completely fill the target crop dimensions, defaults to false.
 background - background color, defaults to "white". If specified, automatically flattens the image.
 flatten - if present, the image will be flattened (flattening removes alpha channel). Defaults to false.
+ignoreAspectRatio - if set to true, resize will ignore aspect ratio
 ```
 
 ## Examples
