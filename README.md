@@ -91,7 +91,7 @@ easyimg.rescrop({
   }
 );
 ```
-For more examples check out [test/test.js](https://github.com/hacksparrow/node-easyimage/blob/master/test.js).
+For more examples check out [test/test.js](https://github.com/hacksparrow/node-easyimage/blob/master/test/test.js).
 
 ## License (MIT)
 
