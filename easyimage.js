@@ -225,9 +225,7 @@ exports.resize = function(options) {
 	function imgResize() {
 
 		if (options.src === undefined || options.dst === undefined) return deferred.reject(error_messages['path']);
-		if (options.width === undefined) return deferred.reject(error_messages['dim']);
-
-		options.height = options.height || options.width;
+		if (options.width === undefined && options.height === undefined) return deferred.reject(error_messages['dim']);
 
     var args = [options.src]
 
