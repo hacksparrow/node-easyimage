@@ -228,7 +228,7 @@ exports.resize = function(options) {
 		if (options.width === undefined) return deferred.reject(error_messages['dim']);
 
 		options.height = options.height || options.width;
-
+		options.gravity = options.gravity || 'Center';
     var args = [options.src]
 
 		if (options.flatten) {
@@ -260,6 +260,11 @@ exports.resize = function(options) {
 			args.push('-background')
 			args.push(options.background)
 		}
+		args.push('-gravity')
+		args.push(options.gravity)
+		args.push('-extent')
+		args.push(options.width + 'x' + options.height)
+		
     args.push(options.dst)
 
 		child = exec('convert', args, function(err, stdout, stderr) {
