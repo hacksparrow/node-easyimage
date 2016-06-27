@@ -15,7 +15,10 @@ On CentOS
 ```
 $ yum install imagemagick
 ```
+On Windows
 
+Download `Windows Binary Release` from [imagemagick.org](https://www.imagemagick.org/script/binary-releases.php#windows).
+From version 7 and above you have to tick off `Install legacy utilities (e.g. convert)` during installation to get all necessary binaries for EasyImage to work.
 ## Installation
 ```
 $ npm install easyimage
