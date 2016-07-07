@@ -7,16 +7,23 @@ var path = require('path');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
 
+var cmdprefix = false;
 // check if ImageMagick is available on the system
 command('convert -version', function(err, stdout, stderr) {
-
-	// ImageMagick is NOT available on the system, exit with download info
 	if (err) {
-		console.log(' ImageMagick Not Found'.red)
-		console.log(' EasyImage requires ImageMagick to work. Install it from http://www.imagemagick.org/script/binary-releases.php.\n')
+		command('magick -version', function(err, stdout, stderr) {
+			if (err) {
+				// ImageMagick is NOT available on the system, exit with download info
+				console.log(' ImageMagick Not Found'.red)
+				console.log(' EasyImage requires ImageMagick to work. Install it from http://www.imagemagick.org/script/binary-releases.php.\n')
+			} else {
+				// Alternate usage method used requiring the prefix
+				cmdprefix = true;
+			}
+		});
 	}
 
-})
+});
 
 var error_messages = {
 	'path': 'Missing image paths.\nMake sure both source and destination files are specified.',
@@ -47,16 +54,18 @@ function info(file) {
 
 	//file = quoted_name(file);
 	// %z = depth, %m = type, %w = width, %h = height, %b = rounded filesize in byte, %f = filename, %x = density
-	var args = ['-format']
-	args.push('%m %z %w %h %b %x %y %f')
-	args.push(file)
+	var args = [];
+	if (cmdprefix) args.push('identify')
+	args.push('-format');
+	args.push('"%m %z %w %h %b %x %y %f"');
+	args.push(file);
 
-	child = exec('identify', args, function(err, stdout, stderr) {
+	child = exec(cmdprefix?'magick':'identify', args, function(err, stdout, stderr) {
 		var info = {};
-		//console.log(stdout)
+		console.log('info: ',err,stdout);
 		//Basic error handling
 		if (stdout) {
-      var temp = stdout.replace(/PixelsPerInch/g, '').replace(/PixelsPerCentimeter/g, '').replace(/Undefined/g, '').split(/\s+/g);
+			var temp = stdout.replace(/(?:PixelsPerInch|PixelsPerCentimeter|Undefined|")/g, '').split(/\s+/g);
 
 			//Basic error handling:
 			if (temp.length < 7) {
@@ -134,7 +143,9 @@ exports.convert = function(options) {
 
 		if (options.src === undefined || options.dst === undefined) return deferred.reject(error_messages['path']);
 
-		var args = [options.src]
+		var args = [];
+		if (cmdprefix) args.push('convert');
+		args.push(options.src);
 		if (options.quality) {
 			args.push('-quality')
 			args.push(options.quality)
@@ -157,7 +168,7 @@ exports.convert = function(options) {
 
 		args.push(options.dst)
 
-		child = exec('convert', args, function(err, stdout, stderr) {
+		child = exec(cmdprefix?'magick':'convert', args, function(err, stdout, stderr) {
 
 			if (err) deferred.reject(err);
 			else deferred.resolve(info(options.dst));
@@ -180,7 +191,9 @@ exports.rotate = function(options) {
 
 		if (options.src === undefined || options.dst === undefined || options.degree === undefined) return deferred.reject(error_messages['path']);
 
-		var args = [options.src]
+		var args = [];
+		if (cmdprefix) args.push('convert');
+		args.push(options.src);
 
 		if (options.flatten) {
 			args.push('-flatten')
@@ -205,7 +218,7 @@ exports.rotate = function(options) {
 		}
 		args.push(options.dst)
 
-		child = exec('convert', args, function(err, stdout, stderr) {
+		child = exec(cmdprefix?'magick':'convert', args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
 			else deferred.resolve(info(options.dst));
 		});
@@ -229,7 +242,9 @@ exports.resize = function(options) {
 
 		options.height = options.height || options.width;
 
-    var args = [options.src]
+		var args = [];
+		if (cmdprefix) args.push('convert');
+		args.push(options.src);
 
 		if (options.flatten) {
 			args.push('-flatten')
@@ -262,7 +277,7 @@ exports.resize = function(options) {
 		}
     args.push(options.dst)
 
-		child = exec('convert', args, function(err, stdout, stderr) {
+		child = exec(cmdprefix?'magick':'convert', args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
 			deferred.resolve(info(options.dst));
 		});
@@ -287,7 +302,9 @@ exports.crop = function(options) {
 		options.x = options.x || 0;
 		options.y = options.y || 0;
 
-    var args = [options.src]
+		var args = [];
+		if (cmdprefix) args.push('convert');
+		args.push(options.src);
 
 		if (options.flatten) {
 			args.push('-flatten')
@@ -319,7 +336,7 @@ exports.crop = function(options) {
 		}
     args.push(options.dst)
 
-		child = exec('convert', args, function(err, stdout, stderr) {
+		child = exec(cmdprefix?'magick':'convert', args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
 			deferred.resolve(info(options.dst));
 		});
@@ -349,7 +366,9 @@ exports.rescrop = function(options) {
 		options.y = options.y || 0;
 		options.fill = options.fill ? '^' : '';
 
-    var args = [options.src]
+		var args = [];
+		if (cmdprefix) args.push('convert');
+		args.push(options.src);
 
 		if (options.flatten) {
 			args.push('-flatten')
@@ -383,7 +402,7 @@ exports.rescrop = function(options) {
 		}
     args.push(options.dst)
 
-		child = exec('convert', args, function(err, stdout, stderr) {
+		child = exec(cmdprefix?'magick':'convert', args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
 			deferred.resolve(info(options.dst));
 		});
@@ -421,7 +440,9 @@ exports.thumbnail = function(options) {
 			if (original.width > original.height) { resizewidth = ''; }
 			else if (original.height > original.width) { resizeheight = ''; }
 
-	    var args = [options.src]
+			var args = [];
+			if (cmdprefix) args.push('convert');
+			args.push(options.src);
 
 			if (options.flatten) {
 				args.push('-flatten')
@@ -458,7 +479,7 @@ exports.thumbnail = function(options) {
 			}
 	    args.push(options.dst)
 
-			child = exec('convert', args, function(err, stdout, stderr) {
+			child = exec(cmdprefix?'magick':'convert', args, function(err, stdout, stderr) {
 				if (err) return deferred.reject(err);
 				deferred.resolve(info(options.dst));
 			});
