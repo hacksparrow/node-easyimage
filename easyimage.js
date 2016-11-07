@@ -41,7 +41,10 @@ function info(file) {
 
 		var rx = /^(\d*\.?\d*)([KMGT]?B)$/;  // regex for extract the float value and its unit
 		var sizeArray = rx.exec(sizeString);
-
+		// if imageMagick didn't return sizeString with unit on CentOS machine
+		if (!sizeArray)
+			return parseFloat(sizeString)
+		
 		return parseFloat(sizeArray[1]) * unit[sizeArray[2]];
 	};
 
