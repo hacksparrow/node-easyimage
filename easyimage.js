@@ -7,16 +7,37 @@ var path = require('path');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
 
-// check if ImageMagick is available on the system
-command('convert -version', function(err, stdout, stderr) {
-
-	// ImageMagick is NOT available on the system, exit with download info
+// check if ImageMagick 7.x is available on the system
+command('magick -version', function(err, stdout, stderr) {
+	// ImageMagick 7.x is NOT available on the system
 	if (err) {
-		console.log(' ImageMagick Not Found'.red)
-		console.log(' EasyImage requires ImageMagick to work. Install it from http://www.imagemagick.org/script/binary-releases.php.\n')
-	}
+		// check if older ImageMagick is available on the system
+		command('convert -version', function(err, stdout, stderr) {
 
-})
+			// ImageMagick is NOT available on the system, exit with download info
+			if (err) {
+				console.log(' ImageMagick Not Found'.red)
+				console.log(' EasyImage requires ImageMagick to work. Install it from http://www.imagemagick.org/script/binary-releases.php.\n')
+
+				magick = function(command, args, callback) {
+					console.log('No ImageMagick available. Cannot execute command.'.red);
+				}
+			}
+			else {
+				// Older ImageMagick is available - use that
+				magick = function(command, args, callback) {
+					return exec(command, args, callback);
+				}
+			}
+		});
+	}
+	else {
+		// ImageMagick 7.x is available - use that
+		magick = function(command, args, callback) {
+			return exec('magick', [command].concat(args), callback);
+		}
+	}
+});
 
 var error_messages = {
 	'path': 'Missing image paths.\nMake sure both source and destination files are specified.',
@@ -51,7 +72,7 @@ function info(file) {
 	args.push('%m %z %w %h %b %x %y %f')
 	args.push(file)
 
-	child = exec('identify', args, function(err, stdout, stderr) {
+	child = magick('identify', args, function(err, stdout, stderr) {
 		var info = {};
 		//console.log(stdout)
 		//Basic error handling
@@ -145,19 +166,19 @@ exports.convert = function(options) {
 			if (options.background) {
 				args.push('-background')
 				args.push(options.background)
-			}	
+			}
 		}
 		else {
 			if (options.background) {
 				args.push('-background')
 				args.push(options.background)
 				args.push('-flatten')
-			}	
+			}
 		}
 
 		args.push(options.dst)
 
-		child = exec('convert', args, function(err, stdout, stderr) {
+		child = magick('convert', args, function(err, stdout, stderr) {
 
 			if (err) deferred.reject(err);
 			else deferred.resolve(info(options.dst));
@@ -187,14 +208,14 @@ exports.rotate = function(options) {
 			if (options.background) {
 				args.push('-background')
 				args.push(options.background)
-			}	
+			}
 		}
 		else {
 			if (options.background) {
 				args.push('-background')
 				args.push(options.background)
 				args.push('-flatten')
-			}	
+			}
 		}
 
 		args.push('-rotate')
@@ -205,7 +226,7 @@ exports.rotate = function(options) {
 		}
 		args.push(options.dst)
 
-		child = exec('convert', args, function(err, stdout, stderr) {
+		child = magick('convert', args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
 			else deferred.resolve(info(options.dst));
 		});
@@ -236,14 +257,14 @@ exports.resize = function(options) {
 			if (options.background) {
 				args.push('-background')
 				args.push(options.background)
-			}	
+			}
 		}
 		else {
 			if (options.background) {
 				args.push('-background')
 				args.push(options.background)
 				args.push('-flatten')
-			}	
+			}
 		}
 
     args.push('-auto-orient')
@@ -262,7 +283,7 @@ exports.resize = function(options) {
 		}
     args.push(options.dst)
 
-		child = exec('convert', args, function(err, stdout, stderr) {
+		child = magick('convert', args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
 			deferred.resolve(info(options.dst));
 		});
@@ -294,14 +315,14 @@ exports.crop = function(options) {
 			if (options.background) {
 				args.push('-background')
 				args.push(options.background)
-			}	
+			}
 		}
 		else {
 			if (options.background) {
 				args.push('-background')
 				args.push(options.background)
 				args.push('-flatten')
-			}	
+			}
 		}
 
     args.push('-auto-orient')
@@ -319,7 +340,7 @@ exports.crop = function(options) {
 		}
     args.push(options.dst)
 
-		child = exec('convert', args, function(err, stdout, stderr) {
+		child = magick('convert', args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
 			deferred.resolve(info(options.dst));
 		});
@@ -356,14 +377,14 @@ exports.rescrop = function(options) {
 			if (options.background) {
 				args.push('-background')
 				args.push(options.background)
-			}	
+			}
 		}
 		else {
 			if (options.background) {
 				args.push('-background')
 				args.push(options.background)
 				args.push('-flatten')
-			}	
+			}
 		}
 
     args.push('-auto-orient')
@@ -383,7 +404,7 @@ exports.rescrop = function(options) {
 		}
     args.push(options.dst)
 
-		child = exec('convert', args, function(err, stdout, stderr) {
+		child = magick('convert', args, function(err, stdout, stderr) {
 			if (err) deferred.reject(err);
 			deferred.resolve(info(options.dst));
 		});
@@ -428,14 +449,14 @@ exports.thumbnail = function(options) {
 				if (options.background) {
 					args.push('-background')
 					args.push(options.background)
-				}	
+				}
 			}
 			else {
 				if (options.background) {
 					args.push('-background')
 					args.push(options.background)
 					args.push('-flatten')
-				}	
+				}
 			}
 
 	    args.push('-auto-orient')
@@ -458,7 +479,7 @@ exports.thumbnail = function(options) {
 			}
 	    args.push(options.dst)
 
-			child = exec('convert', args, function(err, stdout, stderr) {
+			child = magick('convert', args, function(err, stdout, stderr) {
 				if (err) return deferred.reject(err);
 				deferred.resolve(info(options.dst));
 			});
