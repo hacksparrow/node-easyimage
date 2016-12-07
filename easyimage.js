@@ -217,6 +217,33 @@ exports.rotate = function(options) {
 	return deferred.promise;
 };
 
+// auto-orient a file
+exports.autoOrient = function(options) {
+
+	var deferred = Q.defer();
+
+	function imgAutoOrient() {
+
+		if (options.src === undefined || options.dst === undefined) return deferred.reject(error_messages['path']);
+
+		var args = [options.src];
+
+		args.push('-auto-orient');
+
+		args.push(options.dst);
+
+		child = exec('convert', args, function(err, stdout, stderr) {
+			if (err) deferred.reject(err);
+			else deferred.resolve(info(options.dst));
+		});
+
+	}
+
+	directoryCheck(options, imgAutoOrient);
+
+	return deferred.promise;
+};
+
 // resize an image
 exports.resize = function(options) {
 
