@@ -102,6 +102,34 @@ describe('.rotate -', function () {
 
 });
 
+describe('.auto-orient -', function () {
+
+    afterEach(function(done) {
+        fs.unlink(__dirname + '/output/autoOrient.jpg', function() {
+            /* ignore any error unlinking */
+            done();
+        });
+    });
+
+    it('should auto-orient the image (90 degree in this test)', function () {
+
+        return easyimg.info('kittenar.jpg').then(function(info){
+            info.should.have.property('width');
+            info.should.have.property('height');
+
+            // Mainly check only if width and height are swaped
+            return easyimg.autoOrient({src:'kittenar.jpg', dst: __dirname + '/output/autoOrient.jpg'}).then(function (file) {
+                file.should.be.a('object');
+                file.name.should.be.equal('autoOrient.jpg');
+                file.should.have.property('width');
+                file.width.should.be.equal(info.height);
+                file.height.should.be.equal(info.width);
+            });
+        })
+    });
+
+});
+
 describe('.resize -', function () {
 
     afterEach(function(done) {
