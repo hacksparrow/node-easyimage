@@ -442,7 +442,7 @@ exports.thumbnail = function(options) {
 	    args.push('-gravity')
 	    args.push(options.gravity)
 	    args.push('-interpolate')
-	    args.push('bicubic')
+	    args.push('catrom')
 	    args.push('-strip')
 	    args.push('-thumbnail')
 	    args.push(resizewidth + 'x' + resizeheight)
