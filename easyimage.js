@@ -31,9 +31,9 @@ function info(file) {
 	var deferred = Q.defer();
 
 	//file = quoted_name(file);
-	// %z = depth, %m = type, %w = width, %h = height, %b = filesize in byte, %f = filename, %x = density
+	// %z = depth, %m = type, %w = width, %h = height, %b = filesize in byte, %f = filename, %x = density, %[orientation] = orientation
 	var args = ['-format']
-	args.push('%m %z %w %h %b %x %f')
+	args.push('%m %z %w %h %b %[orientation] %x %f')
 	args.push(file)
 
 	child = exec('identify', args, function(err, stdout, stderr) {
@@ -44,7 +44,7 @@ function info(file) {
 			var temp = stdout.replace('PixelsPerInch', '').replace('PixelsPerCentimeter', '').split(' ');
 
 			//Basic error handling:
-			if (temp.length < 7) {
+			if (temp.length < 8) {
 				deferred.reject(new Error(stderr || error_messages['unsupported']));
 			} else {
 
@@ -53,8 +53,9 @@ function info(file) {
 				info.width   = parseInt(temp[2]);
 				info.height  = parseInt(temp[3]);
 				info.size    = parseInt(temp[4]);
-				info.density = parseFloat(temp[5]);
-				info.name    = temp.slice(6).join(' ').replace(/(\r\n|\n|\r)/gm, '').trim();
+				info.orientation = temp[5];
+				info.density = parseFloat(temp[6]);
+				info.name    = temp.slice(7).join(' ').replace(/(\r\n|\n|\r)/gm, '').trim();
 				info.path = file;
 
 				if (stderr) {
