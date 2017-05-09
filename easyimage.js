@@ -6,17 +6,7 @@ var child;
 var path = require('path');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
-
-// check if ImageMagick is available on the system
-command('convert -version', function(err, stdout, stderr) {
-
-	// ImageMagick is NOT available on the system, exit with download info
-	if (err) {
-		console.log(' ImageMagick Not Found'.red)
-		console.log(' EasyImage requires ImageMagick to work. Install it from http://www.imagemagick.org/script/binary-releases.php.\n')
-	}
-
-})
+var semver = require('semver');
 
 var error_messages = {
 	'path': 'Missing image paths.\nMake sure both source and destination files are specified.',
@@ -24,6 +14,37 @@ var error_messages = {
 	'restricted': 'The command you are trying to execute is prohibited.',
 	'unsupported': 'File not supported.',
 };
+
+/**
+ * Gets ImageMagick version.
+ * @return {Promise}
+ */
+function getImageMagickVersion() {
+	var deferred = Q.defer();
+
+	command('convert -version', function(err, stdout) {
+		if(err) {
+			var errMessage = [
+				' ImageMagick Not Found'.red,
+				' EasyImage requires ImageMagick to work. Install it from http://www.imagemagick.org/script/binary-releases.php.'
+			].join('\n');
+			deferred.reject(new Error(errMessage));
+        } else {
+			var imVersion = stdout.match(/^version: imagemagick (.+) q\d+/i)[1];
+			deferred.resolve(imVersion);
+		}
+    });
+
+    return deferred.promise;
+}
+
+var imVersion;
+getImageMagickVersion().then(function(version) {
+	imVersion = version;
+}, function(err) {
+	console.log(err.message);
+});
+
 
 // general info function
 function info(file) {
@@ -442,7 +463,7 @@ exports.thumbnail = function(options) {
 	    args.push('-gravity')
 	    args.push(options.gravity)
 	    args.push('-interpolate')
-	    args.push('catrom')
+	    args.push(semver.gt(imVersion, '6.7.7-7') ? 'catrom' : 'bicubic');
 	    args.push('-strip')
 	    args.push('-thumbnail')
 	    args.push(resizewidth + 'x' + resizeheight)
