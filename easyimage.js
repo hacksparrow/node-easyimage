@@ -463,7 +463,7 @@ exports.thumbnail = function(options) {
 	    args.push('-gravity')
 	    args.push(options.gravity)
 	    args.push('-interpolate')
-	    args.push(semver.gt(imVersion, '6.7.7-7') ? 'catrom' : 'bicubic');
+	    args.push(semver.gte(imVersion, '6.7.7-7') ? 'catrom' : 'bicubic');
 	    args.push('-strip')
 	    args.push('-thumbnail')
 	    args.push(resizewidth + 'x' + resizeheight)
