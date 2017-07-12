@@ -6,7 +6,6 @@ var child;
 var path = require('path');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
-var semver = require('semver');
 
 var error_messages = {
 	'path': 'Missing image paths.\nMake sure both source and destination files are specified.',
@@ -29,22 +28,14 @@ function getImageMagickVersion() {
 				' EasyImage requires ImageMagick to work. Install it from http://www.imagemagick.org/script/binary-releases.php.'
 			].join('\n');
 			deferred.reject(new Error(errMessage));
-        } else {
+		} else {
 			var imVersion = stdout.match(/^version: imagemagick (.+) q\d+/i)[1];
 			deferred.resolve(imVersion);
 		}
-    });
+	});
 
-    return deferred.promise;
+	return deferred.promise;
 }
-
-var imVersion;
-getImageMagickVersion().then(function(version) {
-	imVersion = version;
-}, function(err) {
-	console.log(err.message);
-});
-
 
 // general info function
 function info(file) {
@@ -421,71 +412,78 @@ exports.thumbnail = function(options) {
 	var deferred = Q.defer();
 
 	function imgThumbnail() {
+		getImageMagickVersion()
+			.then(function(imVersion) {
+				console.log('imVersion:', imVersion);
 
-		if (options.src === undefined || options.dst === undefined) return deferred.reject(error_messages['path']);
-		if (options.width === undefined) return deferred.reject(error_messages['dim']);
+				if (options.src === undefined || options.dst === undefined) return deferred.reject(error_messages['path']);
+				if (options.width === undefined) return deferred.reject(error_messages['dim']);
 
-		options.height = options.height || options.width;
-		options.gravity = options.gravity || 'Center';
-		options.x = options.x || 0;
-		options.y = options.y || 0;
+				options.height = options.height || options.width;
+				options.gravity = options.gravity || 'Center';
+				options.x = options.x || 0;
+				options.y = options.y || 0;
 
-		info(options.src).then(function(original) {
+				info(options.src).then(function(original) {
 
-			// dimensions come as strings, convert them to number
-			original.width = +original.width;
-			original.height = +original.height;
+					// dimensions come as strings, convert them to number
+					original.width = +original.width;
+					original.height = +original.height;
 
-			var resizewidth = options.width;
-			var resizeheight = options.height;
+					var resizewidth = options.width;
+					var resizeheight = options.height;
 
-			if (original.width > original.height) { resizewidth = ''; }
-			else if (original.height > original.width) { resizeheight = ''; }
+					if (original.width > original.height) { resizewidth = ''; }
+					else if (original.height > original.width) { resizeheight = ''; }
 
-	    var args = [options.src]
+					var args = [options.src]
 
-			if (options.flatten) {
-				args.push('-flatten')
-				if (options.background) {
-					args.push('-background')
-					args.push(options.background)
-				}	
-			}
-			else {
-				if (options.background) {
-					args.push('-background')
-					args.push(options.background)
-					args.push('-flatten')
-				}	
-			}
+					if (options.flatten) {
+						args.push('-flatten')
+						if (options.background) {
+							args.push('-background')
+							args.push(options.background)
+						}
+					}
+					else {
+						if (options.background) {
+							args.push('-background')
+							args.push(options.background)
+							args.push('-flatten')
+						}
+					}
 
-	    args.push('-auto-orient')
-	    args.push('-gravity')
-	    args.push(options.gravity)
-	    args.push('-interpolate')
-	    args.push(semver.gte(imVersion, '6.7.7-7') ? 'catrom' : 'bicubic');
-	    args.push('-strip')
-	    args.push('-thumbnail')
-	    args.push(resizewidth + 'x' + resizeheight)
-	    args.push('-crop')
-	    args.push(options.width + 'x'+ options.height + '+' + options.x + '+' + options.y)
-	    if (options.quality) {
-	    	args.push('-quality')
-	    	args.push(options.quality)
-	    }
-			if (options.background) {
-				args.push('-background')
-				args.push(options.background)
-			}
-	    args.push(options.dst)
+					args.push('-auto-orient')
+					args.push('-gravity')
+					args.push(options.gravity)
+					args.push('-interpolate')
+					args.push(imVersion.match(/^6\.7.+$/) ? 'catrom' : 'bicubic');
+					args.push('-strip')
+					args.push('-thumbnail')
+					args.push(resizewidth + 'x' + resizeheight)
+					args.push('-crop')
+					args.push(options.width + 'x'+ options.height + '+' + options.x + '+' + options.y)
+					if (options.quality) {
+						args.push('-quality')
+						args.push(options.quality)
+					}
+					if (options.background) {
+						args.push('-background')
+						args.push(options.background)
+					}
+					args.push(options.dst)
 
-			child = exec('convert', args, function(err, stdout, stderr) {
-				if (err) return deferred.reject(err);
-				deferred.resolve(info(options.dst));
+					child = exec('convert', args, function(err, stdout, stderr) {
+						if (err) return deferred.reject(err);
+						deferred.resolve(info(options.dst));
+					});
+
+				}, function (err) { deferred.reject(err); });
+			})
+			.catch(function(err) {
+				console.error(err.message);
+				deferred.reject(err);
 			});
-
-		}, function (err) { deferred.reject(err); });
-
 	}
 
 	directoryCheck(options, imgThumbnail)
