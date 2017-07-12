@@ -457,7 +457,7 @@ exports.thumbnail = function(options) {
 					args.push('-gravity')
 					args.push(options.gravity)
 					args.push('-interpolate')
-					args.push(imVersion.match(/^6\.7.+$/) ? 'catrom' : 'bicubic');
+					args.push(imVersion.match(/^6\.[7-9]\.\d-\d+$/) || imVersion.match(/^7\.\d\.\d-\d+$/) ? 'catrom' : 'bicubic');
 					args.push('-strip')
 					args.push('-thumbnail')
 					args.push(resizewidth + 'x' + resizeheight)
