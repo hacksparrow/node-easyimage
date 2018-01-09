@@ -1,5 +1,8 @@
+sudo: required
 language: node_js
 node_js:
+  - "node"
+  - "lts/*"
   - "0.10"
   - "0.8"
 before_install:

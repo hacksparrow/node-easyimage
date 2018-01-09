@@ -1,13 +1,23 @@
 {
   "name": "easyimage",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "A promise-based, user-friendly module for processing images in Node.js",
   "license": "MIT",
   "main": "easyimage.js",
   "scripts": {
     "test": "cd test && mocha"
   },
-  "author": "Hage Yaapa <captain@hacksparrow.com>",
+  "author": {
+    "name": "Hage Yaapa",
+    "email": "captain@hacksparrow.com"
+  },
+  "maintainers": [
+    {
+      "name": "Kevin Gravier",
+      "email": "kevin@mrkmg.com",
+      "web": "https://github.com/mrkmg"
+    }
+  ],
   "keywords": [
     "imagemagick",
     "image",
@@ -21,7 +31,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://git@github.com:hacksparrow/node-easyimage.git"
+    "url": "https://github.com/hacksparrow/node-easyimage.git"
   },
   "dependencies": {
     "colors": "^1.0.3",
@@ -29,9 +39,9 @@
     "q": "^1.0.1"
   },
   "devDependencies": {
-    "chai": "^1.9.1",
-    "chai-as-promised": "^4.1.1",
-    "mocha": "^1.21.4",
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^4.1.0",
     "rimraf": "^2.2.8"
   }
 }
