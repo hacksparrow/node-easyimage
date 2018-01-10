@@ -36,9 +36,9 @@ easyimg.crop(<options>) - to crop an image.
 easyimg.thumbnail(<options>) - to create square thumbnails.
 easyimg.rescrop(<options>) - to resize and crop and image in one go, useful for creating customzied thumbnails.
 easyimg.rotate(<options>) - to rotate an image.
-easyimg.exec(<command>) - when you want to call a custom command to ImageMagick, you will need to take care of escaping special characters etc.
+easyimg.execute(<command>, <arguments>) - when you want to call a custom command to ImageMagick. Pass arguments as an array.
 ```
-**NOTE**: `easyimg.exec()` spawns a subshell.
+**NOTE**: `easyimg.exec()` spawns a subshell, and has been deprecated. It can not detect the version of ImageMagick to ensure proper execution. Please use the `easyimg.execute()` function moving forward.
 
 The EasyImage options object can have these properties depending on the method. Unrelated options are ignored.
 
@@ -82,11 +82,11 @@ easyimg.rescrop({
      width:500, height:500,
      cropwidth:128, cropheight:128,
      x:0, y:0
-  }).then(
-  function(image) {
+  })
+  .then(function(image) {
      console.log('Resized and cropped: ' + image.width + ' x ' + image.height);
-  },
-  function (err) {
+  })
+  .catch(function (err) {
     console.log(err);
   }
 );
@@ -111,4 +111,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
