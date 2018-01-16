@@ -7,7 +7,7 @@
   "scripts": {
     "test": "cd test && mocha",
     "build": "npm run src && npm run doc",
-    "doc": "typedoc src/ImageMagick.ts src/Commands/* src/Errors/*",
+    "doc": "typedoc src/ImageMagick.ts src/Options.ts src/Commands/* src/Errors/*",
     "src": "tsc"
   },
   "author": {

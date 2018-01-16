@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IImageMagickCommandResult | easyimage</title>
+	<title>IBaseOptions | easyimage</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style type="text/css">/*! normalize.css v1.1.3 | MIT License | git.io/normalize */
@@ -922,8 +922,28 @@ img { max-width: 100%; }
 		<li class=" tsd-kind-class">
 			<a href="../classes/unsupportederror.html" class="tsd-kind-icon">Unsupported<wbr>Error</a>
 		</li>
-		<li class=" tsd-kind-interface">
+		<li class="current tsd-kind-interface">
 			<a href="ibaseoptions.html" class="tsd-kind-icon">IBase<wbr>Options</a>
+			<ul>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="ibaseoptions.html#autoorient" class="tsd-kind-icon">auto<wbr>Orient</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="ibaseoptions.html#background" class="tsd-kind-icon">background</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="ibaseoptions.html#dst" class="tsd-kind-icon">dst</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="ibaseoptions.html#flatten" class="tsd-kind-icon">flatten</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="ibaseoptions.html#quality" class="tsd-kind-icon">quality</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="ibaseoptions.html#src" class="tsd-kind-icon">src</a>
+				</li>
+			</ul>
 		</li>
 		<li class=" tsd-kind-interface">
 			<a href="iconvertoptions.html" class="tsd-kind-icon">IConvert<wbr>Options</a>
@@ -931,16 +951,8 @@ img { max-width: 100%; }
 		<li class=" tsd-kind-interface">
 			<a href="icropoptions.html" class="tsd-kind-icon">ICrop<wbr>Options</a>
 		</li>
-		<li class="current tsd-kind-interface">
+		<li class=" tsd-kind-interface">
 			<a href="iimagemagickcommandresult.html" class="tsd-kind-icon">IImage<wbr>Magick<wbr>Command<wbr>Result</a>
-			<ul>
-				<li class=" tsd-kind-property tsd-parent-kind-interface">
-					<a href="iimagemagickcommandresult.html#stderr" class="tsd-kind-icon">stderr</a>
-				</li>
-				<li class=" tsd-kind-property tsd-parent-kind-interface">
-					<a href="iimagemagickcommandresult.html#stdout" class="tsd-kind-icon">stdout</a>
-				</li>
-			</ul>
 		</li>
 		<li class=" tsd-kind-interface">
 			<a href="iinforesult.html" class="tsd-kind-icon">IInfo<wbr>Result</a>
@@ -992,7 +1004,24 @@ img { max-width: 100%; }
 			<h3>Hierarchy</h3>
 			<ul class="tsd-hierarchy">
 				<li>
-					<span class="target">IImageMagickCommandResult</span>
+					<span class="target">IBaseOptions</span>
+					<ul class="tsd-hierarchy">
+						<li>
+							<a href="iconvertoptions.html" class="tsd-signature-type">IConvertOptions</a>
+						</li>
+						<li>
+							<a href="icropoptions.html" class="tsd-signature-type">ICropOptions</a>
+						</li>
+						<li>
+							<a href="iresizeoptions.html" class="tsd-signature-type">IResizeOptions</a>
+						</li>
+						<li>
+							<a href="irotateoptions.html" class="tsd-signature-type">IRotateOptions</a>
+						</li>
+						<li>
+							<a href="ithumbnailoptions.html" class="tsd-signature-type">IThumbnailOptions</a>
+						</li>
+					</ul>
 				</li>
 			</ul>
 		</section>
@@ -1003,8 +1032,12 @@ img { max-width: 100%; }
 					<section class="tsd-index-section ">
 						<h3>Properties</h3>
 						<ul class="tsd-index-list">
-							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iimagemagickcommandresult.html#stderr" class="tsd-kind-icon">stderr</a></li>
-							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iimagemagickcommandresult.html#stdout" class="tsd-kind-icon">stdout</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ibaseoptions.html#autoorient" class="tsd-kind-icon">auto<wbr>Orient</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ibaseoptions.html#background" class="tsd-kind-icon">background</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ibaseoptions.html#dst" class="tsd-kind-icon">dst</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ibaseoptions.html#flatten" class="tsd-kind-icon">flatten</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ibaseoptions.html#quality" class="tsd-kind-icon">quality</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ibaseoptions.html#src" class="tsd-kind-icon">src</a></li>
 						</ul>
 					</section>
 				</div>
@@ -1013,24 +1046,114 @@ img { max-width: 100%; }
 		<section class="tsd-panel-group tsd-member-group ">
 			<h2>Properties</h2>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-				<a name="stderr" class="tsd-anchor"></a>
-				<h3>stderr</h3>
-				<div class="tsd-signature tsd-kind-icon">stderr<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+				<a name="autoorient" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagOptional">Optional</span> auto<wbr>Orient</h3>
+				<div class="tsd-signature tsd-kind-icon">auto<wbr>Orient<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/766d487/src/ImageMagick.ts#L88">ImageMagick.ts:88</a></li>
+						<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/766d487/src/Options.ts#L30">Options.ts:30</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Auto orientate the image.</p>
+					</div>
+					<dl class="tsd-comment-tags">
+						<dt>default</dt>
+						<dd><p>true</p>
+						</dd>
+					</dl>
+				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-				<a name="stdout" class="tsd-anchor"></a>
-				<h3>stdout</h3>
-				<div class="tsd-signature tsd-kind-icon">stdout<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+				<a name="background" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagOptional">Optional</span> background</h3>
+				<div class="tsd-signature tsd-kind-icon">background<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/766d487/src/ImageMagick.ts#L87">ImageMagick.ts:87</a></li>
+						<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/766d487/src/Options.ts#L41">Options.ts:41</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Apply a background color.</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="dst" class="tsd-anchor"></a>
+				<h3>dst</h3>
+				<div class="tsd-signature tsd-kind-icon">dst<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/766d487/src/Options.ts#L24">Options.ts:24</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Destination file.</p>
+					</div>
+					<dl class="tsd-comment-tags">
+						<dt>default</dt>
+						<dd><p>A temporary file</p>
+						</dd>
+					</dl>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="flatten" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagOptional">Optional</span> flatten</h3>
+				<div class="tsd-signature tsd-kind-icon">flatten<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/766d487/src/Options.ts#L36">Options.ts:36</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Flatten the resulting image.</p>
+					</div>
+					<dl class="tsd-comment-tags">
+						<dt>default</dt>
+						<dd><p>false</p>
+						</dd>
+					</dl>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="quality" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagOptional">Optional</span> quality</h3>
+				<div class="tsd-signature tsd-kind-icon">quality<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/766d487/src/Options.ts#L47">Options.ts:47</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Set the output quality.</p>
+					</div>
+					<dl class="tsd-comment-tags">
+						<dt>type</dt>
+						<dd><p>number 1-100</p>
+						</dd>
+					</dl>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="src" class="tsd-anchor"></a>
+				<h3>src</h3>
+				<div class="tsd-signature tsd-kind-icon">src<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/766d487/src/Options.ts#L18">Options.ts:18</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Source file.</p>
+					</div>
+				</div>
 			</section>
 		</section>
 		<footer class="with-border-bottom">

@@ -923,6 +923,9 @@ img { max-width: 100%; }
 			<a href="classes/unsupportederror.html" class="tsd-kind-icon">Unsupported<wbr>Error</a>
 		</li>
 		<li class=" tsd-kind-interface">
+			<a href="interfaces/ibaseoptions.html" class="tsd-kind-icon">IBase<wbr>Options</a>
+		</li>
+		<li class=" tsd-kind-interface">
 			<a href="interfaces/iconvertoptions.html" class="tsd-kind-icon">IConvert<wbr>Options</a>
 		</li>
 		<li class=" tsd-kind-interface">
@@ -987,61 +990,30 @@ img { max-width: 100%; }
 </code></pre><p>On CentOS</p>
 			<pre><code><span class="hljs-meta">$</span><span class="bash"> yum install imagemagick</span>
 </code></pre><h2 id="installation">Installation</h2>
-			<pre><code><span class="hljs-meta">$</span><span class="bash"> npm install easyimage</span>
+			<pre><code><span class="hljs-meta">$</span><span class="bash"> npm install --save easyimage</span>
 </code></pre><h2 id="usage">Usage</h2>
-			<pre><code><span class="hljs-attribute">var easyimg</span> = require(<span class="hljs-string">'easyimage'</span>);
-</code></pre><p>EasyImage offers these promise methods:</p>
-			<pre><code>easyimg.info(<span class="hljs-symbol">&lt;image_path&gt;</span>) - <span class="hljs-keyword">to</span> retrieve information about <span class="hljs-keyword">an</span> image. Will <span class="hljs-keyword">return</span> <span class="hljs-keyword">an</span> object with the following properties - <span class="hljs-built_in">type</span>, depth, width, height, size, density, name, <span class="hljs-built_in">and</span> path.
-easyimg.convert(<span class="hljs-symbol">&lt;options&gt;</span>) - <span class="hljs-keyword">to</span> convert <span class="hljs-keyword">an</span> image from one format <span class="hljs-keyword">to</span> another.
-easyimg.<span class="hljs-keyword">resize</span>(<span class="hljs-symbol">&lt;options&gt;</span>) - <span class="hljs-keyword">to</span> <span class="hljs-keyword">resize</span> <span class="hljs-keyword">an</span> image.
-easyimg.crop(<span class="hljs-symbol">&lt;options&gt;</span>) - <span class="hljs-keyword">to</span> crop <span class="hljs-keyword">an</span> image.
-easyimg.thumbnail(<span class="hljs-symbol">&lt;options&gt;</span>) - <span class="hljs-keyword">to</span> create square thumbnails.
-easyimg.rescrop(<span class="hljs-symbol">&lt;options&gt;</span>) - <span class="hljs-keyword">to</span> <span class="hljs-keyword">resize</span> <span class="hljs-built_in">and</span> crop <span class="hljs-built_in">and</span> image in one <span class="hljs-keyword">go</span>, useful <span class="hljs-keyword">for</span> creating customzied thumbnails.
-easyimg.rotate(<span class="hljs-symbol">&lt;options&gt;</span>) - <span class="hljs-keyword">to</span> rotate <span class="hljs-keyword">an</span> image.
-easyimg.<span class="hljs-keyword">execute</span>(<span class="hljs-symbol">&lt;command&gt;</span>, <span class="hljs-symbol">&lt;arguments&gt;</span>) - when you want <span class="hljs-keyword">to</span> <span class="hljs-keyword">call</span> <span class="hljs-keyword">a</span> custom <span class="hljs-keyword">command</span> <span class="hljs-keyword">to</span> ImageMagick. Pass arguments <span class="hljs-keyword">as</span> <span class="hljs-keyword">an</span> array.
-</code></pre><p><strong>NOTE</strong>: <code>easyimg.exec()</code> spawns a subshell, and has been deprecated. It can not detect the version of ImageMagick to ensure proper execution. Please use the <code>easyimg.execute()</code> function moving forward.</p>
-			<p>The EasyImage options object can have these properties depending on the method. Unrelated options are ignored.</p>
-			<pre><code>src - path <span class="hljs-keyword">to</span> source <span class="hljs-built_in">image</span>.
-dst - path <span class="hljs-keyword">to</span> destination <span class="hljs-built_in">image</span>.
-width - width of resized <span class="hljs-built_in">image</span>.
-height - height of resized <span class="hljs-built_in">image</span>.
-degree - degree of rotation.
-cropwidth - width of cropped <span class="hljs-built_in">image</span>, <span class="hljs-keyword">if</span> missing, width will be used instead.
-cropheight - height of cropped <span class="hljs-built_in">image</span>, <span class="hljs-keyword">if</span> missing, height will be used instead.
-x - x offset <span class="hljs-keyword">for</span> cropping, defaults <span class="hljs-keyword">to</span> <span class="hljs-number">0</span>.
-y - y offset <span class="hljs-keyword">for</span> cropping, defaults <span class="hljs-keyword">to</span> <span class="hljs-number">0</span>.
-quality - quality of processed <span class="hljs-built_in">image</span>, <span class="hljs-number">1</span> <span class="hljs-keyword">to</span> <span class="hljs-number">100</span>.
-gravity - crop <span class="hljs-built_in">position</span> [NorthWest | North | NorthEast | <span class="hljs-built_in">West</span> | Center | <span class="hljs-built_in">East</span> | SouthWest | South | SouthEast], defaults <span class="hljs-keyword">to</span> Center.
-fill - fill area <span class="hljs-built_in">flag</span>, <span class="hljs-built_in">image</span> is resized <span class="hljs-keyword">to</span> completely fill the target crop dimensions, defaults <span class="hljs-keyword">to</span> <span class="hljs-literal">false</span>.
-background - background color, defaults <span class="hljs-keyword">to</span> <span class="hljs-string">"white"</span>. <span class="hljs-keyword">If</span> specified, automatically flattens the <span class="hljs-built_in">image</span>.
-flatten - <span class="hljs-keyword">if</span> present, the <span class="hljs-built_in">image</span> will be flattened (flattening removes alpha channel). Defaults <span class="hljs-keyword">to</span> <span class="hljs-literal">false</span>.
-ignoreAspectRatio - <span class="hljs-keyword">if</span> <span class="hljs-built_in">set</span> <span class="hljs-keyword">to</span> <span class="hljs-literal">true</span>, <span class="hljs-built_in">resize</span> will ignore aspect ratio
-</code></pre><h2 id="examples">Examples</h2>
-			<p><strong>Example 1: File info</strong></p>
-			<pre><code>easyimg.info(<span class="hljs-string">'kitten.jpg'</span>).<span class="hljs-keyword">then</span>(
-  <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(file)</span></span> {
-    console.<span class="hljs-built_in">log</span>(file);
-  }, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(err)</span></span> {
-    console.<span class="hljs-built_in">log</span>(err);
-  }
-);
-</code></pre><p>The first function of the <code>then</code> method is the success handler, the second function is the error handler.</p>
-			<p><strong>Example 2: Resize and Crop</strong></p>
-			<pre><code><span class="hljs-selector-tag">easyimg</span><span class="hljs-selector-class">.rescrop</span>({
-     <span class="hljs-attribute">src</span>:<span class="hljs-string">'kitten.jpg'</span>, <span class="hljs-attribute">dst</span>:<span class="hljs-string">'./output/kitten-thumbnail.jpg'</span>,
-     <span class="hljs-attribute">width</span>:<span class="hljs-number">500</span>, <span class="hljs-attribute">height</span>:<span class="hljs-number">500</span>,
-     <span class="hljs-attribute">cropwidth</span>:<span class="hljs-number">128</span>, <span class="hljs-attribute">cropheight</span>:<span class="hljs-number">128</span>,
-     <span class="hljs-attribute">x</span>:<span class="hljs-number">0</span>, <span class="hljs-attribute">y</span>:<span class="hljs-number">0</span>
-  })
-  <span class="hljs-selector-class">.then</span>(function(image) {
-     <span class="hljs-selector-tag">console</span><span class="hljs-selector-class">.log</span>(<span class="hljs-string">'Resized and cropped: '</span> + image.width + <span class="hljs-string">' x '</span> + image.height);
-  })
-  <span class="hljs-selector-class">.catch</span>(function (err) {
-    <span class="hljs-selector-tag">console</span><span class="hljs-selector-class">.log</span>(err);
-  }
-);
-</code></pre><p>For more examples check out <a href="https://github.com/hacksparrow/node-easyimage/blob/master/test/test.js">test/test.js</a>.</p>
-			<h2 id="license-mit-">License (MIT)</h2>
+			<p>The EasyImage module is ES6 compatible. You can import just the commands that you will need.</p>
+			<p>Except for <code>info</code> and <code>execute</code>, all commands take an options object.</p>
+			<h3 id="info">Info</h3>
+			<p>The <code>info</code> command will give you details about an image file.</p>
+			<p>```ecmascript 6
+			import {info} from &quot;easyimage&quot;;</p>
+			<p>info(&quot;/path/to/image.jpg&quot;).then((info) =&gt; console.log(info));</p>
+			<pre><code>
+<span class="hljs-comment">### Convert</span>
+
+The `convert` command can convert an image file <span class="hljs-keyword">from</span> one<span class="hljs-built_in"> type </span><span class="hljs-keyword">to</span> another.
+
+```ecmascript 6
+import {convert} <span class="hljs-keyword">from</span> <span class="hljs-string">"easyimage"</span>;
+
+const options = {
+    src: <span class="hljs-string">"/path/to/source.jpg"</span>,
+    dst: <span class="hljs-string">"/path/to/dest.png"</span>
+};
+
+convert(options).then((info) =&gt; console.log(info));
+</code></pre><h2 id="license-mit-">License (MIT)</h2>
 			<p>Copyright (c) 2015 Hage Yaapa <a href="[http://www.hacksparrow.com](http://www.hacksparrow.com)">[http://www.hacksparrow.com](http://www.hacksparrow.com)</a></p>
 			<p>Permission is hereby granted, free of charge, to any person obtaining a copy
 				of this software and associated documentation files (the &quot;Software&quot;), to deal
@@ -1076,6 +1048,7 @@ ignoreAspectRatio - <span class="hljs-keyword">if</span> <span class="hljs-built
 					<section class="tsd-index-section ">
 						<h3>Interfaces</h3>
 						<ul class="tsd-index-list">
+							<li class="tsd-kind-interface"><a href="interfaces/ibaseoptions.html" class="tsd-kind-icon">IBase<wbr>Options</a></li>
 							<li class="tsd-kind-interface"><a href="interfaces/iconvertoptions.html" class="tsd-kind-icon">IConvert<wbr>Options</a></li>
 							<li class="tsd-kind-interface"><a href="interfaces/icropoptions.html" class="tsd-kind-icon">ICrop<wbr>Options</a></li>
 							<li class="tsd-kind-interface"><a href="interfaces/iimagemagickcommandresult.html" class="tsd-kind-icon">IImage<wbr>Magick<wbr>Command<wbr>Result</a></li>
@@ -1115,7 +1088,7 @@ ignoreAspectRatio - <span class="hljs-keyword">if</span> <span class="hljs-built
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/0a1dee5/src/Commands/convert.ts#L14">Commands/convert.ts:14</a></li>
+								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/766d487/src/Commands/convert.ts#L27">Commands/convert.ts:27</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1143,7 +1116,7 @@ ignoreAspectRatio - <span class="hljs-keyword">if</span> <span class="hljs-built
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/0a1dee5/src/Commands/crop.ts#L14">Commands/crop.ts:14</a></li>
+								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/766d487/src/Commands/crop.ts#L27">Commands/crop.ts:27</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1171,7 +1144,7 @@ ignoreAspectRatio - <span class="hljs-keyword">if</span> <span class="hljs-built
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/0a1dee5/src/ImageMagick.ts#L21">ImageMagick.ts:21</a></li>
+								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/766d487/src/ImageMagick.ts#L34">ImageMagick.ts:34</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1202,7 +1175,7 @@ ignoreAspectRatio - <span class="hljs-keyword">if</span> <span class="hljs-built
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/0a1dee5/src/ImageMagick.ts#L49">ImageMagick.ts:49</a></li>
+								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/766d487/src/ImageMagick.ts#L62">ImageMagick.ts:62</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1224,7 +1197,7 @@ ignoreAspectRatio - <span class="hljs-keyword">if</span> <span class="hljs-built
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/0a1dee5/src/Commands/info.ts#L11">Commands/info.ts:11</a></li>
+								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/766d487/src/Commands/info.ts#L24">Commands/info.ts:24</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1252,7 +1225,7 @@ ignoreAspectRatio - <span class="hljs-keyword">if</span> <span class="hljs-built
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/0a1dee5/src/Commands/rescrop.ts#L15">Commands/rescrop.ts:15</a></li>
+								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/766d487/src/Commands/rescrop.ts#L28">Commands/rescrop.ts:28</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1280,7 +1253,7 @@ ignoreAspectRatio - <span class="hljs-keyword">if</span> <span class="hljs-built
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/0a1dee5/src/Commands/resize.ts#L14">Commands/resize.ts:14</a></li>
+								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/766d487/src/Commands/resize.ts#L27">Commands/resize.ts:27</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1308,7 +1281,7 @@ ignoreAspectRatio - <span class="hljs-keyword">if</span> <span class="hljs-built
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/0a1dee5/src/Commands/rotate.ts#L14">Commands/rotate.ts:14</a></li>
+								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/766d487/src/Commands/rotate.ts#L27">Commands/rotate.ts:27</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1336,7 +1309,7 @@ ignoreAspectRatio - <span class="hljs-keyword">if</span> <span class="hljs-built
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/0a1dee5/src/Commands/thumbnail.ts#L14">Commands/thumbnail.ts:14</a></li>
+								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/766d487/src/Commands/thumbnail.ts#L27">Commands/thumbnail.ts:27</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
