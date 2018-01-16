@@ -20,7 +20,7 @@ $ yum install imagemagick
 
 On Windows
   
-Download `Windows Binary Release` from [imagemagick.org](https://www.imagemagick.org/script/binary-releases.php#windows).
+Download `Windows Binary Release` from [imagemagick.org](https://www.imagemagick.org/script/download.php#windows).
 
 ## Installation
 
