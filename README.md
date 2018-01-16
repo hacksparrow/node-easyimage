@@ -7,14 +7,20 @@ On Ubuntu
 ```
 $ apt-get install imagemagick
 ```
+
 On Mac OS X
 ```
 $ brew install imagemagick
 ```
+
 On CentOS
 ```
 $ yum install imagemagick
 ```
+
+On Windows
+  
+Download `Windows Binary Release` from [imagemagick.org](https://www.imagemagick.org/script/binary-releases.php#windows).
 
 ## Installation
 
