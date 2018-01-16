@@ -3,5 +3,6 @@ module.exports = {
   "mode": "file",
   "excludeNotExported": true,
   "theme": "minimal",
-  "excludeExternals": true
+  "excludeExternals": true,
+  "gitRevision": "master"
 };

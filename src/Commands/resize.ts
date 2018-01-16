@@ -36,7 +36,7 @@ export async function resize(options: IResizeOptions): Promise<IInfoResult> {
     const args: string[] = [options.src];
     applyBaseOptionsToArgs(options, args);
 
-    const resizeDefinition = `${options.width}x${options.height}${options.ignoreAspectRatio ? "!" : ""}`;
+    const resizeDefinition = `${options.width}x${options.height ? options.height : ""}${options.ignoreAspectRatio ? "!" : ""}`;
 
     args.push("-resize", resizeDefinition, options.dst);
 
@@ -66,8 +66,5 @@ export interface IResizeOptions extends IBaseOptions {
 function applyDefaultsToResizeOptions(options: IResizeOptions) {
     if (options.ignoreAspectRatio === undefined) {
         options.ignoreAspectRatio = false;
-    }
-    if (!options.height) {
-        options.height = options.width;
     }
 }

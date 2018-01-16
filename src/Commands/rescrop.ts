@@ -29,7 +29,7 @@ Promise = Promise || Bluebird as any;
 export async function rescrop(options: IResCropOptions): Promise<IInfoResult> {
     applyDefaultsToBaseOptions(options);
     upgradeCropOptions(options);
-    applyDefaultsToCropOptions(options);
+    applyDefaultsToRescropOptions(options);
 
     await ensureDestinationDirectoryExists(options);
 
@@ -38,7 +38,7 @@ export async function rescrop(options: IResCropOptions): Promise<IInfoResult> {
     applyBaseOptionsToArgs(options, args);
 
     const cropDefinition = options.cropWidth + "x" + options.cropHeight + "+" + options.x + "+" + options.y;
-    const resizeDefinition = `${options.width}x${options.height}${options.ignoreAspectRatio ? "!" : ""}`;
+    const resizeDefinition = `${options.width}x${options.height ? options.height : ""}${options.ignoreAspectRatio ? "!" : ""}`;
 
     if (options.gravity) {
         args.push("-gravity", options.gravity);
@@ -64,7 +64,7 @@ function upgradeCropOptions(options: ICropOptions) {
     }
 }
 
-function applyDefaultsToCropOptions(options: ICropOptions) {
+function applyDefaultsToRescropOptions(options: IResCropOptions) {
     if (!options.cropHeight) {
         options.cropHeight = options.cropWidth;
     }

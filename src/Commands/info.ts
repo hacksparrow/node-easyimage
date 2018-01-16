@@ -24,7 +24,7 @@ Promise = Promise || Bluebird as any;
  * @returns {Bluebird<IInfoResult>}
  */
 export async function info(filePath: string): Promise<IInfoResult> {
-    const args = ["-format", "%m %z %w %h %b %x %y %f %[orientation]", filePath];
+    const args = ["-format", "%m %z %w %h %b %x %y %[orientation] %f", filePath];
 
     const {stdout, stderr} = await execute("identify", args);
 
@@ -32,16 +32,13 @@ export async function info(filePath: string): Promise<IInfoResult> {
         throw new UnsupportedError();
     }
 
-    console.log(stdout);
-
     const temp = stdout
         .replace(/PixelsPerInch/g, "")
         .replace(/PixelsPerCentimeter/g, "")
-        .replace(/Undefined/g, "")
         .split(/\s+/g);
 
     // All fields not found
-    if (temp.length < 7) {
+    if (temp.length < 8) {
         throw new UnsupportedError();
     }
 
@@ -55,8 +52,8 @@ export async function info(filePath: string): Promise<IInfoResult> {
             x: parseFloat(temp[5]),
             y: parseFloat(temp[6]),
         },
-        name: temp.slice(7).join(" ").replace(/(\r\n|\n|\r)/gm, "").trim(),
-        orientation: temp[8],
+        orientation: temp[7],
+        name: temp.slice(8).join(" ").replace(/(\r\n|\n|\r)/gm, "").trim(),
         path: filePath,
     };
 

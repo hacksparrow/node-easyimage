@@ -155,8 +155,21 @@ describe('.resize -', function () {
             file.height.should.be.equal(400);
             file.name.should.be.equal('resize.jpg');
         });
-
     });
+
+    it("should resize a tall image to a specified width while maintaining aspect ratio", function () {
+        return easyimg.resize({
+            src: "./yolo-tall.png",
+            dst: __dirname + '/output/resize.jpg',
+            width: 10
+        }).then(function (file) {
+            file.should.be.a('object');
+            file.should.have.property('width');
+            file.width.should.be.equal(10);
+            file.height.should.be.equal(25);
+            file.name.should.be.equal('resize.jpg');
+        });
+    })
 
 });
 
