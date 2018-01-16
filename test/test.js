@@ -181,8 +181,21 @@ describe('.resize -', function () {
             file.height.should.be.equal(25);
             file.name.should.be.equal('resize.jpg');
         });
-    })
+    });
 
+    it("should not upscale an image if downscaleOnly is true", function () {
+        return easyimg.resize({
+            src: srcimg,
+            dst: __dirname + '/output/resize.jpg',
+            width: 1000,
+            onlyDownscale: true
+        }).then(function (file) {
+            file.should.be.a('object');
+            file.should.have.property('width');
+            file.width.should.be.equal(800);
+            file.name.should.be.equal('resize.jpg');
+        });
+    });
 });
 
 describe('.crop -', function () {
