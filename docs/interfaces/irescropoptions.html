@@ -949,6 +949,9 @@ img { max-width: 100%; }
 				<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
 					<a href="irescropoptions.html#background" class="tsd-kind-icon">background</a>
 				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
+					<a href="irescropoptions.html#coalesce" class="tsd-kind-icon">coalesce</a>
+				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a href="irescropoptions.html#cropheight" class="tsd-kind-icon">crop<wbr>Height</a>
 				</li>
@@ -975,6 +978,9 @@ img { max-width: 100%; }
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a href="irescropoptions.html#ignoreaspectratio" class="tsd-kind-icon">ignore<wbr>Aspect<wbr>Ratio</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a href="irescropoptions.html#onlydownscale" class="tsd-kind-icon">only<wbr>Downscale</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
 					<a href="irescropoptions.html#quality" class="tsd-kind-icon">quality</a>
@@ -1058,6 +1064,7 @@ img { max-width: 100%; }
 						<ul class="tsd-index-list">
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited"><a href="irescropoptions.html#autoorient" class="tsd-kind-icon">auto<wbr>Orient</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited"><a href="irescropoptions.html#background" class="tsd-kind-icon">background</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited"><a href="irescropoptions.html#coalesce" class="tsd-kind-icon">coalesce</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="irescropoptions.html#cropheight" class="tsd-kind-icon">crop<wbr>Height</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="irescropoptions.html#cropwidth" class="tsd-kind-icon">crop<wbr>Width</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="irescropoptions.html#cropheight-1" class="tsd-kind-icon">cropheight</a></li>
@@ -1067,6 +1074,7 @@ img { max-width: 100%; }
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="irescropoptions.html#gravity" class="tsd-kind-icon">gravity</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="irescropoptions.html#height" class="tsd-kind-icon">height</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="irescropoptions.html#ignoreaspectratio" class="tsd-kind-icon">ignore<wbr>Aspect<wbr>Ratio</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="irescropoptions.html#onlydownscale" class="tsd-kind-icon">only<wbr>Downscale</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited"><a href="irescropoptions.html#quality" class="tsd-kind-icon">quality</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited"><a href="irescropoptions.html#src" class="tsd-kind-icon">src</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="irescropoptions.html#width" class="tsd-kind-icon">width</a></li>
@@ -1109,13 +1117,38 @@ img { max-width: 100%; }
 					<p>Inherited from <a href="ibaseoptions.html">IBaseOptions</a>.<a href="ibaseoptions.html#background">background</a></p>
 					<p>Overrides <a href="ibaseoptions.html">IBaseOptions</a>.<a href="ibaseoptions.html#background">background</a></p>
 					<ul>
-						<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/Options.ts#L41">Options.ts:41</a></li>
+						<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/Options.ts#L48">Options.ts:48</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
 						<p>Apply a background color.</p>
 					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
+				<a name="coalesce" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagOptional">Optional</span> coalesce</h3>
+				<div class="tsd-signature tsd-kind-icon">coalesce<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+				<aside class="tsd-sources">
+					<p>Inherited from <a href="ibaseoptions.html">IBaseOptions</a>.<a href="ibaseoptions.html#coalesce">coalesce</a></p>
+					<p>Overrides <a href="ibaseoptions.html">IBaseOptions</a>.<a href="ibaseoptions.html#coalesce">coalesce</a></p>
+					<ul>
+						<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/Options.ts#L37">Options.ts:37</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Applies the &quot;-coalesce&quot; option.</p>
+					</div>
+					<dl class="tsd-comment-tags">
+						<dt>default</dt>
+						<dd><p>false</p>
+						</dd>
+						<dt>see</dt>
+						<dd><p><a href="https://www.imagemagick.org/script/command-line-options.php#coalesce">https://www.imagemagick.org/script/command-line-options.php#coalesce</a></p>
+						</dd>
+					</dl>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
@@ -1225,7 +1258,7 @@ img { max-width: 100%; }
 					<p>Inherited from <a href="ibaseoptions.html">IBaseOptions</a>.<a href="ibaseoptions.html#flatten">flatten</a></p>
 					<p>Overrides <a href="ibaseoptions.html">IBaseOptions</a>.<a href="ibaseoptions.html#flatten">flatten</a></p>
 					<ul>
-						<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/Options.ts#L36">Options.ts:36</a></li>
+						<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/Options.ts#L43">Options.ts:43</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1267,7 +1300,7 @@ img { max-width: 100%; }
 				<aside class="tsd-sources">
 					<p>Inherited from <a href="iresizeoptions.html">IResizeOptions</a>.<a href="iresizeoptions.html#height">height</a></p>
 					<ul>
-						<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/Commands/resize.ts#L57">Commands/resize.ts:57</a></li>
+						<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/Commands/resize.ts#L69">Commands/resize.ts:69</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1288,7 +1321,7 @@ img { max-width: 100%; }
 				<aside class="tsd-sources">
 					<p>Inherited from <a href="iresizeoptions.html">IResizeOptions</a>.<a href="iresizeoptions.html#ignoreaspectratio">ignoreAspectRatio</a></p>
 					<ul>
-						<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/Commands/resize.ts#L63">Commands/resize.ts:63</a></li>
+						<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/Commands/resize.ts#L75">Commands/resize.ts:75</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1297,7 +1330,28 @@ img { max-width: 100%; }
 					</div>
 					<dl class="tsd-comment-tags">
 						<dt>default</dt>
-						<dd><p>false;</p>
+						<dd><p>false</p>
+						</dd>
+					</dl>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+				<a name="onlydownscale" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagOptional">Optional</span> only<wbr>Downscale</h3>
+				<div class="tsd-signature tsd-kind-icon">only<wbr>Downscale<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+				<aside class="tsd-sources">
+					<p>Inherited from <a href="iresizeoptions.html">IResizeOptions</a>.<a href="iresizeoptions.html#onlydownscale">onlyDownscale</a></p>
+					<ul>
+						<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/Commands/resize.ts#L81">Commands/resize.ts:81</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Only reduce the size of the image. Do not increase it.</p>
+					</div>
+					<dl class="tsd-comment-tags">
+						<dt>default</dt>
+						<dd><p>false</p>
 						</dd>
 					</dl>
 				</div>
@@ -1310,7 +1364,7 @@ img { max-width: 100%; }
 					<p>Inherited from <a href="ibaseoptions.html">IBaseOptions</a>.<a href="ibaseoptions.html#quality">quality</a></p>
 					<p>Overrides <a href="ibaseoptions.html">IBaseOptions</a>.<a href="ibaseoptions.html#quality">quality</a></p>
 					<ul>
-						<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/Options.ts#L47">Options.ts:47</a></li>
+						<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/Options.ts#L54">Options.ts:54</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1348,7 +1402,7 @@ img { max-width: 100%; }
 				<aside class="tsd-sources">
 					<p>Inherited from <a href="iresizeoptions.html">IResizeOptions</a>.<a href="iresizeoptions.html#width">width</a></p>
 					<ul>
-						<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/Commands/resize.ts#L51">Commands/resize.ts:51</a></li>
+						<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/Commands/resize.ts#L63">Commands/resize.ts:63</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">

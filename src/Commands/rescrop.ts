@@ -37,8 +37,21 @@ export async function rescrop(options: IResCropOptions): Promise<IInfoResult> {
 
     applyBaseOptionsToArgs(options, args);
 
+    let resizeDefinition = `${options.width}`;
+
+    if (options.height) {
+        resizeDefinition += `x${options.height}`;
+    }
+    if (options.ignoreAspectRatio) resizeDefinition += "!";
+    if (options.onlyDownscale) {
+        if (/^win/.test(process.platform)) {
+            resizeDefinition += "^>"
+        } else {
+            resizeDefinition += ">";
+        }
+    }
+
     const cropDefinition = options.cropWidth + "x" + options.cropHeight + "+" + options.x + "+" + options.y;
-    const resizeDefinition = `${options.width}x${options.height ? options.height : ""}${options.ignoreAspectRatio ? "!" : ""}`;
 
     if (options.gravity) {
         args.push("-gravity", options.gravity);

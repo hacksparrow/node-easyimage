@@ -36,7 +36,19 @@ export async function resize(options: IResizeOptions): Promise<IInfoResult> {
     const args: string[] = [options.src];
     applyBaseOptionsToArgs(options, args);
 
-    const resizeDefinition = `${options.width}x${options.height ? options.height : ""}${options.ignoreAspectRatio ? "!" : ""}`;
+    let resizeDefinition = `${options.width}`;
+
+    if (options.height) {
+        resizeDefinition += `x${options.height}`;
+    }
+    if (options.ignoreAspectRatio) resizeDefinition += "!";
+    if (options.onlyDownscale) {
+        if (/^win/.test(process.platform)) {
+            resizeDefinition += "^>"
+        } else {
+            resizeDefinition += ">";
+        }
+    }
 
     args.push("-resize", resizeDefinition, options.dst);
 
@@ -58,13 +70,23 @@ export interface IResizeOptions extends IBaseOptions {
 
     /**
      * Ignore aspect ratio when resizing.
-     * @default false;
+     * @default false
      */
     ignoreAspectRatio?: boolean;
+
+    /**
+     * Only reduce the size of the image. Do not increase it.
+     * @default false
+     */
+    onlyDownscale?: boolean;
 }
 
 function applyDefaultsToResizeOptions(options: IResizeOptions) {
     if (options.ignoreAspectRatio === undefined) {
         options.ignoreAspectRatio = false;
+    }
+
+    if (options.onlyDownscale === undefined) {
+        options.onlyDownscale = false;
     }
 }

@@ -19,7 +19,12 @@ export interface IResizeOptions extends IBaseOptions {
     height?: number;
     /**
      * Ignore aspect ratio when resizing.
-     * @default false;
+     * @default false
      */
     ignoreAspectRatio?: boolean;
+    /**
+     * Only reduce the size of the image. Do not increase it.
+     * @default false
+     */
+    onlyDownscale?: boolean;
 }
