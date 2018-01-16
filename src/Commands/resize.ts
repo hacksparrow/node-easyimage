@@ -11,12 +11,13 @@
  MIT License
  */
 
-import * as Promise from "bluebird";
+import * as Bluebird from "bluebird";
 import {IBaseOptions} from "../Options";
-import {ensureDestinationDirectoryExists, applyDefaultsToBaseOptions, applyBaseOptionsToArgs} from "../Utilities";
-import {MissingOptionsError} from "../Errors/MissingOptionsError";
+import {ensureDestinationDirectoryExists, applyDefaultsToBaseOptions, applyBaseOptionsToArgs, checkForMissingOptions} from "../Utilities";
 import {execute} from "../ImageMagick";
 import {info, IInfoResult} from "./info";
+
+Promise = Promise || Bluebird as any;
 
 /**
  * Resizes an image.
@@ -24,28 +25,23 @@ import {info, IInfoResult} from "./info";
  * @param {IResizeOptions} options
  * @returns {Bluebird<IInfoResult>}
  */
-export function resize(options: IResizeOptions): Promise<IInfoResult> {
-    return ensureDestinationDirectoryExists(options)
-        .then(() => {
-            const missingOptions: string[] = [];
+export async function resize(options: IResizeOptions): Promise<IInfoResult> {
+    checkForMissingOptions(options, ["src", "width"]);
 
-            if (!options.src) missingOptions.push("src");
-            if (!options.width) missingOptions.push("cropWidth");
+    applyDefaultsToBaseOptions(options);
+    applyDefaultsToResizeOptions(options);
 
-            if (missingOptions.length) throw new MissingOptionsError(missingOptions);
+    await ensureDestinationDirectoryExists(options);
 
-            const args: string[] = [options.src];
+    const args: string[] = [options.src];
+    applyBaseOptionsToArgs(options, args);
 
-            applyDefaultsToBaseOptions(options);
-            applyDefaultsToResizeOptions(options);
-            applyBaseOptionsToArgs(options, args);
+    const resizeDefinition = `${options.width}x${options.height}${options.ignoreAspectRatio ? "!" : ""}`;
 
-            const resizeDefinition = `${options.width}x${options.height}${options.ignoreAspectRatio ? "!" : ""}`;
+    args.push("-resize", resizeDefinition, options.dst);
 
-            args.push("-resize", resizeDefinition, options.dst);
-
-            return execute("convert", args);
-        }).then(() => info(options.dst));
+    await execute("convert", args);
+    return info(options.dst);
 }
 
 export interface IResizeOptions extends IBaseOptions {
@@ -68,6 +64,10 @@ export interface IResizeOptions extends IBaseOptions {
 }
 
 function applyDefaultsToResizeOptions(options: IResizeOptions) {
-    if (options.ignoreAspectRatio === undefined) options.ignoreAspectRatio = false;
-    if (!options.height) options.height = options.width;
+    if (options.ignoreAspectRatio === undefined) {
+        options.ignoreAspectRatio = false;
+    }
+    if (!options.height) {
+        options.height = options.width;
+    }
 }

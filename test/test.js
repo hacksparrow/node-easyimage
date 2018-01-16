@@ -11,7 +11,7 @@ if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir);
 }
 
-var easyimg = require('../easyimage.js');
+var easyimg = require('../lib/EasyImage.js');
 var srcimg = 'kitten.jpg';
 
 describe('.info - ', function () {

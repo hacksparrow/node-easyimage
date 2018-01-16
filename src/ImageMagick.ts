@@ -11,10 +11,12 @@
  MIT License
  */
 
-import * as Promise from "bluebird";
+import * as Bluebird from "bluebird";
 import { execFile, execFileSync } from "child_process";
 import {ImageMagickMissingError} from "./Errors/ImageMagickMissingError";
 import {UnsupportedError} from "./Errors/UnsupportedError";
+
+Promise = Promise || Bluebird as any;
 
 let availableImageMagickVersion: number = null;
 
@@ -27,7 +29,7 @@ if (isVersion7()) {
 /**
  * Executes a command with arguments and returns the stdout and stderr.
  *
- * @param {string} command
+ * @param {string} command the command to run (convert, identify, etc).
  * @param {string[]} args
  * @returns {Promise<IImageMagickCommandResult>}
  */

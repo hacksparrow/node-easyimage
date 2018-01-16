@@ -11,12 +11,13 @@
  MIT License
  */
 
-import * as Promise from "bluebird";
+import * as Bluebird from "bluebird";
 import {IBaseOptions} from "../Options";
-import {ensureDestinationDirectoryExists, applyDefaultsToBaseOptions, applyBaseOptionsToArgs} from "../Utilities";
-import {MissingOptionsError} from "../Errors/MissingOptionsError";
+import {ensureDestinationDirectoryExists, applyDefaultsToBaseOptions, applyBaseOptionsToArgs, checkForMissingOptions} from "../Utilities";
 import {execute} from "../ImageMagick";
 import {info, IInfoResult} from "./info";
+
+Promise = Promise || Bluebird as any;
 
 /**
  * Crops an image.
@@ -24,34 +25,29 @@ import {info, IInfoResult} from "./info";
  * @param {ICropOptions} options
  * @returns {Bluebird<IInfoResult>}
  */
-export function crop(options: ICropOptions): Promise<IInfoResult> {
-    return ensureDestinationDirectoryExists(options)
-        .then(() => {
-            const missingOptions: string[] = [];
+export async function crop(options: ICropOptions): Promise<IInfoResult> {
+    applyDefaultsToBaseOptions(options);
+    upgradeCropOptions(options);
+    applyDefaultsToCropOptions(options);
 
-            upgradeCropOptions(options);
+    await ensureDestinationDirectoryExists(options);
 
-            if (!options.src) missingOptions.push("src");
-            if (!options.cropWidth) missingOptions.push("cropWidth");
+    checkForMissingOptions(options, ["src", "cropWidth"]);
 
-            if (missingOptions.length) throw new MissingOptionsError(missingOptions);
+    const args: string[] = [options.src];
 
-            const args: string[] = [options.src];
+    applyBaseOptionsToArgs(options, args);
 
-            applyDefaultsToBaseOptions(options);
-            applyDefaultsToCropOptions(options);
-            applyBaseOptionsToArgs(options, args);
+    const cropDefinition = options.cropWidth + "x" + options.cropHeight + "+" + options.x + "+" + options.y;
 
-            const cropDefinition = options.cropWidth + 'x' + options.cropHeight + '+' + options.x + '+' + options.y;
+    if (options.gravity) {
+        args.push("-gravity", options.gravity);
+    }
 
-            if (options.gravity) {
-                args.push("-gravity", options.gravity);
-            }
+    args.push("-crop", cropDefinition, options.dst);
 
-            args.push("-crop", cropDefinition, options.dst);
-
-            return execute("convert", args);
-        }).then(() => info(options.dst));
+    await execute("convert", args);
+    return info(options.dst);
 }
 
 export interface ICropOptions extends IBaseOptions {
@@ -108,7 +104,13 @@ function upgradeCropOptions(options: ICropOptions) {
 }
 
 function applyDefaultsToCropOptions(options: ICropOptions) {
-    if (!options.cropHeight) options.cropHeight = options.cropWidth;
-    if (!options.x) options.x = 0;
-    if (!options.y) options.y = 0;
+    if (!options.cropHeight) {
+        options.cropHeight = options.cropWidth;
+    }
+    if (!options.x) {
+        options.x = 0;
+    }
+    if (!options.y) {
+        options.y = 0;
+    }
 }

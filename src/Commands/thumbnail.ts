@@ -11,12 +11,14 @@
  MIT License
  */
 
-import * as Promise from "bluebird";
+import * as Bluebird from "bluebird";
 import {IBaseOptions} from "../Options";
-import {ensureDestinationDirectoryExists, applyDefaultsToBaseOptions, applyBaseOptionsToArgs, checkForMissingArgs} from "../Utilities";
+import {ensureDestinationDirectoryExists, applyDefaultsToBaseOptions, applyBaseOptionsToArgs, checkForMissingOptions} from "../Utilities";
 import {execute, getImageMagickVersion} from "../ImageMagick";
 import {info, IInfoResult} from "./info";
 import {UnsupportedError} from "../Errors/UnsupportedError";
+
+Promise = Promise || Bluebird as any;
 
 /**
  * Creates a thumbnail of an image.
@@ -24,33 +26,37 @@ import {UnsupportedError} from "../Errors/UnsupportedError";
  * @param {IThumbnailOptions} options
  * @returns {Bluebird<IInfoResult>}
  */
-export function thumbnail(options: IThumbnailOptions): Promise<IInfoResult> {
-    return ensureDestinationDirectoryExists(options)
-        .then(() => {
-            checkForMissingArgs(options, ["src", "width", "height"]);
-        })
-        .then(() => info(options.src))
-        .then((infoData: IInfoResult) => {
-            applyDefaultsToBaseOptions(options);
-            applyDefaultsToThumbnailOptions(options);
+export async function thumbnail(options: IThumbnailOptions): Promise<IInfoResult> {
+    applyDefaultsToBaseOptions(options);
+    applyDefaultsToThumbnailOptions(options);
+    checkForMissingOptions(options, ["src", "width", "height"]);
 
-            const args: string[] = [options.src];
+    await ensureDestinationDirectoryExists(options);
 
-            applyBaseOptionsToArgs(options, args);
+    const infoData = await info(options.src);
 
-            if (options.gravity) args.push("-gravity", options.gravity);
+    const args: string[] = [options.src];
 
-            args.push("-interpolate", options.interpolate);
-            args.push("-strip");
+    applyBaseOptionsToArgs(options, args);
 
-            if (infoData.width > infoData.height) args.push("-thumbnail", `x${options.height}`);
-            else args.push("-thumbnail", `${options.width}x`);
+    if (options.gravity) {
+        args.push("-gravity", options.gravity);
+    }
 
-            args.push("-crop", `${options.width}x${options.height}+${options.x}+${options.y}`);
-            args.push(options.dst);
+    args.push("-interpolate", options.interpolate);
+    args.push("-strip");
 
-            return execute("convert", args);
-        }).then(() => info(options.dst));
+    if (infoData.width > infoData.height) {
+        args.push("-thumbnail", `x${options.height}`);
+    } else {
+        args.push("-thumbnail", `${options.width}x`);
+    }
+
+    args.push("-crop", `${options.width}x${options.height}+${options.x}+${options.y}`);
+    args.push(options.dst);
+
+    await execute("convert", args);
+    return info(options.dst);
 }
 
 export interface IThumbnailOptions extends IBaseOptions {
@@ -63,14 +69,23 @@ export interface IThumbnailOptions extends IBaseOptions {
 }
 
 function applyDefaultsToThumbnailOptions(options: IThumbnailOptions) {
-    if (!options.x) options.x = 0;
-    if (!options.y) options.y = 0;
+    if (!options.x) {
+        options.x = 0;
+    }
+    if (!options.y) {
+        options.y = 0;
+    }
     if (!options.interpolate) {
         const availableVersion = getImageMagickVersion();
         switch (availableVersion) {
-            case 6: options.interpolate = "bicubic"; break;
-            case 7: options.interpolate = "catrom"; break;
-            default: throw new UnsupportedError();
+            case 6:
+                options.interpolate = "bicubic";
+                break;
+            case 7:
+                options.interpolate = "catrom";
+                break;
+            default:
+                throw new UnsupportedError();
         }
     }
 }

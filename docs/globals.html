@@ -932,6 +932,9 @@ img { max-width: 100%; }
 			<a href="interfaces/icropoptions.html" class="tsd-kind-icon">ICrop<wbr>Options</a>
 		</li>
 		<li class=" tsd-kind-interface">
+			<a href="interfaces/idensity.html" class="tsd-kind-icon">IDensity</a>
+		</li>
+		<li class=" tsd-kind-interface">
 			<a href="interfaces/iimagemagickcommandresult.html" class="tsd-kind-icon">IImage<wbr>Magick<wbr>Command<wbr>Result</a>
 		</li>
 		<li class=" tsd-kind-interface">
@@ -990,29 +993,126 @@ img { max-width: 100%; }
 </code></pre><p>On CentOS</p>
 			<pre><code><span class="hljs-meta">$</span><span class="bash"> yum install imagemagick</span>
 </code></pre><h2 id="installation">Installation</h2>
+			<p>EasyImage 3 is only compatible with NodeJS 4 or greater.</p>
 			<pre><code><span class="hljs-meta">$</span><span class="bash"> npm install --save easyimage</span>
+</code></pre><p>For NodeJS 0.12, use <a href="https://github.com/hacksparrow/node-easyimage/tree/v2.2.0">EasyImage 2</a></p>
+			<pre><code><span class="hljs-variable">$ </span>npm install --save easyimage<span class="hljs-variable">@2</span>
 </code></pre><h2 id="usage">Usage</h2>
 			<p>The EasyImage module is ES6 compatible. You can import just the commands that you will need.</p>
-			<p>Except for <code>info</code> and <code>execute</code>, all commands take an options object.</p>
-			<h3 id="info">Info</h3>
-			<p>The <code>info</code> command will give you details about an image file.</p>
-			<p>```ecmascript 6
-			import {info} from &quot;easyimage&quot;;</p>
-			<p>info(&quot;/path/to/image.jpg&quot;).then((info) =&gt; console.log(info));</p>
-			<pre><code>
-<span class="hljs-comment">### Convert</span>
+			<p>Every command which takes an options object which extends from <a href="https://mrkmg.github.io/node-easyimage/interfaces/ibaseoptions.html">IBaseOptions</a>. You can use
+				any of the parameters defined on <code>IBaseOptions</code>. For example, to prevent EasyImage from auto-orientating your image, you can pass <code>autoOrient: false</code> on any
+			command.</p>
+			<p>Every command must have a <code>src</code> parameter. If you do not specify a <code>dst</code>, then a random file will be created. Be sure to clean up randomly created files by
+			either moving them to permanent storage, or deleting them. Some command have other required options.</p>
+			<p>The examples below only specify the required arguments. See the <a href="https://mrkmg.github.io/node-easyimage/index.html">Docs</a> for all available options for each
+			command.</p>
+			<h3 id="convert">Convert</h3>
+			<p>The <a href="http://localhost:63342/node-easyimage/docs/globals.html#convert">convert()</a> command can convert an image file from one type to another.</p>
+			<pre><code><span class="hljs-keyword">import</span> {convert} <span class="hljs-keyword">from</span> <span class="hljs-string">"easyimage"</span>;
 
-The `convert` command can convert an image file <span class="hljs-keyword">from</span> one<span class="hljs-built_in"> type </span><span class="hljs-keyword">to</span> another.
-
-```ecmascript 6
-import {convert} <span class="hljs-keyword">from</span> <span class="hljs-string">"easyimage"</span>;
-
-const options = {
-    src: <span class="hljs-string">"/path/to/source.jpg"</span>,
-    dst: <span class="hljs-string">"/path/to/dest.png"</span>
+<span class="hljs-keyword">const</span> options = {
+    <span class="hljs-attr">src</span>: <span class="hljs-string">"/path/to/source.jpg"</span>,
+    <span class="hljs-attr">dst</span>: <span class="hljs-string">"/path/to/dest.png"</span>
 };
 
-convert(options).then((info) =&gt; console.log(info));
+<span class="hljs-keyword">const</span> info = <span class="hljs-keyword">await</span> convert(options);
+</code></pre><h3 id="crop">Crop</h3>
+			<p>The <a href="https://mrkmg.github.io/node-easyimage/globals.html#crop">crop()</a> command will crop an image to the specified size.</p>
+			<pre><code><span class="hljs-keyword">import</span> {crop} <span class="hljs-keyword">from</span> <span class="hljs-string">"easyimage"</span>;
+
+<span class="hljs-keyword">const</span> options = {
+    <span class="hljs-attr">src</span>: <span class="hljs-string">"/path/to/source.jpg"</span>,
+    <span class="hljs-attr">dst</span>: <span class="hljs-string">"/path/to/dest.jpg"</span>,
+    <span class="hljs-attr">cropWidth</span>: <span class="hljs-number">100</span>
+};
+
+<span class="hljs-keyword">const</span> info = <span class="hljs-keyword">await</span> crop(options)
+</code></pre><h3 id="resize">Resize</h3>
+			<p>The <a href="https://mrkmg.github.io/node-easyimage/globals.html#resize">resize()</a> command will resize an image to the specified size.</p>
+			<pre><code><span class="hljs-keyword">import</span> {resize} <span class="hljs-keyword">from</span> <span class="hljs-string">"easyimage"</span>;
+
+<span class="hljs-keyword">const</span> options = {
+    <span class="hljs-attr">src</span>: <span class="hljs-string">"/path/to/source.jpg"</span>,
+    <span class="hljs-attr">dst</span>: <span class="hljs-string">"/path/to/dest.jpg"</span>,
+    <span class="hljs-attr">width</span>: <span class="hljs-number">100</span>
+};
+
+<span class="hljs-keyword">const</span> info = <span class="hljs-keyword">await</span> resize(options)
+</code></pre><h3 id="rescrop">Rescrop</h3>
+			<p>The <a href="https://mrkmg.github.io/node-easyimage/globals.html#rescrop">rescrop()</a> command will resize and crop an image to the specified size.</p>
+			<pre><code><span class="hljs-class">import </span>{rescrop} from <span class="hljs-string">"easyimage"</span>;
+
+const options = {
+<span class="hljs-symbol">    src:</span> <span class="hljs-string">"/path/to/source.jpg"</span>,
+<span class="hljs-symbol">    dst:</span> <span class="hljs-string">"/path/to/dest.jpg"</span>,
+<span class="hljs-symbol">    width:</span> <span class="hljs-number">100</span>,
+<span class="hljs-symbol">    cropWidth:</span> <span class="hljs-number">200</span>
+};
+
+const info = await rescrop(options)
+</code></pre><h3 id="rotate">Rotate</h3>
+			<p>The <a href="https://mrkmg.github.io/node-easyimage/globals.html#rotate">rotate()</a> command will rotate an image by the specified number of degrees.</p>
+			<pre><code><span class="hljs-keyword">import</span> {rotate} <span class="hljs-keyword">from</span> <span class="hljs-string">"easyimage"</span>;
+
+<span class="hljs-keyword">const</span> options = {
+    <span class="hljs-attr">src</span>: <span class="hljs-string">"/path/to/source.jpg"</span>,
+    <span class="hljs-attr">dst</span>: <span class="hljs-string">"/path/to/dest.jpg"</span>,
+    <span class="hljs-attr">degree</span>: <span class="hljs-number">90</span>
+};
+
+<span class="hljs-keyword">const</span> info = <span class="hljs-keyword">await</span> rotate(options)
+</code></pre><h3 id="thumbnail">Thumbnail</h3>
+			<p>The <a href="https://mrkmg.github.io/node-easyimage/globals.html#thumbnail">thumbnail()</a> command will create a thumbnail of the specified image.</p>
+			<pre><code><span class="hljs-keyword">import</span> {thumbnail} <span class="hljs-keyword">from</span> <span class="hljs-string">"easyimage"</span>;
+
+<span class="hljs-keyword">const</span> options = {
+    <span class="hljs-attr">src</span>: <span class="hljs-string">"/path/to/source.jpg"</span>,
+    <span class="hljs-attr">dst</span>: <span class="hljs-string">"/path/to/dest.jpg"</span>,
+    <span class="hljs-attr">width</span>: <span class="hljs-number">100</span>
+};
+
+<span class="hljs-keyword">const</span> info = <span class="hljs-keyword">await</span> thumbnail(options)
+</code></pre><h2 id="helper-commands">Helper Commands</h2>
+			<p>In addition to the above commands, there are three other commands available.</p>
+			<h3 id="info">Info</h3>
+			<p>The <a href="https://mrkmg.github.io/node-easyimage/globals.html#info">info()</a> command will give you details about an image file.</p>
+			<pre><code>import {info} <span class="hljs-keyword">from</span> <span class="hljs-string">"easyimage"</span>;
+
+const <span class="hljs-builtin-name">info</span> = await <span class="hljs-builtin-name">info</span>(<span class="hljs-string">"/path/to/image.jpg"</span>)
+</code></pre><h3 id="execute">Execute</h3>
+			<p>The <a href="">execute()</a> command allows you directly run ImageMagick with your own tool and arguments. It will handle calling the appropriate ImageMagick version, and
+			return the raw <code>stdout</code> and <code>stderr</code> to you.</p>
+			<pre><code><span class="hljs-keyword">import</span> {execute} <span class="hljs-keyword">from</span> <span class="hljs-string">"easyimage"</span>;
+
+<span class="hljs-keyword">const</span> {<span class="hljs-literal">stdout</span>, <span class="hljs-literal">stderr</span>} = await execute(<span class="hljs-string">"convert"</span>, [<span class="hljs-string">"/path/to/source.jpg"</span>, <span class="hljs-string">"-flatten"</span>, <span class="hljs-string">"/path/to/dest.jpg"</span>]);
+</code></pre><h3 id="getimagemagickversion">getImageMagickVersion</h3>
+			<p>The <a href="https://mrkmg.github.io/node-easyimage/globals.html#getimagemagickversion">getImageMagickVersion()</a> command will return the detected version of
+			ImageMagick.</p>
+			<pre><code><span class="hljs-keyword">import</span> {getImageMagickVersion} <span class="hljs-keyword">from</span> <span class="hljs-string">"easyimage"</span>;
+
+<span class="hljs-keyword">const</span> version = getImageMagickVersion();
+</code></pre><h2 id="error-handling">Error Handling</h2>
+			<p>There are 5 different types of errors that can be thrown.</p>
+			<ul>
+				<li><code>BadDestinationError</code></li>
+				<li><code>ImageMagickMissingError</code></li>
+				<li><code>MissingExtensionError</code></li>
+				<li><code>MissingOptionsError</code></li>
+				<li><code>UnsupportedError</code></li>
+			</ul>
+			<p>You can try to catch for specific errors.</p>
+			<pre><code><span class="hljs-keyword">import</span> {convert, MissingOptionsError} <span class="hljs-keyword">from</span> <span class="hljs-string">"easyimage"</span>;
+
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">shouldError</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">try</span> {
+        <span class="hljs-keyword">await</span> convert({});
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"I should not show"</span>);
+    } <span class="hljs-keyword">catch</span> (MissingOptionsError e) {
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"I should show"</span>);
+    } <span class="hljs-keyword">catch</span> (<span class="hljs-built_in">Error</span> e) {
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"I should not show either"</span>);
+    }
+}
 </code></pre><h2 id="license-mit-">License (MIT)</h2>
 			<p>Copyright (c) 2015 Hage Yaapa <a href="[http://www.hacksparrow.com](http://www.hacksparrow.com)">[http://www.hacksparrow.com](http://www.hacksparrow.com)</a></p>
 			<p>Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -1051,6 +1151,7 @@ convert(options).then((info) =&gt; console.log(info));
 							<li class="tsd-kind-interface"><a href="interfaces/ibaseoptions.html" class="tsd-kind-icon">IBase<wbr>Options</a></li>
 							<li class="tsd-kind-interface"><a href="interfaces/iconvertoptions.html" class="tsd-kind-icon">IConvert<wbr>Options</a></li>
 							<li class="tsd-kind-interface"><a href="interfaces/icropoptions.html" class="tsd-kind-icon">ICrop<wbr>Options</a></li>
+							<li class="tsd-kind-interface"><a href="interfaces/idensity.html" class="tsd-kind-icon">IDensity</a></li>
 							<li class="tsd-kind-interface"><a href="interfaces/iimagemagickcommandresult.html" class="tsd-kind-icon">IImage<wbr>Magick<wbr>Command<wbr>Result</a></li>
 							<li class="tsd-kind-interface"><a href="interfaces/iinforesult.html" class="tsd-kind-icon">IInfo<wbr>Result</a></li>
 							<li class="tsd-kind-interface"><a href="interfaces/irescropoptions.html" class="tsd-kind-icon">IRes<wbr>Crop<wbr>Options</a></li>
@@ -1088,7 +1189,7 @@ convert(options).then((info) =&gt; console.log(info));
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/766d487/src/Commands/convert.ts#L27">Commands/convert.ts:27</a></li>
+								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/8a7bcd2/src/Commands/convert.ts#L27">Commands/convert.ts:27</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1116,7 +1217,7 @@ convert(options).then((info) =&gt; console.log(info));
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/766d487/src/Commands/crop.ts#L27">Commands/crop.ts:27</a></li>
+								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/8a7bcd2/src/Commands/crop.ts#L28">Commands/crop.ts:28</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1144,7 +1245,7 @@ convert(options).then((info) =&gt; console.log(info));
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/766d487/src/ImageMagick.ts#L34">ImageMagick.ts:34</a></li>
+								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/8a7bcd2/src/ImageMagick.ts#L36">ImageMagick.ts:36</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1156,6 +1257,9 @@ convert(options).then((info) =&gt; console.log(info));
 						<ul class="tsd-parameters">
 							<li>
 								<h5>command: <span class="tsd-signature-type">string</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<p>the command to run (convert, identify, etc).</p>
+								</div>
 							</li>
 							<li>
 								<h5>args: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
@@ -1175,7 +1279,7 @@ convert(options).then((info) =&gt; console.log(info));
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/766d487/src/ImageMagick.ts#L62">ImageMagick.ts:62</a></li>
+								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/8a7bcd2/src/ImageMagick.ts#L64">ImageMagick.ts:64</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1197,7 +1301,7 @@ convert(options).then((info) =&gt; console.log(info));
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/766d487/src/Commands/info.ts#L24">Commands/info.ts:24</a></li>
+								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/8a7bcd2/src/Commands/info.ts#L26">Commands/info.ts:26</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1209,6 +1313,9 @@ convert(options).then((info) =&gt; console.log(info));
 						<ul class="tsd-parameters">
 							<li>
 								<h5>filePath: <span class="tsd-signature-type">string</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<p>Path to the image file.</p>
+								</div>
 							</li>
 						</ul>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="interfaces/iinforesult.html" class="tsd-signature-type">IInfoResult</a><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1225,7 +1332,7 @@ convert(options).then((info) =&gt; console.log(info));
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/766d487/src/Commands/rescrop.ts#L28">Commands/rescrop.ts:28</a></li>
+								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/8a7bcd2/src/Commands/rescrop.ts#L29">Commands/rescrop.ts:29</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1253,7 +1360,7 @@ convert(options).then((info) =&gt; console.log(info));
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/766d487/src/Commands/resize.ts#L27">Commands/resize.ts:27</a></li>
+								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/8a7bcd2/src/Commands/resize.ts#L28">Commands/resize.ts:28</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1281,7 +1388,7 @@ convert(options).then((info) =&gt; console.log(info));
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/766d487/src/Commands/rotate.ts#L27">Commands/rotate.ts:27</a></li>
+								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/8a7bcd2/src/Commands/rotate.ts#L28">Commands/rotate.ts:28</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1309,7 +1416,7 @@ convert(options).then((info) =&gt; console.log(info));
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/766d487/src/Commands/thumbnail.ts#L27">Commands/thumbnail.ts:27</a></li>
+								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/8a7bcd2/src/Commands/thumbnail.ts#L29">Commands/thumbnail.ts:29</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">

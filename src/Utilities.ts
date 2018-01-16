@@ -11,7 +11,7 @@
  MIT License
  */
 
-import * as Promise from "bluebird";
+import * as Bluebird from "bluebird";
 import {exists} from "fs";
 import * as mkdirp from "mkdirp";
 import {tmpdir} from "os";
@@ -21,6 +21,8 @@ import {BadDestinationError} from "./Errors/BadDestinationError";
 import {IBaseOptions} from "./Options";
 import {MissingOptionsError} from "./Errors/MissingOptionsError";
 import {MissingExtensionError} from "./Errors/MissingExtensionError";
+
+Promise = Promise || Bluebird as any;
 
 export function ensureDestinationDirectoryExists(options: IBaseOptions) {
     if (!options.dst) {
@@ -44,16 +46,19 @@ export function ensureDestinationDirectoryExists(options: IBaseOptions) {
                     } else {
                         reject(new BadDestinationError());
                     }
-                })
+                });
             }
-        })
-
+        });
     });
 }
 
 export function applyDefaultsToBaseOptions(options: IBaseOptions) {
-    if (!options.hasOwnProperty("autoOrient")) options.autoOrient = true;
-    if (!options.hasOwnProperty("dst")) options.dst = makeTemporaryFile(options.src);
+    if (!options.hasOwnProperty("autoOrient")) {
+        options.autoOrient = true;
+    }
+    if (!options.hasOwnProperty("dst")) {
+        options.dst = makeTemporaryFile(options.src);
+    }
 }
 
 export function applyBaseOptionsToArgs(options: IBaseOptions, args: string[]) {
@@ -72,19 +77,25 @@ export function applyBaseOptionsToArgs(options: IBaseOptions, args: string[]) {
     }
 }
 
-export function checkForMissingArgs<T extends IBaseOptions>(options: T, requiredArgs: Array<keyof T>) {
+export function checkForMissingOptions<T extends IBaseOptions>(options: T, requiredArgs: Array<keyof T>) {
     const missingArgs: Array<keyof T> = [];
 
     for (const requiredArg of requiredArgs) {
-        if (!options.hasOwnProperty(requiredArg)) missingArgs.push(requiredArg);
+        if (!options.hasOwnProperty(requiredArg)) {
+            missingArgs.push(requiredArg);
+        }
     }
 
-    if (missingArgs.length) throw new MissingOptionsError(missingArgs);
+    if (missingArgs.length) {
+        throw new MissingOptionsError(missingArgs);
+    }
 }
 
 function makeTemporaryFile(sourceFile: string) {
     const extension = extname(sourceFile);
-    if (!extension) throw new MissingExtensionError(sourceFile);
+    if (!extension) {
+        throw new MissingExtensionError(sourceFile);
+    }
     const fileName = generate();
     return `${tmpdir()}/EasyImage-${fileName}.${extension}`;
 }

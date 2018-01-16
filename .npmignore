@@ -7,7 +7,6 @@
 docs/
 src/
 node_modules/
-output/
 test/
 .travis.yml
 tsconfig.json

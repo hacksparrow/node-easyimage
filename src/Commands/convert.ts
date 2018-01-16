@@ -10,13 +10,13 @@
 
  MIT License
  */
-
-import * as Promise from "bluebird";
+import * as Bluebird from "bluebird";
 import {IBaseOptions} from "../Options";
-import {ensureDestinationDirectoryExists, applyDefaultsToBaseOptions, applyBaseOptionsToArgs} from "../Utilities";
-import {MissingOptionsError} from "../Errors/MissingOptionsError";
+import {ensureDestinationDirectoryExists, applyDefaultsToBaseOptions, applyBaseOptionsToArgs, checkForMissingOptions} from "../Utilities";
 import {execute} from "../ImageMagick";
 import {info, IInfoResult} from "./info";
+
+Promise = Promise || Bluebird as any;
 
 /**
  * Converts an image from one format to another.
@@ -24,24 +24,20 @@ import {info, IInfoResult} from "./info";
  * @param {IConvertOptions} options
  * @returns {Bluebird<IInfoResult>}
  */
-export function convert(options: IConvertOptions): Promise<IInfoResult> {
-    return ensureDestinationDirectoryExists(options)
-        .then(() => {
-            const missingOptions: string[] = [];
+export async function convert(options: IConvertOptions): Promise<IInfoResult> {
+    applyDefaultsToBaseOptions(options);
+    checkForMissingOptions(options, ["src"]);
 
-            if (!options.src) missingOptions.push("src");
+    await ensureDestinationDirectoryExists(options);
 
-            if (missingOptions.length) throw new MissingOptionsError(missingOptions);
+    const args: string[] = [options.src];
 
-            const args: string[] = [options.src];
+    applyBaseOptionsToArgs(options, args);
 
-            applyDefaultsToBaseOptions(options);
-            applyBaseOptionsToArgs(options, args);
+    args.push(options.dst);
 
-            args.push(options.dst);
-
-            return execute("convert", args);
-        }).then(() => info(options.dst));
+    await execute("convert", args);
+    return info(options.dst);
 }
 
 export interface IConvertOptions extends IBaseOptions {

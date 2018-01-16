@@ -11,13 +11,14 @@
  MIT License
  */
 
-import * as Promise from "bluebird";
+import * as Bluebird from "bluebird";
 import {ensureDestinationDirectoryExists, applyDefaultsToBaseOptions, applyBaseOptionsToArgs} from "../Utilities";
-import {MissingOptionsError} from "../Errors/MissingOptionsError";
 import {execute} from "../ImageMagick";
 import {info, IInfoResult} from "./info";
 import {ICropOptions} from "./crop";
 import {IResizeOptions} from "./resize";
+
+Promise = Promise || Bluebird as any;
 
 /**
  * Resizes and crops an image.
@@ -25,35 +26,28 @@ import {IResizeOptions} from "./resize";
  * @param {IResCropOptions} options
  * @returns {Bluebird<IInfoResult>}
  */
-export function rescrop(options: IResCropOptions): Promise<IInfoResult> {
-    return ensureDestinationDirectoryExists(options)
-        .then(() => {
-            const missingOptions: string[] = [];
+export async function rescrop(options: IResCropOptions): Promise<IInfoResult> {
+    applyDefaultsToBaseOptions(options);
+    upgradeCropOptions(options);
+    applyDefaultsToCropOptions(options);
 
-            upgradeCropOptions(options);
+    await ensureDestinationDirectoryExists(options);
 
-            if (!options.src) missingOptions.push("src");
-            if (!options.cropWidth) missingOptions.push("cropWidth");
+    const args: string[] = [options.src];
 
-            if (missingOptions.length) throw new MissingOptionsError(missingOptions);
+    applyBaseOptionsToArgs(options, args);
 
-            const args: string[] = [options.src];
+    const cropDefinition = options.cropWidth + "x" + options.cropHeight + "+" + options.x + "+" + options.y;
+    const resizeDefinition = `${options.width}x${options.height}${options.ignoreAspectRatio ? "!" : ""}`;
 
-            applyDefaultsToBaseOptions(options);
-            applyDefaultsToCropOptions(options);
-            applyBaseOptionsToArgs(options, args);
+    if (options.gravity) {
+        args.push("-gravity", options.gravity);
+    }
 
-            const cropDefinition = options.cropWidth + 'x' + options.cropHeight + '+' + options.x + '+' + options.y;
-            const resizeDefinition = `${options.width}x${options.height}${options.ignoreAspectRatio ? "!" : ""}`;
+    args.push("-resize", resizeDefinition, "-crop", cropDefinition, options.dst);
 
-            if (options.gravity) {
-                args.push("-gravity", options.gravity);
-            }
-
-            args.push("-resize", resizeDefinition, "-crop", cropDefinition, options.dst);
-
-            return execute("convert", args);
-        }).then(() => info(options.dst));
+    await execute("convert", args);
+    return info(options.dst);
 }
 
 export interface IResCropOptions extends ICropOptions, IResizeOptions {
@@ -71,7 +65,13 @@ function upgradeCropOptions(options: ICropOptions) {
 }
 
 function applyDefaultsToCropOptions(options: ICropOptions) {
-    if (!options.cropHeight) options.cropHeight = options.cropWidth;
-    if (!options.x) options.x = 0;
-    if (!options.y) options.y = 0;
+    if (!options.cropHeight) {
+        options.cropHeight = options.cropWidth;
+    }
+    if (!options.x) {
+        options.x = 0;
+    }
+    if (!options.y) {
+        options.y = 0;
+    }
 }

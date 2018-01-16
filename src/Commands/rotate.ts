@@ -11,12 +11,13 @@
  MIT License
  */
 
-import * as Promise from "bluebird";
+import * as Bluebird from "bluebird";
 import {IBaseOptions} from "../Options";
-import {ensureDestinationDirectoryExists, applyDefaultsToBaseOptions, applyBaseOptionsToArgs} from "../Utilities";
-import {MissingOptionsError} from "../Errors/MissingOptionsError";
+import {ensureDestinationDirectoryExists, applyDefaultsToBaseOptions, applyBaseOptionsToArgs, checkForMissingOptions} from "../Utilities";
 import {execute} from "../ImageMagick";
 import {info, IInfoResult} from "./info";
+
+Promise = Promise || Bluebird as any;
 
 /**
  * Rotates an image by a specified number of degrees.
@@ -24,25 +25,20 @@ import {info, IInfoResult} from "./info";
  * @param {IRotateOptions} options
  * @returns {Bluebird<IInfoResult>}
  */
-export function rotate(options: IRotateOptions): Promise<IInfoResult> {
-    return ensureDestinationDirectoryExists(options)
-        .then(() => {
-            const missingOptions: string[] = [];
+export async function rotate(options: IRotateOptions): Promise<IInfoResult> {
+    checkForMissingOptions(options, ["src", "degree"]);
+    applyDefaultsToBaseOptions(options);
 
-            if (!options.src) missingOptions.push("src");
-            if (!options.degree) missingOptions.push("degree");
+    await ensureDestinationDirectoryExists(options);
 
-            if (missingOptions.length) throw new MissingOptionsError(missingOptions);
+    const args: string[] = [options.src];
 
-            const args: string[] = [options.src];
+    applyBaseOptionsToArgs(options, args);
 
-            applyDefaultsToBaseOptions(options);
-            applyBaseOptionsToArgs(options, args);
+    args.push("-rotate", options.degree.toString(), options.dst);
 
-            args.push("-rotate", options.degree.toString() , options.dst);
-
-            return execute("convert", args);
-        }).then(() => info(options.dst));
+    await execute("convert", args);
+    return info(options.dst);
 }
 
 export interface IRotateOptions extends IBaseOptions {

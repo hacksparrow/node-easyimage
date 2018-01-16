@@ -2,11 +2,14 @@
   "compilerOptions": {
     "module": "commonjs",
     "noImplicitAny": true,
-    "removeComments": true,
     "preserveConstEnums": true,
+    "declaration": true,
+    "declarationDir": "./types",
     "sourceMap": false,
     "outDir": "./lib",
-    "lib": ["es2015", "dom"]
+    "skipLibCheck": true,
+    "importHelpers": true,
+    "lib": ["es2015"]
   },
   "include": ["./src/**/*"],
   "exclude": ["node_modules"]

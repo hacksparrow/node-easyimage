@@ -11,71 +11,107 @@
  MIT License
  */
 
-import * as Promise from "bluebird";
+import * as Bluebird from "bluebird";
 import {execute} from "../ImageMagick";
 import {UnsupportedError} from "../Errors/UnsupportedError";
+
+Promise = Promise || Bluebird as any;
 
 /**
  * Returns information about an image.
  *
- * @param {string} filePath
+ * @param {string} filePath Path to the image file.
  * @returns {Bluebird<IInfoResult>}
  */
-export function info(filePath: string): Promise<IInfoResult> {
+export async function info(filePath: string): Promise<IInfoResult> {
     const args = ["-format", "%m %z %w %h %b %x %y %f", filePath];
 
-    return execute("identify", args)
-        .then((data) => {
-            if (!data.stdout) {
-                throw new UnsupportedError();
-            }
+    const {stdout, stderr} = await execute("identify", args);
 
-            const temp = data.stdout
-                .replace(/PixelsPerInch/g, "")
-                .replace(/PixelsPerCentimeter/g, "")
-                .replace(/Undefined/g, "")
-                .split(/\s+/g);
+    if (stdout === "") {
+        throw new UnsupportedError();
+    }
 
-            // All fields not found
-            if (temp.length < 7) {
-                throw new UnsupportedError();
-            }
+    const temp = stdout
+        .replace(/PixelsPerInch/g, "")
+        .replace(/PixelsPerCentimeter/g, "")
+        .replace(/Undefined/g, "")
+        .split(/\s+/g);
 
-            const result: IInfoResult = {
-                type: temp[0].toLowerCase(),
-                depth: parseInt(temp[1]),
-                width: parseInt(temp[2]),
-                height: parseInt(temp[3]),
-                size: parseSize(temp[4]),
-                density: {
-                    x: parseFloat(temp[5]),
-                    y: parseFloat(temp[6])
-                },
-                name: temp.slice(7).join(' ').replace(/(\r\n|\n|\r)/gm, '').trim(),
-                path: filePath
-            };
+    // All fields not found
+    if (temp.length < 7) {
+        throw new UnsupportedError();
+    }
 
-            if (data.stderr) {
-                result.warnings = data.stderr;
-            }
+    const result: IInfoResult = {
+        type: temp[0].toLowerCase(),
+        depth: parseInt(temp[1]),
+        width: parseInt(temp[2]),
+        height: parseInt(temp[3]),
+        size: parseSize(temp[4]),
+        density: {
+            x: parseFloat(temp[5]),
+            y: parseFloat(temp[6]),
+        },
+        name: temp.slice(7).join(" ").replace(/(\r\n|\n|\r)/gm, "").trim(),
+        path: filePath,
+    };
 
-            return result;
-        });
+    if (stderr) {
+        result.warnings = stderr;
+    }
+
+    return result;
 }
 
 export interface IInfoResult {
+    /**
+     * Type of file.
+     */
     type: string,
+
+    /**
+     * The number of bits in a color sample within a pixel.
+     */
     depth: number;
+
+    /**
+     * The width of the image.
+     */
     width: number;
+
+    /**
+     * The height of the image.
+     */
     height: number;
+
+    /**
+     * The filesize of the image in bytes.
+     */
     size: number;
+
+    /**
+     * The density of the image.
+     */
     density: IDensity;
+
+    /**
+     * The filename (excluding the path) of the image.
+     */
     name: string;
+
+    /**
+     * The path to the image.
+     */
     path: string;
+
+    /**
+     * Any warnings that ImageMagick may have output.
+     */
     warnings?: string;
 }
 
-interface IDensity {
+export interface IDensity {
     x: number;
     y: number;
 }
