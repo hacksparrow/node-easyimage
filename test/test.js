@@ -73,7 +73,19 @@ describe('.convert -', function () {
             file.type.should.be.equal('png');
             file.name.should.be.equal('convert.png');
         });
+    });
 
+    it("should convert a multi-page pdf to a single image", function () {
+        return easyimg.convert({
+            src: "test.pdf",
+            dst: __dirname + "/output/convert.png"
+        }).then(function (file) {
+            file.should.be.a('object');
+            file.should.have.property('type');
+            file.type.should.be.equal('png');
+            file.name.should.be.equal('convert.png');
+            file.height.should.be.equal(1584);
+        });
     });
 
 });

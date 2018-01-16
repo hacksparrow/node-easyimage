@@ -30,6 +30,13 @@ export interface IBaseOptions {
     autoOrient?: boolean;
 
     /**
+     * Applies the "-coalesce" option.
+     * @default false
+     * @see https://www.imagemagick.org/script/command-line-options.php#coalesce
+     */
+    coalesce?: boolean
+
+    /**
      * Flatten the resulting image.
      * @default false
      */

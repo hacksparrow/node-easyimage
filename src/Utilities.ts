@@ -56,6 +56,7 @@ export function applyDefaultsToBaseOptions(options: IBaseOptions) {
     if (!options.hasOwnProperty("autoOrient")) {
         options.autoOrient = true;
     }
+
     if (!options.hasOwnProperty("dst")) {
         options.dst = makeTemporaryFile(options.src);
     }
@@ -72,8 +73,16 @@ export function applyBaseOptionsToArgs(options: IBaseOptions, args: string[]) {
         args.push("-auto-orient");
     }
 
+    if (options.coalesce) {
+        args.push("-coalesce");
+    }
+
     if (options.quality) {
         args.push("-quality", options.quality.toString());
+    }
+
+    if (extname(options.src) === ".pdf") {
+        args.push("-append");
     }
 }
 
@@ -97,5 +106,5 @@ function makeTemporaryFile(sourceFile: string) {
         throw new MissingExtensionError(sourceFile);
     }
     const fileName = generate();
-    return `${tmpdir()}/EasyImage-${fileName}.${extension}`;
+    return `${tmpdir()}/EasyImage-${fileName}${extension}`;
 }

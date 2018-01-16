@@ -1,3 +1,16 @@
+3.0.0 - PENDING-RELEASE
+------------------
+
+1. Rewrote in typescript with ES6
+2. Removed exec
+3. Removed support for node 0.12
+4. Fixed various bugs
+5. No longer apply a gravity to `resize()` or `rescrop()`
+6. All PDF's with no page definition now automatically apply "-append"
+7. Added `coalesce` option to all commands
+8. Added orientation to `info()`
+9. Changed `resize()` to not auto-set height from width
+
 2.2.0 - 10-01-2018
 ------------------
 
