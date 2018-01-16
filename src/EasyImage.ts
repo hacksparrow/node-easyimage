@@ -11,4 +11,11 @@
  MIT License
  */
 
-module.exports = require("./lib/EasyImage");
+export * from "./ImageMagick";
+export * from "./Commands/info";
+export * from "./Commands/crop";
+export * from "./Commands/convert";
+export * from "./Commands/resize";
+export * from "./Commands/rotate";
+export * from "./Commands/rescrop";
+export * from "./Commands/thumbnail";

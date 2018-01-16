@@ -46,7 +46,7 @@ describe('.info - ', function () {
 
     describe('invalid file type', function () {
         it('should not be supported', function () {
-            return assert.isRejected(easyimg.info('./test.js'), /^identify/);
+            return assert.isRejected(easyimg.info('./test.js'), "The issued command is unsupported");
         });
     });
 

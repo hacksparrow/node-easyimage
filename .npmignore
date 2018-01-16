@@ -4,5 +4,11 @@
 *.swp
 *.out
 
+docs/
+src/
+node_modules/
 output/
-kitten.jpg
+test/
+.travis.yml
+tsconfig.json
+typedoc.js

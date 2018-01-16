@@ -18,80 +18,39 @@ $ yum install imagemagick
 
 ## Installation
 ```
-$ npm install easyimage
+$ npm install --save easyimage
 ```
 
 ## Usage
-```
-var easyimg = require('easyimage');
+
+The EasyImage module is ES6 compatible. You can import just the commands that you will need.
+
+Except for `info` and `execute`, all commands take an options object.
+
+### Info
+
+The `info` command will give you details about an image file.
+
+```ecmascript 6
+import {info} from "easyimage";
+
+info("/path/to/image.jpg").then((info) => console.log(info));
 ```
 
-EasyImage offers these promise methods:
+### Convert
 
-```
-easyimg.info(<image_path>) - to retrieve information about an image. Will return an object with the following properties - type, depth, width, height, size, density, name, and path.
-easyimg.convert(<options>) - to convert an image from one format to another.
-easyimg.resize(<options>) - to resize an image.
-easyimg.crop(<options>) - to crop an image.
-easyimg.thumbnail(<options>) - to create square thumbnails.
-easyimg.rescrop(<options>) - to resize and crop and image in one go, useful for creating customzied thumbnails.
-easyimg.rotate(<options>) - to rotate an image.
-easyimg.execute(<command>, <arguments>) - when you want to call a custom command to ImageMagick. Pass arguments as an array.
-```
-**NOTE**: `easyimg.exec()` spawns a subshell, and has been deprecated. It can not detect the version of ImageMagick to ensure proper execution. Please use the `easyimg.execute()` function moving forward.
+The `convert` command can convert an image file from one type to another.
 
-The EasyImage options object can have these properties depending on the method. Unrelated options are ignored.
+```ecmascript 6
+import {convert} from "easyimage";
 
-```
-src - path to source image.
-dst - path to destination image.
-width - width of resized image.
-height - height of resized image.
-degree - degree of rotation.
-cropwidth - width of cropped image, if missing, width will be used instead.
-cropheight - height of cropped image, if missing, height will be used instead.
-x - x offset for cropping, defaults to 0.
-y - y offset for cropping, defaults to 0.
-quality - quality of processed image, 1 to 100.
-gravity - crop position [NorthWest | North | NorthEast | West | Center | East | SouthWest | South | SouthEast], defaults to Center.
-fill - fill area flag, image is resized to completely fill the target crop dimensions, defaults to false.
-background - background color, defaults to "white". If specified, automatically flattens the image.
-flatten - if present, the image will be flattened (flattening removes alpha channel). Defaults to false.
-ignoreAspectRatio - if set to true, resize will ignore aspect ratio
-```
+const options = {
+    src: "/path/to/source.jpg",
+    dst: "/path/to/dest.png"
+};
 
-## Examples
-
-**Example 1: File info**
+convert(options).then((info) => console.log(info));
 ```
-easyimg.info('kitten.jpg').then(
-  function(file) {
-    console.log(file);
-  }, function (err) {
-    console.log(err);
-  }
-);
-```
-
-The first function of the `then` method is the success handler, the second function is the error handler.
-
-**Example 2: Resize and Crop**
-```
-easyimg.rescrop({
-     src:'kitten.jpg', dst:'./output/kitten-thumbnail.jpg',
-     width:500, height:500,
-     cropwidth:128, cropheight:128,
-     x:0, y:0
-  })
-  .then(function(image) {
-     console.log('Resized and cropped: ' + image.width + ' x ' + image.height);
-  })
-  .catch(function (err) {
-    console.log(err);
-  }
-);
-```
-For more examples check out [test/test.js](https://github.com/hacksparrow/node-easyimage/blob/master/test/test.js).
 
 ## License (MIT)
 

@@ -11,4 +11,8 @@
  MIT License
  */
 
-module.exports = require("./lib/EasyImage");
+export class ImageMagickMissingError extends Error {
+    constructor() {
+        super("ImageMagick not found");
+    }
+}

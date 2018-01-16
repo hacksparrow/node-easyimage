@@ -11,4 +11,8 @@
  MIT License
  */
 
-module.exports = require("./lib/EasyImage");
+export class UnsupportedError extends Error {
+    constructor() {
+        super("The issued command is unsupported");
+    }
+}

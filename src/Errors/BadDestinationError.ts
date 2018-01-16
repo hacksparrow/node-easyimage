@@ -11,4 +11,8 @@
  MIT License
  */
 
-module.exports = require("./lib/EasyImage");
+export class BadDestinationError extends Error {
+    constructor() {
+        super("`dst` directory could not be created");
+    }
+}

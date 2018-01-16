@@ -11,4 +11,8 @@
  MIT License
  */
 
-module.exports = require("./lib/EasyImage");
+export class MissingOptionsError extends Error {
+    constructor(options: string[]) {
+        super(`Missing ${options.map(o => "`" + o + "`").join(", ")} from options`);
+    }
+}

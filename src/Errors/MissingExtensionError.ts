@@ -11,4 +11,8 @@
  MIT License
  */
 
-module.exports = require("./lib/EasyImage");
+export class MissingExtensionError extends Error {
+    constructor(srcFile: string) {
+        super(`${srcFile} does not have an extension`);
+    }
+}

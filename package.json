@@ -5,7 +5,10 @@
   "license": "MIT",
   "main": "easyimage.js",
   "scripts": {
-    "test": "cd test && mocha"
+    "test": "cd test && mocha",
+    "build": "npm run src && npm run doc",
+    "doc": "typedoc src/ImageMagick.ts src/Commands/* src/Errors/*",
+    "src": "tsc"
   },
   "author": {
     "name": "Hage Yaapa",
@@ -34,14 +37,20 @@
     "url": "https://github.com/hacksparrow/node-easyimage.git"
   },
   "dependencies": {
-    "colors": "^1.0.3",
+    "bluebird": "^3.5.1",
     "mkdirp": "^0.5.0",
-    "q": "^1.0.1"
+    "shortid": "^2.2.8",
+    "typescript": "^2.6.2"
   },
   "devDependencies": {
+    "@types/bluebird": "^3.5.19",
+    "@types/mkdirp": "^0.5.2",
+    "@types/node": "=4",
+    "@types/shortid": "0.0.29",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "mocha": "^4.1.0",
-    "rimraf": "^2.2.8"
+    "rimraf": "^2.2.8",
+    "typedoc": "^0.9.0"
   }
 }
