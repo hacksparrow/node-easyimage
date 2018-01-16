@@ -24,13 +24,15 @@ Promise = Promise || Bluebird as any;
  * @returns {Bluebird<IInfoResult>}
  */
 export async function info(filePath: string): Promise<IInfoResult> {
-    const args = ["-format", "%m %z %w %h %b %x %y %f", filePath];
+    const args = ["-format", "%m %z %w %h %b %x %y %f %[orientation]", filePath];
 
     const {stdout, stderr} = await execute("identify", args);
 
     if (stdout === "") {
         throw new UnsupportedError();
     }
+
+    console.log(stdout);
 
     const temp = stdout
         .replace(/PixelsPerInch/g, "")
@@ -54,6 +56,7 @@ export async function info(filePath: string): Promise<IInfoResult> {
             y: parseFloat(temp[6]),
         },
         name: temp.slice(7).join(" ").replace(/(\r\n|\n|\r)/gm, "").trim(),
+        orientation: temp[8],
         path: filePath,
     };
 
@@ -104,6 +107,11 @@ export interface IInfoResult {
      * The path to the image.
      */
     path: string;
+
+    /**
+     * Orientation of the image.
+     */
+    orientation: string;
 
     /**
      * Any warnings that ImageMagick may have output.

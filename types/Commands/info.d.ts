@@ -39,6 +39,10 @@ export interface IInfoResult {
      */
     path: string;
     /**
+     * Orientation of the image.
+     */
+    orientation: string;
+    /**
      * Any warnings that ImageMagick may have output.
      */
     warnings?: string;
