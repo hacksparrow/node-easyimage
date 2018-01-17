@@ -8,10 +8,29 @@ import { IInfoResult } from "./info";
  */
 export declare function thumbnail(options: IThumbnailOptions): Promise<IInfoResult>;
 export interface IThumbnailOptions extends IBaseOptions {
+    /**
+     * Height of thumbnail.
+     */
     height: number;
+    /**
+     * Width of thumbnail.
+     */
     width: number;
+    /**
+     * Gravity for sizing.
+     * @see https://www.imagemagick.org/script/command-line-options.php#gravity
+     */
     gravity?: string;
+    /**
+     * X offset for thumbnail.
+     */
     x?: number;
+    /**
+     * Y offset for thumbnail.
+     */
     y?: number;
+    /**
+     * Interpolate the thumbnail.
+     */
     interpolate?: string;
 }

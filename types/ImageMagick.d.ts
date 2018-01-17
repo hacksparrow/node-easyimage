@@ -9,9 +9,10 @@ export declare function execute(command: string, args: string[]): Promise<IImage
 /**
  * Returns the latest available version of ImageMagick
  *
- * @returns {number}
+ * @param {boolean} fresh Do not used previously found version
+ * @returns {Promise<number>}
  */
-export declare function getImageMagickVersion(): number;
+export declare function getImageMagickVersion(fresh?: boolean): Promise<number>;
 export interface IImageMagickCommandResult {
     stdout: string;
     stderr: string;

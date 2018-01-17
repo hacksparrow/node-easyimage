@@ -16,7 +16,6 @@ import {IBaseOptions} from "../Options";
 import {ensureDestinationDirectoryExists, applyDefaultsToBaseOptions, applyBaseOptionsToArgs, checkForMissingOptions} from "../Utilities";
 import {execute, getImageMagickVersion} from "../ImageMagick";
 import {info, IInfoResult} from "./info";
-import {UnsupportedError} from "../Errors/UnsupportedError";
 
 Promise = Promise || Bluebird as any;
 
@@ -28,7 +27,7 @@ Promise = Promise || Bluebird as any;
  */
 export async function thumbnail(options: IThumbnailOptions): Promise<IInfoResult> {
     applyDefaultsToBaseOptions(options);
-    applyDefaultsToThumbnailOptions(options);
+    await applyDefaultsToThumbnailOptions(options);
     checkForMissingOptions(options, ["src", "width", "height"]);
 
     await ensureDestinationDirectoryExists(options);
@@ -60,15 +59,39 @@ export async function thumbnail(options: IThumbnailOptions): Promise<IInfoResult
 }
 
 export interface IThumbnailOptions extends IBaseOptions {
+    /**
+     * Height of thumbnail.
+     */
     height: number;
+
+    /**
+     * Width of thumbnail.
+     */
     width: number;
+
+    /**
+     * Gravity for sizing.
+     * @see https://www.imagemagick.org/script/command-line-options.php#gravity
+     */
     gravity?: string;
+
+    /**
+     * X offset for thumbnail.
+     */
     x?: number;
+
+    /**
+     * Y offset for thumbnail.
+     */
     y?: number;
+
+    /**
+     * Interpolate the thumbnail.
+     */
     interpolate?: string;
 }
 
-function applyDefaultsToThumbnailOptions(options: IThumbnailOptions) {
+async function applyDefaultsToThumbnailOptions(options: IThumbnailOptions) {
     if (!options.x) {
         options.x = 0;
     }
@@ -76,7 +99,7 @@ function applyDefaultsToThumbnailOptions(options: IThumbnailOptions) {
         options.y = 0;
     }
     if (!options.interpolate) {
-        const availableVersion = getImageMagickVersion();
+        const availableVersion = await getImageMagickVersion();
         switch (availableVersion) {
             case 6:
                 options.interpolate = "bicubic";
@@ -84,8 +107,6 @@ function applyDefaultsToThumbnailOptions(options: IThumbnailOptions) {
             case 7:
                 options.interpolate = "catrom";
                 break;
-            default:
-                throw new UnsupportedError();
         }
     }
 }

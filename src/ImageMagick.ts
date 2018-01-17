@@ -12,19 +12,13 @@
  */
 
 import * as Bluebird from "bluebird";
-import { execFile, execFileSync } from "child_process";
+import { execFile } from "child_process";
 import {ImageMagickMissingError} from "./Errors/ImageMagickMissingError";
 import {UnsupportedError} from "./Errors/UnsupportedError";
 
 Promise = Promise || Bluebird as any;
 
 let availableImageMagickVersion: number = null;
-
-if (isVersion7()) {
-    availableImageMagickVersion = 7;
-} else if (isVersion6()) {
-    availableImageMagickVersion = 6;
-}
 
 /**
  * Executes a command with arguments and returns the stdout and stderr.
@@ -33,59 +27,81 @@ if (isVersion7()) {
  * @param {string[]} args
  * @returns {Promise<IImageMagickCommandResult>}
  */
-export function execute(command: string, args: string[]): Promise<IImageMagickCommandResult> {
-    return new Promise((resolve, reject) => {
-        if (availableImageMagickVersion === null) {
-            return reject(new ImageMagickMissingError());
-        }
+export async function execute(command: string, args: string[]): Promise<IImageMagickCommandResult> {
+    const version = await getImageMagickVersion();
 
-        if (availableImageMagickVersion === 7) {
-            args.unshift(command);
-            command = "magick";
-        }
+    if (version === 7) {
+        args.unshift(command);
+        command = "magick";
+    }
 
-        if (process.env.EASYIMAGEDEBUG === "true") console.log(command + " " + args.join(" "));
-
-        execFile(command, args, (err: Error, stdout: string, stderr: string) => {
-            if (err) {
-                return reject(new UnsupportedError());
-            }
-
-            return resolve({stdout, stderr});
-        });
-    });
+    try {
+        return execFilePromised(command, args);
+    } catch (err) {
+        throw new UnsupportedError(err);
+    }
 }
 
 /**
  * Returns the latest available version of ImageMagick
  *
- * @returns {number}
+ * @param {boolean} fresh Do not used previously found version
+ * @returns {Promise<number>}
  */
-export function getImageMagickVersion() {
+export async function getImageMagickVersion(fresh?: boolean) {
+    if (!fresh && availableImageMagickVersion !== null) {
+        return availableImageMagickVersion;
+    }
+
+    if (await hasMagicKCommand()) {
+        availableImageMagickVersion = 7;
+    } else if (await hasConvertCommand()) {
+        availableImageMagickVersion = 6;
+    }
+
+    if (availableImageMagickVersion === null) {
+        throw new ImageMagickMissingError();
+    }
+
     return availableImageMagickVersion;
-}
-
-function isVersion7() {
-    try {
-        const resultBuffer = execFileSync('magick', ['-version']);
-        const resultString = resultBuffer.toString();
-        return /ImageMagick/.test(resultString);
-    } catch (e) {
-        return false;
-    }
-}
-
-function isVersion6() {
-    try {
-        const resultBuffer = execFileSync('convert', ['-version']);
-        const resultString = resultBuffer.toString();
-        return /ImageMagick/.test(resultString);
-    } catch (e) {
-        return false;
-    }
 }
 
 export interface IImageMagickCommandResult {
     stdout: string,
     stderr: string,
+}
+
+async function hasMagicKCommand() {
+    try {
+        const {stdout} = await execFilePromised("magick", ["-version"]);
+        return /ImageMagick/.test(stdout);
+    } catch (e) {
+        return false;
+    }
+}
+
+async function hasConvertCommand() {
+    try {
+        const {stdout} = await execFilePromised("convert", ["-version"]);
+        return /ImageMagick/.test(stdout);
+    } catch (e) {
+        return false;
+    }
+}
+
+interface IExecFileResult {
+    stdout: string,
+    stderr: string,
+}
+
+async function execFilePromised(command: string, args?: string[]): Promise<IExecFileResult> {
+    return new Promise<IExecFileResult>((resolve, reject) => {
+        execFile(command, args, (err: Error, stdout: string, stderr: string) => {
+            if (err) {
+                return reject(err);
+            }
+
+            return resolve({stdout, stderr});
+        });
+    });
 }

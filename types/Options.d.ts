@@ -7,7 +7,7 @@ export interface IBaseOptions {
      * Destination file.
      * @default A temporary file
      */
-    dst: string;
+    dst?: string;
     /**
      * Auto orientate the image.
      * @default true

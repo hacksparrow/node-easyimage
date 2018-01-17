@@ -12,7 +12,7 @@
  */
 
 export class UnsupportedError extends Error {
-    constructor() {
-        super("The issued command is unsupported");
+    constructor(err: string) {
+        super(`The issued command is unsupported: ${err}`);
     }
 }

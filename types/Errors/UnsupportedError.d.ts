@@ -1,3 +1,3 @@
 export declare class UnsupportedError extends Error {
-    constructor();
+    constructor(err: string);
 }

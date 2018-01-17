@@ -29,7 +29,7 @@ export async function info(filePath: string): Promise<IInfoResult> {
     const {stdout, stderr} = await execute("identify", args);
 
     if (stdout === "") {
-        throw new UnsupportedError();
+        throw new UnsupportedError("ImageMagick returned unexpected data.");
     }
 
     const temp = stdout
@@ -39,7 +39,7 @@ export async function info(filePath: string): Promise<IInfoResult> {
 
     // All fields not found
     if (temp.length < 8) {
-        throw new UnsupportedError();
+        throw new UnsupportedError("ImageMagick returned unexpected data.");
     }
 
     const result: IInfoResult = {
