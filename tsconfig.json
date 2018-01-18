@@ -9,7 +9,7 @@
     "outDir": "./lib",
     "skipLibCheck": true,
     "importHelpers": true,
-    "lib": ["es2015"]
+    "lib": ["ES2015"]
   },
   "include": ["./src/**/*"],
   "exclude": ["node_modules"]

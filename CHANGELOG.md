@@ -10,6 +10,9 @@
 7. Added `coalesce` option to all commands
 8. Added orientation to `info()`
 9. Changed `resize()` to not auto-set height from width
+10. Added `getImageMagickVersion()`
+11. Rewrote tests to be more clear
+
 
 2.2.0 - 10-01-2018
 ------------------

@@ -45,10 +45,10 @@ any of the parameters defined on `IBaseOptions`. For example, to prevent EasyIma
 command.
 
 Every command must have a `src` parameter. If you do not specify a `dst`, then a random file will be created. Be sure to clean up randomly created files by
-either moving them to permanent storage, or deleting them. Some command have other required options.
+either moving them to permanent storage, or deleting them. Some commands have other required options.
 
-The examples below only specify the required arguments. See the [Docs](https://mrkmg.github.io/node-easyimage/index.html) for all available options for each
-command.
+The examples below only specify some of the available arguments. See the [Docs](https://mrkmg.github.io/node-easyimage/index.html) for all available options for
+each command.
 
 ### Convert
 
@@ -179,7 +179,7 @@ ImageMagick.
 ```
 import {getImageMagickVersion} from "easyimage";
 
-const version = getImageMagickVersion();
+const version = await getImageMagickVersion();
 ```
 
 ## Error Handling

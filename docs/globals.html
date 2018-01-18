@@ -1005,9 +1005,9 @@ img { max-width: 100%; }
 				any of the parameters defined on <code>IBaseOptions</code>. For example, to prevent EasyImage from auto-orientating your image, you can pass <code>autoOrient: false</code> on any
 			command.</p>
 			<p>Every command must have a <code>src</code> parameter. If you do not specify a <code>dst</code>, then a random file will be created. Be sure to clean up randomly created files by
-			either moving them to permanent storage, or deleting them. Some command have other required options.</p>
-			<p>The examples below only specify the required arguments. See the <a href="https://mrkmg.github.io/node-easyimage/index.html">Docs</a> for all available options for each
-			command.</p>
+			either moving them to permanent storage, or deleting them. Some commands have other required options.</p>
+			<p>The examples below only specify some of the available arguments. See the <a href="https://mrkmg.github.io/node-easyimage/index.html">Docs</a> for all available options for
+			each command.</p>
 			<h3 id="convert">Convert</h3>
 			<p>The <a href="http://localhost:63342/node-easyimage/docs/globals.html#convert">convert()</a> command can convert an image file from one type to another.</p>
 			<pre><code><span class="hljs-keyword">import</span> {convert} <span class="hljs-keyword">from</span> <span class="hljs-string">"easyimage"</span>;
@@ -1092,7 +1092,7 @@ const <span class="hljs-builtin-name">info</span> = await <span class="hljs-buil
 			ImageMagick.</p>
 			<pre><code><span class="hljs-keyword">import</span> {getImageMagickVersion} <span class="hljs-keyword">from</span> <span class="hljs-string">"easyimage"</span>;
 
-<span class="hljs-keyword">const</span> version = getImageMagickVersion();
+<span class="hljs-keyword">const</span> version = <span class="hljs-keyword">await</span> getImageMagickVersion();
 </code></pre><h2 id="error-handling">Error Handling</h2>
 			<p>There are 5 different types of errors that can be thrown.</p>
 			<ul>
@@ -1191,7 +1191,7 @@ const <span class="hljs-builtin-name">info</span> = await <span class="hljs-buil
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/Commands/convert.ts#L27">Commands/convert.ts:27</a></li>
+								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/commands/convert.ts#L27">commands/convert.ts:27</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1219,7 +1219,7 @@ const <span class="hljs-builtin-name">info</span> = await <span class="hljs-buil
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/Commands/crop.ts#L28">Commands/crop.ts:28</a></li>
+								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/commands/crop.ts#L28">commands/crop.ts:28</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1247,7 +1247,7 @@ const <span class="hljs-builtin-name">info</span> = await <span class="hljs-buil
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/ImageMagick.ts#L30">ImageMagick.ts:30</a></li>
+								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/execute.ts#L30">execute.ts:30</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1281,7 +1281,7 @@ const <span class="hljs-builtin-name">info</span> = await <span class="hljs-buil
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/ImageMagick.ts#L51">ImageMagick.ts:51</a></li>
+								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/execute.ts#L51">execute.ts:51</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1312,7 +1312,7 @@ const <span class="hljs-builtin-name">info</span> = await <span class="hljs-buil
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/Commands/info.ts#L26">Commands/info.ts:26</a></li>
+								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/commands/info.ts#L26">commands/info.ts:26</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1343,7 +1343,7 @@ const <span class="hljs-builtin-name">info</span> = await <span class="hljs-buil
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/Commands/rescrop.ts#L29">Commands/rescrop.ts:29</a></li>
+								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/commands/rescrop.ts#L29">commands/rescrop.ts:29</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1371,7 +1371,7 @@ const <span class="hljs-builtin-name">info</span> = await <span class="hljs-buil
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/Commands/resize.ts#L28">Commands/resize.ts:28</a></li>
+								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/commands/resize.ts#L28">commands/resize.ts:28</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1399,7 +1399,7 @@ const <span class="hljs-builtin-name">info</span> = await <span class="hljs-buil
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/Commands/rotate.ts#L28">Commands/rotate.ts:28</a></li>
+								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/commands/rotate.ts#L28">commands/rotate.ts:28</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1427,7 +1427,7 @@ const <span class="hljs-builtin-name">info</span> = await <span class="hljs-buil
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/Commands/thumbnail.ts#L28">Commands/thumbnail.ts:28</a></li>
+								<li>Defined in <a href="https://github.com/mrkmg/node-easyimage/blob/master/src/commands/thumbnail.ts#L28">commands/thumbnail.ts:28</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
