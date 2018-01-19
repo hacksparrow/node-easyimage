@@ -999,6 +999,37 @@ img { max-width: 100%; }
 			<pre><code><span class="hljs-meta">$</span><span class="bash"> npm install --save easyimage</span>
 </code></pre><p>For NodeJS 0.12, use <a href="https://github.com/hacksparrow/node-easyimage/tree/v2.2.0">EasyImage 2</a></p>
 			<pre><code><span class="hljs-variable">$ </span>npm install --save easyimage<span class="hljs-variable">@2</span>
+</code></pre><h2 id="quick-start">Quick Start</h2>
+			<p>Get info about an image.</p>
+			<pre><code><span class="hljs-keyword">import</span> {info} <span class="hljs-keyword">from</span> <span class="hljs-string">"easyimage"</span>;
+<span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">const</span> imageInfo = <span class="hljs-keyword">await</span> info(<span class="hljs-string">"/path/to/image.jpg"</span>);
+} <span class="hljs-keyword">catch</span> (e) {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Error: "</span>, e);
+}
+</code></pre><p>Convert an image from JPG to PNG.</p>
+			<pre><code><span class="hljs-keyword">import</span> {convert} from <span class="hljs-string">"easyimage"</span>;
+<span class="hljs-keyword">try</span> {
+    await convert({
+        src: <span class="hljs-string">"/path/to/source.jpg"</span>,
+        dst: <span class="hljs-string">"/path/to/dest.png"</span>,
+    });
+} <span class="hljs-keyword">catch</span> (e) {
+    console.log(<span class="hljs-string">"Error: "</span>, e);
+}
+</code></pre><p>Create a thumbnail.</p>
+			<pre><code><span class="hljs-keyword">import</span> {thumbnail} <span class="hljs-keyword">from</span> <span class="hljs-string">"easyimage"</span>;
+<span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">const</span> thumbnailInfo = <span class="hljs-keyword">await</span> thumbnail({
+        <span class="hljs-attr">src</span>: <span class="hljs-string">"/path/to/source.jpg"</span>,
+        <span class="hljs-attr">width</span>: <span class="hljs-number">100</span>,
+        <span class="hljs-attr">height</span>: <span class="hljs-number">100</span>,
+    });
+
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Thumbnail is at: "</span> + thumbnailInfo.path);
+} <span class="hljs-keyword">catch</span> (e) {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Error: "</span>, e);
+}
 </code></pre><h2 id="usage">Usage</h2>
 			<p>The EasyImage module is ES6 compatible. You can import just the commands that you will need.</p>
 			<p>Every command which takes an options object which extends from <a href="https://mrkmg.github.io/node-easyimage/interfaces/ibaseoptions.html">IBaseOptions</a>. You can use
@@ -1006,94 +1037,30 @@ img { max-width: 100%; }
 			command.</p>
 			<p>Every command must have a <code>src</code> parameter. If you do not specify a <code>dst</code>, then a random file will be created. Be sure to clean up randomly created files by
 			either moving them to permanent storage, or deleting them. Some commands have other required options.</p>
-			<p>The examples below only specify some of the available arguments. See the <a href="https://mrkmg.github.io/node-easyimage/index.html">Docs</a> for all available options for
-			each command.</p>
-			<h3 id="convert">Convert</h3>
-			<p>The <a href="http://localhost:63342/node-easyimage/docs/globals.html#convert">convert()</a> command can convert an image file from one type to another.</p>
-			<pre><code><span class="hljs-keyword">import</span> {convert} <span class="hljs-keyword">from</span> <span class="hljs-string">"easyimage"</span>;
-
-<span class="hljs-keyword">const</span> options = {
-    <span class="hljs-attr">src</span>: <span class="hljs-string">"/path/to/source.jpg"</span>,
-    <span class="hljs-attr">dst</span>: <span class="hljs-string">"/path/to/dest.png"</span>
-};
-
-<span class="hljs-keyword">const</span> info = <span class="hljs-keyword">await</span> convert(options);
-</code></pre><h3 id="crop">Crop</h3>
+			<p>See the <a href="https://mrkmg.github.io/node-easyimage/index.html">Docs</a> for all available options for each command.</p>
+			<p><strong>convert</strong></p>
+			<p>The <a href="https://mrkmg.github.io/node-easyimage/docs/globals.html#convert">convert()</a> command can convert an image file from one type to another.</p>
+			<p><strong>crop</strong></p>
 			<p>The <a href="https://mrkmg.github.io/node-easyimage/globals.html#crop">crop()</a> command will crop an image to the specified size.</p>
-			<pre><code><span class="hljs-keyword">import</span> {crop} <span class="hljs-keyword">from</span> <span class="hljs-string">"easyimage"</span>;
-
-<span class="hljs-keyword">const</span> options = {
-    <span class="hljs-attr">src</span>: <span class="hljs-string">"/path/to/source.jpg"</span>,
-    <span class="hljs-attr">dst</span>: <span class="hljs-string">"/path/to/dest.jpg"</span>,
-    <span class="hljs-attr">cropWidth</span>: <span class="hljs-number">100</span>
-};
-
-<span class="hljs-keyword">const</span> info = <span class="hljs-keyword">await</span> crop(options)
-</code></pre><h3 id="resize">Resize</h3>
+			<p><strong>resize</strong></p>
 			<p>The <a href="https://mrkmg.github.io/node-easyimage/globals.html#resize">resize()</a> command will resize an image to the specified size.</p>
-			<pre><code><span class="hljs-keyword">import</span> {resize} <span class="hljs-keyword">from</span> <span class="hljs-string">"easyimage"</span>;
-
-<span class="hljs-keyword">const</span> options = {
-    <span class="hljs-attr">src</span>: <span class="hljs-string">"/path/to/source.jpg"</span>,
-    <span class="hljs-attr">dst</span>: <span class="hljs-string">"/path/to/dest.jpg"</span>,
-    <span class="hljs-attr">width</span>: <span class="hljs-number">100</span>
-};
-
-<span class="hljs-keyword">const</span> info = <span class="hljs-keyword">await</span> resize(options)
-</code></pre><h3 id="rescrop">Rescrop</h3>
+			<p><strong>rescrop</strong></p>
 			<p>The <a href="https://mrkmg.github.io/node-easyimage/globals.html#rescrop">rescrop()</a> command will resize and crop an image to the specified size.</p>
-			<pre><code><span class="hljs-class">import </span>{rescrop} from <span class="hljs-string">"easyimage"</span>;
-
-const options = {
-<span class="hljs-symbol">    src:</span> <span class="hljs-string">"/path/to/source.jpg"</span>,
-<span class="hljs-symbol">    dst:</span> <span class="hljs-string">"/path/to/dest.jpg"</span>,
-<span class="hljs-symbol">    width:</span> <span class="hljs-number">100</span>,
-<span class="hljs-symbol">    cropWidth:</span> <span class="hljs-number">200</span>
-};
-
-const info = await rescrop(options)
-</code></pre><h3 id="rotate">Rotate</h3>
+			<p><strong>rotate</strong></p>
 			<p>The <a href="https://mrkmg.github.io/node-easyimage/globals.html#rotate">rotate()</a> command will rotate an image by the specified number of degrees.</p>
-			<pre><code><span class="hljs-keyword">import</span> {rotate} <span class="hljs-keyword">from</span> <span class="hljs-string">"easyimage"</span>;
-
-<span class="hljs-keyword">const</span> options = {
-    <span class="hljs-attr">src</span>: <span class="hljs-string">"/path/to/source.jpg"</span>,
-    <span class="hljs-attr">dst</span>: <span class="hljs-string">"/path/to/dest.jpg"</span>,
-    <span class="hljs-attr">degree</span>: <span class="hljs-number">90</span>
-};
-
-<span class="hljs-keyword">const</span> info = <span class="hljs-keyword">await</span> rotate(options)
-</code></pre><h3 id="thumbnail">Thumbnail</h3>
+			<p><strong>thumbnail</strong></p>
 			<p>The <a href="https://mrkmg.github.io/node-easyimage/globals.html#thumbnail">thumbnail()</a> command will create a thumbnail of the specified image.</p>
-			<pre><code><span class="hljs-keyword">import</span> {thumbnail} <span class="hljs-keyword">from</span> <span class="hljs-string">"easyimage"</span>;
-
-<span class="hljs-keyword">const</span> options = {
-    <span class="hljs-attr">src</span>: <span class="hljs-string">"/path/to/source.jpg"</span>,
-    <span class="hljs-attr">dst</span>: <span class="hljs-string">"/path/to/dest.jpg"</span>,
-    <span class="hljs-attr">width</span>: <span class="hljs-number">100</span>
-};
-
-<span class="hljs-keyword">const</span> info = <span class="hljs-keyword">await</span> thumbnail(options)
-</code></pre><h2 id="helper-commands">Helper Commands</h2>
+			<h2 id="helper-commands">Helper Commands</h2>
 			<p>In addition to the above commands, there are three other commands available.</p>
-			<h3 id="info">Info</h3>
+			<p><strong>info</strong></p>
 			<p>The <a href="https://mrkmg.github.io/node-easyimage/globals.html#info">info()</a> command will give you details about an image file.</p>
-			<pre><code>import {info} <span class="hljs-keyword">from</span> <span class="hljs-string">"easyimage"</span>;
-
-const <span class="hljs-builtin-name">info</span> = await <span class="hljs-builtin-name">info</span>(<span class="hljs-string">"/path/to/image.jpg"</span>)
-</code></pre><h3 id="execute">Execute</h3>
+			<p><strong>execute</strong></p>
 			<p>The <a href="">execute()</a> command allows you directly run ImageMagick with your own tool and arguments. It will handle calling the appropriate ImageMagick version, and
 			return the raw <code>stdout</code> and <code>stderr</code> to you.</p>
-			<pre><code><span class="hljs-keyword">import</span> {execute} <span class="hljs-keyword">from</span> <span class="hljs-string">"easyimage"</span>;
-
-<span class="hljs-keyword">const</span> {<span class="hljs-literal">stdout</span>, <span class="hljs-literal">stderr</span>} = await execute(<span class="hljs-string">"convert"</span>, [<span class="hljs-string">"/path/to/source.jpg"</span>, <span class="hljs-string">"-flatten"</span>, <span class="hljs-string">"/path/to/dest.jpg"</span>]);
-</code></pre><h3 id="getimagemagickversion">getImageMagickVersion</h3>
+			<p><strong>getImageMagickVersion</strong></p>
 			<p>The <a href="https://mrkmg.github.io/node-easyimage/globals.html#getimagemagickversion">getImageMagickVersion()</a> command will return the detected version of
 			ImageMagick.</p>
-			<pre><code><span class="hljs-keyword">import</span> {getImageMagickVersion} <span class="hljs-keyword">from</span> <span class="hljs-string">"easyimage"</span>;
-
-<span class="hljs-keyword">const</span> version = <span class="hljs-keyword">await</span> getImageMagickVersion();
-</code></pre><h2 id="error-handling">Error Handling</h2>
+			<h2 id="error-handling">Error Handling</h2>
 			<p>There are 5 different types of errors that can be thrown.</p>
 			<ul>
 				<li><code>BadDestinationError</code></li>
