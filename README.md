@@ -1,26 +1,8 @@
 EasyImage [![NPM version](https://badge.fury.io/js/easyimage.svg)](https://badge.fury.io/js/easyimage)
 =========
 
-EasyImage is a promise-based image processing module for Node.js, it is built on top of ImageMagick, so make sure ImageMagick is installed on your system.
-
-On Ubuntu
-```
-$ apt-get install imagemagick
-```
-
-On Mac OS X
-```
-$ brew install imagemagick
-```
-
-On CentOS
-```
-$ yum install imagemagick
-```
-
-On Windows
-  
-Download `Windows Binary Release` from [imagemagick.org](https://www.imagemagick.org/script/download.php#windows).
+EasyImage is a promise-based image processing module for Node.js, it is built on top of [ImageMagick](https://www.imagemagick.org/script/download.php), so make
+sure ImageMagick is installed on your system.
 
 ## Installation
 
