@@ -36,6 +36,50 @@ For NodeJS 0.12, use [EasyImage 2](https://github.com/hacksparrow/node-easyimage
 $ npm install --save easyimage@2
 ```
 
+## Quick Start
+
+Get info about an image.
+
+```
+import {info} from "easyimage";
+try {
+    const imageInfo = await info("/path/to/image.jpg");
+} catch (e) {
+    console.log("Error: ", e);
+}
+```
+
+Convert an image from JPG to PNG.
+
+```
+import {convert} from "easyimage";
+try {
+    await convert({
+        src: "/path/to/source.jpg",
+        dst: "/path/to/dest.png",
+    });
+} catch (e) {
+    console.log("Error: ", e);
+}
+```
+
+Create a thumbnail.
+
+```
+import {thumbnail} from "easyimage";
+try {
+    const thumbnailInfo = await thumbnail({
+        src: "/path/to/source.jpg",
+        width: 100,
+        height: 100,
+    });
+    
+    console.log("Thumbnail is at: " + thumbnailInfo.path);
+} catch (e) {
+    console.log("Error: ", e);
+}
+```
+
 ## Usage
 
 The EasyImage module is ES6 compatible. You can import just the commands that you will need.
@@ -47,140 +91,53 @@ command.
 Every command must have a `src` parameter. If you do not specify a `dst`, then a random file will be created. Be sure to clean up randomly created files by
 either moving them to permanent storage, or deleting them. Some commands have other required options.
 
-The examples below only specify some of the available arguments. See the [Docs](https://mrkmg.github.io/node-easyimage/index.html) for all available options for
-each command.
+See the [Docs](https://mrkmg.github.io/node-easyimage/index.html) for all available options for each command.
 
-### Convert
+**convert**
 
-The [convert()](http://localhost:63342/node-easyimage/docs/globals.html#convert) command can convert an image file from one type to another.
+The [convert()](https://mrkmg.github.io/node-easyimage/docs/globals.html#convert) command can convert an image file from one type to another.
 
-```
-import {convert} from "easyimage";
-
-const options = {
-    src: "/path/to/source.jpg",
-    dst: "/path/to/dest.png"
-};
-
-const info = await convert(options);
-```
-
-### Crop
+**crop**
 
 The [crop()](https://mrkmg.github.io/node-easyimage/globals.html#crop) command will crop an image to the specified size.
 
-```
-import {crop} from "easyimage";
-
-const options = {
-    src: "/path/to/source.jpg",
-    dst: "/path/to/dest.jpg",
-    cropWidth: 100
-};
-
-const info = await crop(options)
-```
-
-### Resize
+**resize**
 
 The [resize()](https://mrkmg.github.io/node-easyimage/globals.html#resize) command will resize an image to the specified size.
 
-```
-import {resize} from "easyimage";
-
-const options = {
-    src: "/path/to/source.jpg",
-    dst: "/path/to/dest.jpg",
-    width: 100
-};
-
-const info = await resize(options)
-```
-
-### Rescrop
+**rescrop**
 
 The [rescrop()](https://mrkmg.github.io/node-easyimage/globals.html#rescrop) command will resize and crop an image to the specified size.
 
-```
-import {rescrop} from "easyimage";
-
-const options = {
-    src: "/path/to/source.jpg",
-    dst: "/path/to/dest.jpg",
-    width: 100,
-    cropWidth: 200
-};
-
-const info = await rescrop(options)
-```
-
-### Rotate
+**rotate**
 
 The [rotate()](https://mrkmg.github.io/node-easyimage/globals.html#rotate) command will rotate an image by the specified number of degrees.
 
-```
-import {rotate} from "easyimage";
-
-const options = {
-    src: "/path/to/source.jpg",
-    dst: "/path/to/dest.jpg",
-    degree: 90
-};
-
-const info = await rotate(options)
-```
-
-### Thumbnail
+**thumbnail**
 
 The [thumbnail()](https://mrkmg.github.io/node-easyimage/globals.html#thumbnail) command will create a thumbnail of the specified image.
 
-```
-import {thumbnail} from "easyimage";
-
-const options = {
-    src: "/path/to/source.jpg",
-    dst: "/path/to/dest.jpg",
-    width: 100
-};
-
-const info = await thumbnail(options)
-```
 
 ## Helper Commands
 
 In addition to the above commands, there are three other commands available.
 
-### Info
+**info**
 
 The [info()](https://mrkmg.github.io/node-easyimage/globals.html#info) command will give you details about an image file.
 
-```
-import {info} from "easyimage";
 
-const info = await info("/path/to/image.jpg")
-```
-
-### Execute
+**execute**
 
 The [execute()]() command allows you directly run ImageMagick with your own tool and arguments. It will handle calling the appropriate ImageMagick version, and 
 return the raw `stdout` and `stderr` to you.
 
-```
-import {execute} from "easyimage";
 
-const {stdout, stderr} = await execute("convert", ["/path/to/source.jpg", "-flatten", "/path/to/dest.jpg"]);
-``` 
-
-### getImageMagickVersion
+**getImageMagickVersion**
 
 The [getImageMagickVersion()](https://mrkmg.github.io/node-easyimage/globals.html#getimagemagickversion) command will return the detected version of 
 ImageMagick.
 
-```
-import {getImageMagickVersion} from "easyimage";
-
-const version = await getImageMagickVersion();
-```
 
 ## Error Handling
 
