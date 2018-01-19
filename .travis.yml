@@ -3,8 +3,7 @@ language: node_js
 node_js:
   - "node"
   - "lts/*"
-  - "0.10"
-  - "0.8"
+  - "0.12"
 before_install:
  - npm install npm -g
- - sudo apt-get install imagemagick
+ - sudo apt-get -y install imagemagick
