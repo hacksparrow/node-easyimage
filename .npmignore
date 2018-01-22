@@ -12,3 +12,4 @@ test/
 tsconfig.json
 typedoc.js
 tslint.json
+.idea/
