@@ -1,4 +1,4 @@
-3.0.0 - PENDING-RELEASE
+3.0.0 - 2018-01-22
 ------------------
 
 1. Rewrote in typescript with ES6
@@ -13,6 +13,7 @@
 10. Added `getImageMagickVersion()`
 11. Rewrote tests to be more clear
 
+------------------------------------------------------------------------
 
 2.2.0 - 10-01-2018
 ------------------
