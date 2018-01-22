@@ -34,7 +34,7 @@ export interface IBaseOptions {
      * @default false
      * @see https://www.imagemagick.org/script/command-line-options.php#coalesce
      */
-    coalesce?: boolean
+    coalesce?: boolean;
 
     /**
      * Flatten the resulting image.

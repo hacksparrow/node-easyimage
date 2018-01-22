@@ -11,11 +11,11 @@
  MIT License
  */
 
-import "mocha";
 import * as chai from "chai";
 import * as chaiAsPromised from "chai-as-promised";
-import * as rimraf from "rimraf";
 import {mkdir} from "fs";
+import "mocha";
+import * as rimraf from "rimraf";
 
 import {resize} from "../../src/commands/resize";
 
@@ -42,13 +42,13 @@ describe("resize command", () => {
         describe("with only width", () => {
             it("should make smaller image", async () => {
                 const wideInfo = await resize({
-                    src: `${files}/wide.png`,
                     dst: `${output}/wide.png`,
+                    src: `${files}/wide.png`,
                     width: 50,
                 });
                 const tallInfo = await resize({
-                    src: `${files}/tall.png`,
                     dst: `${output}/tall.png`,
+                    src: `${files}/tall.png`,
                     width: 50,
                 });
 
@@ -61,13 +61,13 @@ describe("resize command", () => {
 
             it("should make larger image", async () => {
                 const wideInfo = await resize({
-                    src: `${files}/wide.png`,
                     dst: `${output}/wide.png`,
+                    src: `${files}/wide.png`,
                     width: 500,
                 });
                 const tallInfo = await resize({
-                    src: `${files}/tall.png`,
                     dst: `${output}/tall.png`,
+                    src: `${files}/tall.png`,
                     width: 500,
                 });
 
@@ -82,16 +82,16 @@ describe("resize command", () => {
         describe("with width and height", () => {
             it("should make smaller image", async () => {
                 const wideInfo = await resize({
-                    src: `${files}/wide.png`,
                     dst: `${output}/wide.png`,
-                    width: 100,
                     height: 100,
+                    src: `${files}/wide.png`,
+                    width: 100,
                 });
                 const tallInfo = await resize({
-                    src: `${files}/tall.png`,
                     dst: `${output}/tall.png`,
-                    width: 100,
                     height: 100,
+                    src: `${files}/tall.png`,
+                    width: 100,
                 });
 
                 wideInfo.width.should.equal(100);
@@ -103,16 +103,16 @@ describe("resize command", () => {
 
             it("should make larger image", async () => {
                 const wideInfo = await resize({
-                    src: `${files}/wide.png`,
                     dst: `${output}/wide.png`,
-                    width: 500,
                     height: 500,
+                    src: `${files}/wide.png`,
+                    width: 500,
                 });
                 const tallInfo = await resize({
-                    src: `${files}/tall.png`,
                     dst: `${output}/tall.png`,
-                    width: 500,
                     height: 500,
+                    src: `${files}/tall.png`,
+                    width: 500,
                 });
 
                 wideInfo.width.should.equal(500);
@@ -128,18 +128,18 @@ describe("resize command", () => {
         describe("with width and height", () => {
             it("should make smaller image", async () => {
                 const wideInfo = await resize({
-                    src: `${files}/wide.png`,
                     dst: `${output}/wide.png`,
-                    width: 100,
                     height: 100,
                     ignoreAspectRatio: true,
+                    src: `${files}/wide.png`,
+                    width: 100,
                 });
                 const tallInfo = await resize({
-                    src: `${files}/tall.png`,
                     dst: `${output}/tall.png`,
-                    width: 100,
                     height: 100,
                     ignoreAspectRatio: true,
+                    src: `${files}/tall.png`,
+                    width: 100,
                 });
 
                 wideInfo.width.should.equal(100);
@@ -151,18 +151,18 @@ describe("resize command", () => {
 
             it("should make larger image", async () => {
                 const wideInfo = await resize({
-                    src: `${files}/wide.png`,
                     dst: `${output}/wide.png`,
-                    width: 500,
                     height: 500,
                     ignoreAspectRatio: true,
+                    src: `${files}/wide.png`,
+                    width: 500,
                 });
                 const tallInfo = await resize({
-                    src: `${files}/tall.png`,
                     dst: `${output}/tall.png`,
-                    width: 500,
                     height: 500,
                     ignoreAspectRatio: true,
+                    src: `${files}/tall.png`,
+                    width: 500,
                 });
 
                 wideInfo.width.should.equal(500);
@@ -177,18 +177,18 @@ describe("resize command", () => {
     describe("with only downscaling", () => {
         it("should make a smaller image", async () => {
             const wideInfo = await resize({
-                src: `${files}/wide.png`,
                 dst: `${output}/wide.png`,
-                width: 50,
                 height: 50,
                 onlyDownscale: true,
+                src: `${files}/wide.png`,
+                width: 50,
             });
             const tallInfo = await resize({
-                src: `${files}/tall.png`,
                 dst: `${output}/tall.png`,
-                width: 50,
                 height: 50,
                 onlyDownscale: true,
+                src: `${files}/tall.png`,
+                width: 50,
             });
 
             wideInfo.width.should.equal(50);
@@ -200,18 +200,18 @@ describe("resize command", () => {
 
         it("shouldn't make larger image", async () => {
             const wideInfo = await resize({
-                src: `${files}/wide.png`,
                 dst: `${output}/wide.png`,
-                width: 500,
                 height: 500,
                 onlyDownscale: true,
+                src: `${files}/wide.png`,
+                width: 500,
             });
             const tallInfo = await resize({
-                src: `${files}/tall.png`,
                 dst: `${output}/tall.png`,
-                width: 500,
                 height: 500,
                 onlyDownscale: true,
+                src: `${files}/tall.png`,
+                width: 500,
             });
 
             wideInfo.width.should.equal(400);

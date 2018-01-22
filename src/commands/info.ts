@@ -12,8 +12,8 @@
  */
 
 import * as Bluebird from "bluebird";
-import {execute} from "../execute";
 import {UnsupportedError} from "../errors/UnsupportedError";
+import {execute} from "../execute";
 
 Promise = Promise || Bluebird as any;
 
@@ -24,7 +24,15 @@ Promise = Promise || Bluebird as any;
  * @returns {Bluebird<IInfoResult>}
  */
 export async function info(filePath: string): Promise<IInfoResult> {
-    const args = ["-format", "%m %z %w %h %b %x %y %[orientation] %f", filePath];
+    const numberOfFrames = await getNumberOfFrames(filePath);
+
+    const args = ["-format", "%m %z %w %h %b %x %y %[orientation] %f"];
+
+    if (numberOfFrames > 1) {
+        args.push(`${filePath}[0]`);
+    } else {
+        args.push(filePath);
+    }
 
     const {stdout, stderr} = await execute("identify", args);
 
@@ -43,18 +51,19 @@ export async function info(filePath: string): Promise<IInfoResult> {
     }
 
     const result: IInfoResult = {
-        type: temp[0].toLowerCase(),
-        depth: parseInt(temp[1]),
-        width: parseInt(temp[2]),
-        height: parseInt(temp[3]),
-        size: parseSize(temp[4]),
         density: {
             x: parseFloat(temp[5]),
             y: parseFloat(temp[6]),
         },
-        orientation: temp[7],
+        depth: parseInt(temp[1], 10),
+        frames: numberOfFrames,
+        height: parseInt(temp[3], 10),
         name: temp.slice(8).join(" ").replace(/(\r\n|\n|\r)/gm, "").trim(),
+        orientation: temp[7],
         path: filePath,
+        size: parseSize(temp[4]),
+        type: temp[0].toLowerCase(),
+        width: parseInt(temp[2], 10),
     };
 
     if (stderr) {
@@ -64,11 +73,23 @@ export async function info(filePath: string): Promise<IInfoResult> {
     return result;
 }
 
+async function getNumberOfFrames(filePath: string) {
+    const args = ["-format", "%n\n", `${filePath}`];
+
+    const {stdout, stderr} = await execute("identify", args);
+
+    if (stdout === "") {
+        throw new UnsupportedError("ImageMagick returned unexpected data.");
+    }
+
+    return parseInt(stdout.split("\n")[0], 10);
+}
+
 export interface IInfoResult {
     /**
      * Type of file.
      */
-    type: string,
+    type: string;
 
     /**
      * The number of bits in a color sample within a pixel.
@@ -111,6 +132,11 @@ export interface IInfoResult {
     orientation: string;
 
     /**
+     * Number of frames in image.
+     */
+    frames: number;
+
+    /**
      * Any warnings that ImageMagick may have output.
      */
     warnings?: string;
@@ -123,10 +149,10 @@ export interface IDensity {
 
 const units = {
     B: 1,
+    GB: 1000000000,
     KB: 1000,
-    MB: 1000000,            // =1000^2
-    GB: 1000000000,         // =1000^3
-    TB: 1000000000000       // =1000^4
+    MB: 1000000,
+    TB: 1000000000000,
 };
 
 function parseSize(sizeString: string) {

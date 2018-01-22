@@ -12,10 +12,10 @@
  */
 
 import * as Bluebird from "bluebird";
-import {ensureDestinationDirectoryExists, applyDefaultsToBaseOptions, applyBaseOptionsToArgs} from "../utilities";
 import {execute} from "../execute";
-import {info, IInfoResult} from "./info";
+import {applyBaseOptionsToArgs, applyDefaultsToBaseOptions, ensureDestinationDirectoryExists} from "../utilities";
 import {ICropOptions} from "./crop";
+import {IInfoResult, info} from "./info";
 import {IResizeOptions} from "./resize";
 
 Promise = Promise || Bluebird as any;
@@ -42,10 +42,10 @@ export async function rescrop(options: IResCropOptions): Promise<IInfoResult> {
     if (options.height) {
         resizeDefinition += `x${options.height}`;
     }
-    if (options.ignoreAspectRatio) resizeDefinition += "!";
+    if (options.ignoreAspectRatio) { resizeDefinition += "!"; }
     if (options.onlyDownscale) {
         if (/^win/.test(process.platform)) {
-            resizeDefinition += "^>"
+            resizeDefinition += "^>";
         } else {
             resizeDefinition += ">";
         }
@@ -56,7 +56,6 @@ export async function rescrop(options: IResCropOptions): Promise<IInfoResult> {
         cropDefinition += `x${options.cropHeight}`;
     }
     cropDefinition += `+${options.x}+${options.y}`;
-
 
     if (options.gravity) {
         args.push("-gravity", options.gravity);

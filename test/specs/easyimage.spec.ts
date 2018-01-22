@@ -11,9 +11,9 @@
  MIT License
  */
 
-import "mocha";
 import * as chai from "chai";
 import * as chaiAsPromised from "chai-as-promised";
+import "mocha";
 import * as EasyImage from "../../src/easyimage";
 
 chai.use(chaiAsPromised);

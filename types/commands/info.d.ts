@@ -43,6 +43,10 @@ export interface IInfoResult {
      */
     orientation: string;
     /**
+     * Number of frames in image.
+     */
+    frames: number;
+    /**
      * Any warnings that ImageMagick may have output.
      */
     warnings?: string;

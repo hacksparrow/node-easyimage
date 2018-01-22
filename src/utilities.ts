@@ -18,9 +18,9 @@ import {tmpdir} from "os";
 import {dirname, extname} from "path";
 import {generate} from "shortid";
 import {BadDestinationError} from "./errors/BadDestinationError";
-import {IBaseOptions} from "./options";
-import {MissingOptionsError} from "./errors/MissingOptionsError";
 import {MissingExtensionError} from "./errors/MissingExtensionError";
+import {MissingOptionsError} from "./errors/MissingOptionsError";
+import {IBaseOptions} from "./options";
 
 Promise = Promise || Bluebird as any;
 

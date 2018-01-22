@@ -11,11 +11,11 @@
  MIT License
  */
 
-import "mocha";
 import * as chai from "chai";
 import * as chaiAsPromised from "chai-as-promised";
-import * as rimraf from "rimraf";
 import {mkdir} from "fs";
+import "mocha";
+import * as rimraf from "rimraf";
 
 import {crop} from "../../src/commands/crop";
 
@@ -41,9 +41,9 @@ describe("crop command", () => {
     describe("to square (only cropWidth)", () => {
         it("should crop an image to smaller size", async () => {
             const info = await crop({
-                src: `${files}/wide.png`,
-                dst: `${output}/test.png`,
                 cropWidth: 50,
+                dst: `${output}/test.png`,
+                src: `${files}/wide.png`,
             });
 
             info.width.should.be.equal(50);
@@ -52,9 +52,9 @@ describe("crop command", () => {
 
         it("shouldn't crop to larger", async () => {
             const info = await crop({
-                src: `${files}/wide.png`,
-                dst: `${output}/test.png`,
                 cropWidth: 500,
+                dst: `${output}/test.png`,
+                src: `${files}/wide.png`,
             });
 
             info.width.should.be.equal(400);
@@ -65,10 +65,10 @@ describe("crop command", () => {
     describe("to rectangle (both cropWidth and cropHeight)", () => {
         it("should crop an image to smaller size", async () => {
             const info = await crop({
-                src: `${files}/wide.png`,
-                dst: `${output}/test.png`,
-                cropWidth: 50,
                 cropHeight: 75,
+                cropWidth: 50,
+                dst: `${output}/test.png`,
+                src: `${files}/wide.png`,
             });
 
             info.width.should.be.equal(50);

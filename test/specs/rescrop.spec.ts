@@ -11,11 +11,11 @@
  MIT License
  */
 
-import "mocha";
 import * as chai from "chai";
 import * as chaiAsPromised from "chai-as-promised";
-import * as rimraf from "rimraf";
 import {mkdir} from "fs";
+import "mocha";
+import * as rimraf from "rimraf";
 
 import {rescrop} from "../../src/commands/rescrop";
 
@@ -40,11 +40,11 @@ describe("rescrop command", () => {
 
     it("should resize and crop an image", async () => {
         const info = await rescrop({
-            src: `${files}/wide.png`,
-            dst: `${output}/wide.png`,
-            width: 100,
-            height: 100,
             cropWidth: 50,
+            dst: `${output}/wide.png`,
+            height: 100,
+            src: `${files}/wide.png`,
+            width: 100,
         });
 
         info.width.should.equal(50);

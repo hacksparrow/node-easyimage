@@ -11,9 +11,9 @@
  MIT License
  */
 
-import "mocha";
 import * as chai from "chai";
 import * as chaiAsPromised from "chai-as-promised";
+import "mocha";
 
 import {info} from "../../src/commands/info";
 
@@ -37,8 +37,13 @@ describe("info command", () => {
         fileInfo.should.have.property("orientation");
         fileInfo.should.have.property("name");
         fileInfo.should.have.property("path");
+        fileInfo.should.have.property("frames");
         fileInfo.density.should.have.property("x");
         fileInfo.density.should.have.property("y");
+    });
+
+    it("should get details for png", async () => {
+        const fileInfo = await info(`${files}/wide.png`);
 
         fileInfo.type.should.equal("png");
         fileInfo.depth.should.equal(8);
@@ -50,5 +55,38 @@ describe("info command", () => {
         fileInfo.orientation.should.equal("Undefined");
         fileInfo.name.should.equal("wide.png");
         fileInfo.path.should.equal(`${files}/wide.png`);
+        fileInfo.frames.should.equal(1);
+    });
+
+    it("should work with a multi-frame gif", async () => {
+        const fileInfo = await info(`${files}/multiframe.gif`);
+
+        fileInfo.type.should.equal("gif");
+        fileInfo.depth.should.equal(8);
+        fileInfo.width.should.equal(972);
+        fileInfo.height.should.equal(730);
+        fileInfo.size.should.closeTo(2045510, 10);
+        fileInfo.density.x.should.equal(72);
+        fileInfo.density.y.should.equal(72);
+        fileInfo.orientation.should.equal("Undefined");
+        fileInfo.name.should.equal("multiframe.gif");
+        fileInfo.path.should.equal(`${files}/multiframe.gif`);
+        fileInfo.frames.should.equal(5);
+    });
+
+    it("should work with a pdf", async () => {
+        const fileInfo = await info(`${files}/test.pdf`);
+
+        fileInfo.type.should.equal("pdf");
+        fileInfo.depth.should.equal(16);
+        fileInfo.width.should.equal(612);
+        fileInfo.height.should.equal(792);
+        fileInfo.size.should.closeTo(6497, 10);
+        fileInfo.density.x.should.equal(72);
+        fileInfo.density.y.should.equal(72);
+        fileInfo.orientation.should.equal("Undefined");
+        fileInfo.name.should.equal("test.pdf");
+        fileInfo.path.should.equal(`${files}/test.pdf`);
+        fileInfo.frames.should.equal(2);
     });
 });

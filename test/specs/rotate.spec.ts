@@ -11,11 +11,11 @@
  MIT License
  */
 
-import "mocha";
 import * as chai from "chai";
 import * as chaiAsPromised from "chai-as-promised";
-import * as rimraf from "rimraf";
 import {mkdir} from "fs";
+import "mocha";
+import * as rimraf from "rimraf";
 
 import {rotate} from "../../src/commands/rotate";
 
@@ -40,9 +40,9 @@ describe("rotate command", () => {
 
     it("should rotate an image", async () => {
         const info = await rotate({
-            src: `${files}/wide.png`,
-            dst: `${output}/wide.png`,
             degree: 90,
+            dst: `${output}/wide.png`,
+            src: `${files}/wide.png`,
         });
 
         info.width.should.equal(200);

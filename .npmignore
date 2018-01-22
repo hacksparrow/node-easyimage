@@ -11,3 +11,4 @@ test/
 .travis.yml
 tsconfig.json
 typedoc.js
+tslint.json

@@ -11,10 +11,10 @@
  MIT License
  */
 import * as Bluebird from "bluebird";
-import {IBaseOptions} from "../options";
-import {ensureDestinationDirectoryExists, applyDefaultsToBaseOptions, applyBaseOptionsToArgs, checkForMissingOptions} from "../utilities";
 import {execute} from "../execute";
-import {info, IInfoResult} from "./info";
+import {IBaseOptions} from "../options";
+import {applyBaseOptionsToArgs, applyDefaultsToBaseOptions, checkForMissingOptions, ensureDestinationDirectoryExists} from "../utilities";
+import {IInfoResult, info} from "./info";
 
 Promise = Promise || Bluebird as any;
 
@@ -40,5 +40,6 @@ export async function convert(options: IConvertOptions): Promise<IInfoResult> {
     return info(options.dst);
 }
 
+// tslint:disable-next-line
 export interface IConvertOptions extends IBaseOptions {
 }

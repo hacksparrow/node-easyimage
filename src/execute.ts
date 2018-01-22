@@ -67,8 +67,8 @@ export async function getImageMagickVersion(fresh?: boolean) {
 }
 
 export interface IImageMagickCommandResult {
-    stdout: string,
-    stderr: string,
+    stdout: string;
+    stderr: string;
 }
 
 async function hasMagicKCommand() {
@@ -90,8 +90,8 @@ async function hasConvertCommand() {
 }
 
 interface IExecFileResult {
-    stdout: string,
-    stderr: string,
+    stdout: string;
+    stderr: string;
 }
 
 async function execFilePromised(command: string, args?: string[]): Promise<IExecFileResult> {

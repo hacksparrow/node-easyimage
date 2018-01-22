@@ -1,5 +1,5 @@
-import { IInfoResult } from "./info";
 import { ICropOptions } from "./crop";
+import { IInfoResult } from "./info";
 import { IResizeOptions } from "./resize";
 /**
  * Resizes and crops an image.

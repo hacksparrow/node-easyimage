@@ -11,11 +11,11 @@
  MIT License
  */
 
-import "mocha";
 import * as chai from "chai";
 import * as chaiAsPromised from "chai-as-promised";
-import * as rimraf from "rimraf";
 import {mkdir, unlink} from "fs";
+import "mocha";
+import * as rimraf from "rimraf";
 
 import {convert} from "../../src/commands/convert";
 
@@ -28,7 +28,7 @@ const output = `${__dirname}/../output`;
 describe("convert command", () => {
     beforeEach((done: () => void) => {
         try {
-            mkdir(output, done);
+            mkdir(output, () => done());
         } catch (e) {
             done();
         }
@@ -41,8 +41,8 @@ describe("convert command", () => {
     describe("with image source", () => {
         it("should convert to image", async () => {
             const info = await convert({
-                src: `${files}/wide.jpg`,
                 dst: `${output}/test.png`,
+                src: `${files}/wide.jpg`,
             });
 
             info.should.be.an("object");
@@ -54,8 +54,8 @@ describe("convert command", () => {
 
         it("should convert to pdf", async () => {
             const info = await convert({
-                src: `${files}/wide.jpg`,
                 dst: `${output}/test.pdf`,
+                src: `${files}/wide.jpg`,
             });
 
             info.should.be.an("object");
@@ -69,8 +69,8 @@ describe("convert command", () => {
     describe("with pdf source", () => {
         it("should convert one page to image", async () => {
             const info = await convert({
-                src: `${files}/test.pdf[1]`,
                 dst: `${output}/test.png`,
+                src: `${files}/test.pdf[1]`,
             });
 
             info.should.be.an("object");
@@ -85,8 +85,8 @@ describe("convert command", () => {
 
         it("should convert all pages to image", async () => {
             const info = await convert({
-                src: `${files}/test.pdf`,
                 dst: `${output}/test.png`,
+                src: `${files}/test.pdf`,
             });
 
             info.should.be.an("object");
@@ -119,6 +119,7 @@ describe("convert command", () => {
             info.should.have.property("type");
             info.should.have.property("name");
             info.type.should.be.equal("jpeg");
+            // tslint:disable-next-line
             /EasyImage-.+\.jpg/.test(info.name).should.be.true;
         });
     });

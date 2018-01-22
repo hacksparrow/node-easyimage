@@ -66,38 +66,38 @@ try {
 
 The EasyImage module is ES6 compatible. You can import just the commands that you will need.
 
-Every command which takes an options object which extends from [IBaseOptions](https://mrkmg.github.io/node-easyimage/interfaces/ibaseoptions.html). You can use
+Every command which takes an options object which extends from [IBaseOptions](https://hacksparrow.github.io/node-easyimage/interfaces/ibaseoptions.html). You can use
 any of the parameters defined on `IBaseOptions`. For example, to prevent EasyImage from auto-orientating your image, you can pass `autoOrient: false` on any
 command.
 
 Every command must have a `src` parameter. If you do not specify a `dst`, then a random file will be created. Be sure to clean up randomly created files by
 either moving them to permanent storage, or deleting them. Some commands have other required options.
 
-See the [Docs](https://mrkmg.github.io/node-easyimage/index.html) for all available options for each command.
+See the [Docs](https://hacksparrow.github.io/node-easyimage/index.html) for all available options for each command.
 
 **convert**
 
-The [convert()](https://mrkmg.github.io/node-easyimage/docs/globals.html#convert) command can convert an image file from one type to another.
+The [convert()](https://hacksparrow.github.io/node-easyimage/docs/globals.html#convert) command can convert an image file from one type to another.
 
 **crop**
 
-The [crop()](https://mrkmg.github.io/node-easyimage/globals.html#crop) command will crop an image to the specified size.
+The [crop()](https://hacksparrow.github.io/node-easyimage/globals.html#crop) command will crop an image to the specified size.
 
 **resize**
 
-The [resize()](https://mrkmg.github.io/node-easyimage/globals.html#resize) command will resize an image to the specified size.
+The [resize()](https://hacksparrow.github.io/node-easyimage/globals.html#resize) command will resize an image to the specified size.
 
 **rescrop**
 
-The [rescrop()](https://mrkmg.github.io/node-easyimage/globals.html#rescrop) command will resize and crop an image to the specified size.
+The [rescrop()](https://hacksparrow.github.io/node-easyimage/globals.html#rescrop) command will resize and crop an image to the specified size.
 
 **rotate**
 
-The [rotate()](https://mrkmg.github.io/node-easyimage/globals.html#rotate) command will rotate an image by the specified number of degrees.
+The [rotate()](https://hacksparrow.github.io/node-easyimage/globals.html#rotate) command will rotate an image by the specified number of degrees.
 
 **thumbnail**
 
-The [thumbnail()](https://mrkmg.github.io/node-easyimage/globals.html#thumbnail) command will create a thumbnail of the specified image.
+The [thumbnail()](https://hacksparrow.github.io/node-easyimage/globals.html#thumbnail) command will create a thumbnail of the specified image.
 
 
 ## Helper Commands
@@ -106,7 +106,7 @@ In addition to the above commands, there are three other commands available.
 
 **info**
 
-The [info()](https://mrkmg.github.io/node-easyimage/globals.html#info) command will give you details about an image file.
+The [info()](https://hacksparrow.github.io/node-easyimage/globals.html#info) command will give you details about an image file.
 
 
 **execute**
@@ -117,7 +117,7 @@ return the raw `stdout` and `stderr` to you.
 
 **getImageMagickVersion**
 
-The [getImageMagickVersion()](https://mrkmg.github.io/node-easyimage/globals.html#getimagemagickversion) command will return the detected version of 
+The [getImageMagickVersion()](https://hacksparrow.github.io/node-easyimage/globals.html#getimagemagickversion) command will return the detected version of 
 ImageMagick.
 
 
@@ -131,7 +131,7 @@ There are 5 different types of errors that can be thrown.
 - `MissingOptionsError`
 - `UnsupportedError`
 
-You can try to catch for specific errors.
+Which allows you to catch specific errors.
 
 ```
 import {convert, MissingOptionsError} from "easyimage";

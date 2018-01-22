@@ -12,10 +12,10 @@
  */
 
 import * as Bluebird from "bluebird";
-import {IBaseOptions} from "../options";
-import {ensureDestinationDirectoryExists, applyDefaultsToBaseOptions, applyBaseOptionsToArgs, checkForMissingOptions} from "../utilities";
 import {execute} from "../execute";
-import {info, IInfoResult} from "./info";
+import {IBaseOptions} from "../options";
+import {applyBaseOptionsToArgs, applyDefaultsToBaseOptions, checkForMissingOptions, ensureDestinationDirectoryExists} from "../utilities";
+import {IInfoResult, info} from "./info";
 
 Promise = Promise || Bluebird as any;
 
@@ -41,10 +41,10 @@ export async function resize(options: IResizeOptions): Promise<IInfoResult> {
     if (options.height) {
         resizeDefinition += `x${options.height}`;
     }
-    if (options.ignoreAspectRatio) resizeDefinition += "!";
+    if (options.ignoreAspectRatio) { resizeDefinition += "!"; }
     if (options.onlyDownscale) {
         if (/^win/.test(process.platform)) {
-            resizeDefinition += "^>"
+            resizeDefinition += "^>";
         } else {
             resizeDefinition += ">";
         }
