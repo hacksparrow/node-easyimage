@@ -77,7 +77,7 @@ See the [Docs](https://hacksparrow.github.io/node-easyimage/index.html) for all 
 
 **convert**
 
-The [convert()](https://hacksparrow.github.io/node-easyimage/docs/globals.html#convert) command can convert an image file from one type to another.
+The [convert()](https://hacksparrow.github.io/node-easyimage/globals.html#convert) command can convert an image file from one type to another.
 
 **crop**
 
