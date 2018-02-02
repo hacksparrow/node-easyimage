@@ -13,7 +13,7 @@
 
 import * as Bluebird from "bluebird";
 import {execute} from "../execute";
-import {applyBaseOptionsToArgs, applyDefaultsToBaseOptions, ensureDestinationDirectoryExists, checkForMissingOptions} from "../utilities";
+import {applyBaseOptionsToArgs, applyDefaultsToBaseOptions, checkForMissingOptions, ensureDestinationDirectoryExists} from "../utilities";
 import {ICropOptions} from "./crop";
 import {IInfoResult, info} from "./info";
 import {IResizeOptions} from "./resize";
