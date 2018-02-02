@@ -31,7 +31,7 @@ exports.execute = require('./lib/execute').execute;
  * @returns {*|PromiseLike<any>}
  */
 exports.exec = function(cmd) {
-	console.debug('This command is deprecated. Please update to using execute'.yellow);
+	process.stderr.write('This command is deprecated. Please update to using execute\n'.yellow);
 	var deferred = Q.defer();
 
 	process.nextTick(function () {
