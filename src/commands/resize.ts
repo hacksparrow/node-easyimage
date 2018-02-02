@@ -26,10 +26,10 @@ Promise = Promise || Bluebird as any;
  * @returns {Bluebird<IInfoResult>}
  */
 export async function resize(options: IResizeOptions): Promise<IInfoResult> {
-    checkForMissingOptions(options, ["src", "width"]);
-
     applyDefaultsToBaseOptions(options);
     applyDefaultsToResizeOptions(options);
+
+    checkForMissingOptions(options, ["src", "width"]);
 
     await ensureDestinationDirectoryExists(options);
 

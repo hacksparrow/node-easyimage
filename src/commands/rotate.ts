@@ -26,8 +26,9 @@ Promise = Promise || Bluebird as any;
  * @returns {Bluebird<IInfoResult>}
  */
 export async function rotate(options: IRotateOptions): Promise<IInfoResult> {
-    checkForMissingOptions(options, ["src", "degree"]);
     applyDefaultsToBaseOptions(options);
+
+    checkForMissingOptions(options, ["src", "degree"]);
 
     await ensureDestinationDirectoryExists(options);
 

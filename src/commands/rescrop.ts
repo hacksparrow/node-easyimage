@@ -13,7 +13,7 @@
 
 import * as Bluebird from "bluebird";
 import {execute} from "../execute";
-import {applyBaseOptionsToArgs, applyDefaultsToBaseOptions, ensureDestinationDirectoryExists} from "../utilities";
+import {applyBaseOptionsToArgs, applyDefaultsToBaseOptions, ensureDestinationDirectoryExists, checkForMissingOptions} from "../utilities";
 import {ICropOptions} from "./crop";
 import {IInfoResult, info} from "./info";
 import {IResizeOptions} from "./resize";
@@ -30,6 +30,8 @@ export async function rescrop(options: IResCropOptions): Promise<IInfoResult> {
     applyDefaultsToBaseOptions(options);
     upgradeCropOptions(options);
     applyDefaultsToRescropOptions(options);
+
+    checkForMissingOptions(options, ["src", "cropWidth", "width"]);
 
     await ensureDestinationDirectoryExists(options);
 

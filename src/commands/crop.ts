@@ -30,9 +30,9 @@ export async function crop(options: ICropOptions): Promise<IInfoResult> {
     upgradeCropOptions(options);
     applyDefaultsToCropOptions(options);
 
-    await ensureDestinationDirectoryExists(options);
-
     checkForMissingOptions(options, ["src", "cropWidth"]);
+
+    await ensureDestinationDirectoryExists(options);
 
     const args: string[] = [options.src];
 

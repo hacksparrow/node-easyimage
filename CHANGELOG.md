@@ -1,3 +1,8 @@
+3.0.1 - 2018-02-02
+------------------
+
+1. Check for missing arugments before creating output directory.
+
 3.0.0 - 2018-01-22
 ------------------
 
@@ -14,6 +19,11 @@
 11. Rewrote tests to be more clear
 
 ------------------------------------------------------------------------
+
+2.2.1 - 2018-02-02
+------------------
+
+1. Removed console.debug and replaced with process.stderr.write
 
 2.2.0 - 10-01-2018
 ------------------

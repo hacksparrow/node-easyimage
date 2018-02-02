@@ -28,6 +28,7 @@ Promise = Promise || Bluebird as any;
 export async function thumbnail(options: IThumbnailOptions): Promise<IInfoResult> {
     applyDefaultsToBaseOptions(options);
     await applyDefaultsToThumbnailOptions(options);
+
     checkForMissingOptions(options, ["src", "width", "height"]);
 
     await ensureDestinationDirectoryExists(options);
