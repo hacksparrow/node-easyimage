@@ -16,7 +16,7 @@ import {exists} from "fs";
 import * as mkdirp from "mkdirp";
 import {tmpdir} from "os";
 import {dirname, extname} from "path";
-import {generate} from "shortid";
+import nanoid = require("nanoid");
 import {BadDestinationError} from "./errors/BadDestinationError";
 import {MissingExtensionError} from "./errors/MissingExtensionError";
 import {MissingOptionsError} from "./errors/MissingOptionsError";
@@ -105,6 +105,6 @@ function makeTemporaryFile(sourceFile: string) {
     if (!extension) {
         throw new MissingExtensionError(sourceFile);
     }
-    const fileName = generate();
+    const fileName = nanoid();
     return `${tmpdir()}/EasyImage-${fileName}${extension}`;
 }
