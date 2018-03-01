@@ -1,6 +1,6 @@
 {
   "name": "easyimage",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "description": "A promise-based, user-friendly module for processing images in Node.js",
   "license": "MIT",
   "main": "lib/easyimage.js",
