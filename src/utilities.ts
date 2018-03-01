@@ -16,11 +16,11 @@ import {exists} from "fs";
 import * as mkdirp from "mkdirp";
 import {tmpdir} from "os";
 import {dirname, extname} from "path";
-import {generate} from "shortid";
 import {BadDestinationError} from "./errors/BadDestinationError";
 import {MissingExtensionError} from "./errors/MissingExtensionError";
 import {MissingOptionsError} from "./errors/MissingOptionsError";
 import {IBaseOptions} from "./options";
+import nanoid = require("nanoid");
 
 Promise = Promise || Bluebird as any;
 
@@ -105,6 +105,6 @@ function makeTemporaryFile(sourceFile: string) {
     if (!extension) {
         throw new MissingExtensionError(sourceFile);
     }
-    const fileName = generate();
+    const fileName = nanoid(8);
     return `${tmpdir()}/EasyImage-${fileName}${extension}`;
 }
