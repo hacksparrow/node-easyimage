@@ -65,7 +65,7 @@ describe("info command", () => {
         fileInfo.depth.should.equal(8);
         fileInfo.width.should.equal(972);
         fileInfo.height.should.equal(730);
-        fileInfo.size.should.closeTo(2045510, 10);
+        fileInfo.size.should.closeTo(2045510, 1000);
         fileInfo.density.x.should.equal(72);
         fileInfo.density.y.should.equal(72);
         fileInfo.orientation.should.equal("Undefined");
@@ -81,7 +81,7 @@ describe("info command", () => {
         fileInfo.depth.should.equal(16);
         fileInfo.width.should.equal(612);
         fileInfo.height.should.equal(792);
-        fileInfo.size.should.closeTo(6497, 10);
+        fileInfo.size.should.closeTo(6497, 100);
         fileInfo.density.x.should.equal(72);
         fileInfo.density.y.should.equal(72);
         fileInfo.orientation.should.equal("Undefined");

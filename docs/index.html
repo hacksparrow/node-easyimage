@@ -60,33 +60,29 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="easyimage-npm-version-https-badge-fury-io-js-easyimage-svg-https-badge-fury-io-js-easyimage-">EasyImage <a href="https://badge.fury.io/js/easyimage"><img src="https://badge.fury.io/js/easyimage.svg" alt="NPM version"></a></h1>
+				<h1 id="easyimage-npm-version">EasyImage <a href="https://badge.fury.io/js/easyimage"><img src="https://badge.fury.io/js/easyimage.svg" alt="NPM version"></a></h1>
 				<p>EasyImage is a promise-based image processing module for Node.js, it is built on top of <a href="https://www.imagemagick.org/script/download.php">ImageMagick</a>, so make
 				sure ImageMagick is installed on your system.</p>
 				<h2 id="installation">Installation</h2>
 				<p>EasyImage 3 is only compatible with NodeJS 4 or greater.</p>
-				<pre><code><span class="hljs-meta">$</span><span class="bash"> npm install --save easyimage</span>
-</code></pre><p>For NodeJS 0.12, use <a href="https://github.com/hacksparrow/node-easyimage/tree/v2.2.0">EasyImage 2</a></p>
-				<pre><code><span class="hljs-variable">$ </span>npm install --save easyimage<span class="hljs-variable">@2</span>
-</code></pre><h2 id="quick-start">Quick Start</h2>
+				<pre><code>$ npm <span class="hljs-keyword">install</span> <span class="hljs-comment">--save easyimage</span></code></pre><p>For NodeJS 0.12, use <a href="https://github.com/hacksparrow/node-easyimage/tree/v2.2.0">EasyImage 2</a></p>
+				<pre><code>$ npm install --save <span class="hljs-symbol">easyimage@</span><span class="hljs-number">2</span></code></pre><h2 id="quick-start">Quick Start</h2>
 				<p>Get info about an image.</p>
 				<pre><code><span class="hljs-keyword">import</span> {info} <span class="hljs-keyword">from</span> <span class="hljs-string">"easyimage"</span>;
 <span class="hljs-keyword">try</span> {
     <span class="hljs-keyword">const</span> imageInfo = <span class="hljs-keyword">await</span> info(<span class="hljs-string">"/path/to/image.jpg"</span>);
 } <span class="hljs-keyword">catch</span> (e) {
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Error: "</span>, e);
-}
-</code></pre><p>Convert an image from JPG to PNG.</p>
-				<pre><code><span class="hljs-keyword">import</span> {convert} from <span class="hljs-string">"easyimage"</span>;
+}</code></pre><p>Convert an image from JPG to PNG.</p>
+				<pre><code><span class="hljs-keyword">import</span> {convert} <span class="hljs-keyword">from</span> <span class="hljs-string">"easyimage"</span>;
 <span class="hljs-keyword">try</span> {
-    await convert({
+    <span class="hljs-keyword">await</span> convert({
         src: <span class="hljs-string">"/path/to/source.jpg"</span>,
         dst: <span class="hljs-string">"/path/to/dest.png"</span>,
     });
 } <span class="hljs-keyword">catch</span> (e) {
-    console.log(<span class="hljs-string">"Error: "</span>, e);
-}
-</code></pre><p>Create a thumbnail.</p>
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Error: "</span>, e);
+}</code></pre><p>Create a thumbnail.</p>
 				<pre><code><span class="hljs-keyword">import</span> {thumbnail} <span class="hljs-keyword">from</span> <span class="hljs-string">"easyimage"</span>;
 <span class="hljs-keyword">try</span> {
     <span class="hljs-keyword">const</span> thumbnailInfo = <span class="hljs-keyword">await</span> thumbnail({
@@ -98,8 +94,7 @@
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Thumbnail is at: "</span> + thumbnailInfo.path);
 } <span class="hljs-keyword">catch</span> (e) {
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Error: "</span>, e);
-}
-</code></pre><h2 id="usage">Usage</h2>
+}</code></pre><h2 id="usage">Usage</h2>
 				<p>The EasyImage module is ES6 compatible. You can import just the commands that you will need.</p>
 				<p>Every command which takes an options object which extends from <a href="https://hacksparrow.github.io/node-easyimage/interfaces/ibaseoptions.html">IBaseOptions</a>. You can use
 					any of the parameters defined on <code>IBaseOptions</code>. For example, to prevent EasyImage from auto-orientating your image, you can pass <code>autoOrient: false</code> on any
@@ -152,7 +147,7 @@
     }
 }
 </code></pre><h2 id="license-mit-">License (MIT)</h2>
-				<p>Copyright (c) 2015 Hage Yaapa <a href="[http://www.hacksparrow.com](http://www.hacksparrow.com)">[http://www.hacksparrow.com](http://www.hacksparrow.com)</a></p>
+				<p>Copyright (c) 2015 Hage Yaapa &lt;<a href="http://www.hacksparrow.com">http://www.hacksparrow.com</a>&gt;</p>
 				<p>Permission is hereby granted, free of charge, to any person obtaining a copy
 					of this software and associated documentation files (the &quot;Software&quot;), to deal
 					in the Software without restriction, including without limitation the rights
