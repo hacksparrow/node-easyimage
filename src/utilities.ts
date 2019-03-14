@@ -96,7 +96,8 @@ export function checkForMissingOptions<T extends IBaseOptions>(options: T, requi
     }
 
     if (missingArgs.length) {
-        throw new MissingOptionsError(missingArgs);
+        const args = missingArgs.filter((v) => typeof v === "string") as string[];
+        throw new MissingOptionsError(args);
     }
 }
 
