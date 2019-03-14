@@ -14,13 +14,13 @@
 import * as Bluebird from "bluebird";
 import {exists} from "fs";
 import * as mkdirp from "mkdirp";
+import nanoid = require("nanoid");
 import {tmpdir} from "os";
 import {dirname, extname} from "path";
 import {BadDestinationError} from "./errors/BadDestinationError";
 import {MissingExtensionError} from "./errors/MissingExtensionError";
 import {MissingOptionsError} from "./errors/MissingOptionsError";
 import {IBaseOptions} from "./options";
-import nanoid = require("nanoid");
 
 Promise = Promise || Bluebird as any;
 
